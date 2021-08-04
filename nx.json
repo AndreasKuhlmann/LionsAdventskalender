@@ -1,0 +1,38 @@
+{
+  "npmScope": "lions-adventskalender",
+  "affected": {
+    "defaultBase": "master"
+  },
+  "implicitDependencies": {
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    ".eslintrc.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "projects": {
+    "advents-kalender": {
+      "tags": []
+    },
+    "advents-kalender-e2e": {
+      "tags": [],
+      "implicitDependencies": ["advents-kalender"]
+    }
+  }
+}
