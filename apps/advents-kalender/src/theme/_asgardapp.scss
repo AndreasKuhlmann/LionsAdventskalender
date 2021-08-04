@@ -1,0 +1,190 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/theming/
+
+/** Ionic CSS Variables **/
+:root {
+
+  --ion-font-family: 'Open Sans';
+
+  --ion-background-color: #ffffff;
+  --ion-item-background: #ffffff;
+  --background: #ffffff;
+
+  --logo-background-size: 100%;
+  --welcome-logo-background-size: 80%;
+
+  /** primary **/
+  --ion-color-primary: #1b8ece;
+  --ion-color-primary-rgb: 27, 142, 206;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #187db5;
+  --ion-color-primary-tint: #3299d3;
+
+  /** secondary **/
+  --ion-color-secondary: #3c3c3b;
+  --ion-color-secondary-rgb: 60, 60, 59;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #353534;
+  --ion-color-secondary-tint: #50504f;
+
+  /** tertiary **/
+  --ion-color-tertiary: #5260ff;
+  --ion-color-tertiary-rgb: 82, 96, 255;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #4854e0;
+  --ion-color-tertiary-tint: #6370ff;
+
+  /** success **/
+  --ion-color-success: #2dd36f;
+  --ion-color-success-rgb: 45, 211, 111;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #28ba62;
+  --ion-color-success-tint: #42d77d;
+
+  /** warning **/
+  --ion-color-warning: #ffc409;
+  --ion-color-warning-rgb: 255, 196, 9;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e0ac08;
+  --ion-color-warning-tint: #ffca22;
+
+  /** danger **/
+  --ion-color-danger: #eb445a;
+  --ion-color-danger-rgb: 235, 68, 90;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #cf3c4f;
+  --ion-color-danger-tint: #ed576b;
+
+  /** default **/
+  --ion-color-dark: #222428;
+  --ion-color-dark-rgb: 34, 36, 40;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #1e2023;
+  --ion-color-dark-tint: #383a3e;
+
+  /** default **/
+  --ion-color-medium: #92949c;
+  --ion-color-medium-rgb: 146, 148, 156;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #808289;
+  --ion-color-medium-tint: #9d9fa6;
+
+  /** default **/
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 245, 248;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
+
+  /** default **/
+  --ion-color-default: #ffffff;
+  --ion-color-default-rgb: 244, 244, 244;
+  --ion-color-default-contrast: #000000;
+  --ion-color-default-contrast-rgb: 0, 0, 0;
+  --ion-color-default-shade: #d7d8da;
+  --ion-color-default-tint: #f5f6f9;
+
+  /** royal **/
+  --ion-color-royal: #781380;
+  --ion-color-royal-rgb: 120, ​19, ​ 128;
+  --ion-color-royal-contrast: #ffffff;
+  --ion-color-royal-contrast-rgb: 255, 255, 255;
+  --ion-color-royal-shade: #7b3980;
+  --ion-color-royal-tint: #c01fcc;
+
+  /** orange **/
+  --ion-color-orange: #f28705;
+  --ion-color-orange-rgb: 242, ​135, ​ 5;
+  --ion-color-orange-contrast: #000000;
+  --ion-color-orange-contrast-rgb: 0, 0, 0;
+  --ion-color-orange-shade: #d93d04;
+  --ion-color-orange-tint: #f29f05;
+
+  /** ocean **/
+  --ion-color-ocean: #7044ff;
+  --ion-color-ocean-rgb: 112, 68, 255;
+  --ion-color-ocean-contrast: #ffffff;
+  --ion-color-ocean-contrast-rgb: 255, 255, 255;
+  --ion-color-ocean-shade: #633ce0;
+  --ion-color-ocean-tint: #7e57ff;
+
+  /** green **/
+  --ion-color-green: #129612;
+  --ion-color-green-rgb: 16, 220, 96;
+  --ion-color-green-contrast: #ffffff;
+  --ion-color-green-contrast-rgb: 255, 255, 255;
+  --ion-color-green-shade: #0ec254;
+  --ion-color-green-tint: #28e070;
+
+  $customColors: ('default', 'royal', 'orange', 'ocean', 'green');
+
+  @each $color in $customColors {
+    .ion-color-#{$color} {
+      --ion-color-base: var(--ion-color-#{$color}) !important;
+      --ion-color-base-rgb: var(--ion-color-#{$color}-rgb) !important;
+      --ion-color-contrast: var(--ion-color-#{$color}-contrast) !important;
+      --ion-color-contrast-rgb: var(--ion-color-#{$color}-contrast-rgb) !important;
+      --ion-color-shade: var(--ion-color-#{$color}-shade) !important;
+      --ion-color-tint: var(--ion-color-#{$color}-tint) !important;
+    }
+  }
+
+  .welcome-logo {
+    max-width: var(--welcome-logo-background-size);
+  }
+
+  .send-button-color {
+    background-color: var(--ion-color-tertiary);
+  }
+
+  .background {
+    background: url(../assets/img/Logo.png) no-repeat 0 0;
+    background-position: center;
+    background-size: var(--logo-background-size);
+    width: 100%;
+    height: 100%;
+  }
+
+  // disabled, because GATEApp wants no transparent background image...
+  // https://github.com/ionic-team/ionic/issues/17494#issuecomment-463676814
+  ion-content:not(.no-logo-background) {
+    --color: #fff;
+    --background: none;
+    background-color: var(--background);
+    background: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url(../assets/img/Logo.png) no-repeat 0 0;
+    background-position: center;
+    background-size: var(--logo-background-size);
+  }
+
+  ion-content.no-transparency {
+    --color: #fff;
+    --background: none;
+    background: url(../assets/img/Logo.png) no-repeat 0 0;
+    background-position: center;
+    // background-size: cover;
+    background-size: var(--logo-background-size);
+    background-color: white;
+  }
+
+  ion-card {
+    --background: #ffffffd7;
+    width: 100%;
+  }
+
+  .comapp-font-color {
+    color: var(--ion-color-primary);
+  }
+  
+  a {
+    text-decoration: underline var(--ion-color-primary);
+  }
+}
