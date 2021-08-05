@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'lions-adventskalender-door',
+  selector: 'door',
   templateUrl: './door.component.html',
   styleUrls: ['./door.component.scss'],
 })

@@ -51,10 +51,10 @@
   <h1 class="header">Oldenburger Adventskalender</h1>
   <div class="flex">
     <div *ngFor="let day of days.adventDays">
-      <lions-adventskalender-door [flipped]="day.flipped" (click)="flip(day)">
+      <door [flipped]="day.flipped" (click)="flip(day)">
         <div class="flash-card-front">{{ day.front }}</div>
         <div class="flash-card-back">{{ day.content }}</div>
-      </lions-adventskalender-door>
+      </door>
     </div>
   </div>
 </div>

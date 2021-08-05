@@ -5,7 +5,7 @@
       "projectType": "application",
       "root": "apps/advents-kalender",
       "sourceRoot": "apps/advents-kalender/src",
-      "prefix": "lions-adventskalender",
+      "prefix": "",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
