@@ -25,6 +25,7 @@ export class DoorComponent implements OnChanges, AfterViewInit {
   @ViewChild('door', { read: ElementRef }) door: ElementRef | undefined;
 
   keepClose = false;
+  timer!: NodeJS.Timeout;
 
   ngAfterViewInit(): void {
     setTimeout(() => this.setBackgroundPosition());
@@ -33,10 +34,16 @@ export class DoorComponent implements OnChanges, AfterViewInit {
   ngOnChanges(): void {
     this.setBackgroundPosition();
   }
+
   toggle(): void {
     if (!this.isOpen) {
-      this.keepClose = true;
-      setTimeout(() => (this.keepClose = false), 1000);
+      if (this.keepClose) {
+        clearTimeout(this.timer);
+        this.keepClose = false;
+      } else {
+        this.keepClose = true;
+        this.timer = setTimeout(() => (this.keepClose = false), 1300);
+      }
     }
   }
 
