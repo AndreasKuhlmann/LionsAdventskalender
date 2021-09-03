@@ -1,10 +1,19 @@
-<div class="flip-container" [class.flipped]="flipped">
-  <div class="flipper">
-    <div class="front">
-      <ng-content select=".flash-card-front"></ng-content>
+<div class="door-wrapper">
+  <div #door class="backDoor">
+    <div style="position: absolute; padding: 3px" *ngIf="isOpen">
+      {{ text }}
     </div>
-    <div class="back">
-      <ng-content select=".flash-card-back"></ng-content>
+    <div
+      class="doorHinge"
+      (click)="toggle()"
+      [ngClass]="{'doorOpen': isOpen, 'doorClose': !isOpen && keepClose }"
+      >
+      <div class="doorInsideCover"></div>
+      <div
+        [attr.data-no]="no"
+        class="door"
+        [ngStyle]="{ 'background-position': backgroundPosition }"
+      ></div>
     </div>
   </div>
 </div>

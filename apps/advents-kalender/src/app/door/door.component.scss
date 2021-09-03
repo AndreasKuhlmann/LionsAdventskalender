@@ -1,66 +1,126 @@
-:host {
-  display: block;
+.door-wrapper {
+  padding: 2em 3em;
+  transition: all 0.5s ease-in-out;
 }
 
-/*
-     *  Flip animation by David Walsh: https://davidwalsh.name/css-flip
-     */
-
-/* entire container, keeps perspective */
-.flip-container {
-  perspective: 1000px;
+.door-wrapper:hover {
+  transform: scale(1.2);
 }
 
-/* flip the pane when hovered */
-.flip-container.flipped .flipper {
-  transform: rotateY(180deg);
-}
-
-.flip-container,
-.front,
-.back {
-  width: 150px;
-  height: 150px;
-  opacity: .85;
-  font-family: 'Kalam', cursive;
-  color: #385052;
-  font-weight: bold;
-  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-/* flip speed goes here */
-.flipper {
-  transition: 0.6s;
+.backDoor {
+  background-color: #ddd;
+  box-shadow: inset 2px 3px 3px #888;
   transform-style: preserve-3d;
-  position: relative;
+  backface-visibility: hidden;
+  width: 200px;
+  height: 200px;
 }
 
-/* hide back of pane during swap */
-.front,
-.back {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ecf0f1;
-  backface-visibility: hidden;
-  -webkit-box-shadow: 0px 8px 4px -4px rgba(163, 163, 163, 0.25);
-  -moz-box-shadow: 0px 8px 4px -4px rgba(163, 163, 163, 0.25);
-  box-shadow: 0px 8px 4px -4px rgba(163, 163, 163, 0.25);
-  border: 1px solid #dee2e3;
-  margin: 0;
+.doorInsideCover {
+  transform: translate3d(0, 0, -1px);
+  background-color: #aaa;
+  cursor: pointer;
+}
+
+.doorHinge {
+  width: 100%;
+  height: 100%;
+  transform-origin: left;
+  transform-style: preserve-3d;
+  transition: all 0.5s ease-in-out;
+}
+
+.doorHinge div {
   position: absolute;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
 }
 
-/* front pane, placed above back */
-.front {
-  z-index: 2;
-  /* for firefox 31 */
-  transform: rotateY(0deg);
+.door {
+  cursor: pointer;
+  border-top: 1px dashed #333;
+  border-right: 1px dashed #333;
+  border-bottom: 1px dashed #333;
+  background: brown url(/assets/kalender.jpg) no-repeat;
+  background-size: 1920px auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
-/* back, initially hidden pane */
-.back {
-  transform: rotateY(180deg);
+.door:before {
+  content: attr(data-no);
+  color: #fff;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: arial, sans-serif;
+  text-shadow: 0 1px 2px #333;
+}
+.doorHinge:after {
+  position: absolute;
+  transform-origin: top left;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  width: 100%;
+  height: 100%;
+  content: '';
+  opacity: 0.5;
+  transform: skew(0deg, 0deg);
+  left: 0;
+  top: 0;
+  z-index: -1;
+  transform: skew(0deg, 0deg) perspective(1200px) translateZ(0px)
+    translateX(0px) translateY(0px) rotateY(0deg);
+  transition: all 0.5s ease-in-out;
+}
+
+.size1020 {
+  width: 10%;
+  height: 20%;
+}
+.size1025 {
+  width: 10%;
+  height: 25%;
+}
+.size0912 {
+  width: 9%;
+  height: 12%;
+}
+
+.door1 {
+  background-position: 5.5% 6.2%;
+}
+
+.door2 {
+  background-position: 38.8% 60.2%;
+}
+
+.door3 {
+  background-position: 38.8% 60.2%;
+}
+
+.doorOpen {
+  transform: perspective(1200px) translateZ(0px) translateX(0px) translateY(0px)
+    rotateY(-105deg);
+  border: none;
+}
+.doorOpen:after {
+  transform: skew(0deg, 35deg) translateZ(0px) translateX(0px) translateY(0px)
+    rotateY(50deg);
+}
+
+.doorClose {
+  transform: perspective(1200px) translateZ(0px) translateX(0px) translateY(0px)
+    rotateY(-35deg);
+  border: none;
+}
+.doorClose:after {
+  transform: skew(0deg, 35deg) translateZ(0px) translateX(0px) translateY(0px)
+    rotateY(50deg);
 }

@@ -1,7 +1,45 @@
-<div class="header">
-  Oldenburger Adventskalender 2021
+<!-- <div class="header">Oldenburger Adventskalender 2021</div> -->
+<div class="calendar-container">
+  <div #grid
+    style="
+      background-image: url(/assets/kalender.jpg);
+      background-repeat: no-repeat;
+      background-size: 1920px auto;
+    "
+  >
+    <img src="/assets/kalender.jpg" style="visibility: hidden; width: 1920px; height: auto;" />
+    <div class="grid-1">
+      <door
+        [baseX]="gridXPosition"
+        [baseY]="gridYPosition"
+        [baseWidth]="gridWidth"
+        [baseHeight]="gridHeight"
+        *ngFor="let day of days.adventDays; let i = index"
+        [no]="i + 1"
+        [isOpen]="day.flipped"
+        [text]="day.content"
+        [style.grid-area]="'d' + (i + 1)"
+        (click)="flip(day)"
+      >
+      </door>
+    </div>
+  </div>
+  <!-- <div #grid class="grid-1">
+    <door
+      [baseX]="gridXPosition"
+      [baseY]="gridYPosition"
+      [baseWidth]="gridWidth"
+      [baseHeight]="gridHeight"
+      *ngFor="let day of days.adventDays; let i = index"
+      [no]="i + 1"
+      [isOpen]="day.flipped"
+      [style.grid-area]="'d' + (i + 1)"
+      (click)="flip(day)"
+    >
+    </door>
+  </div> -->
 </div>
-<div class="grid-1">
+<!-- <div class="grid-1">
   <div
     *ngFor="let day of days.adventDays; let i = index"
     [style.grid-area]="'d' + (i + 1)"
@@ -11,9 +49,8 @@
       <div class="flash-card-back">{{ day.content }}</div>
     </door>
   </div>
-  <div class="picture">
-  </div>
-  </div>
+  <div class="picture"></div>
+</div> -->
 <div class="snowflakes" aria-hidden="true">
   <div class="snowflake">❅</div>
   <div class="snowflake">❆</div>
