@@ -15,8 +15,7 @@ import {
 export class DoorComponent implements OnChanges, AfterViewInit {
   @Input() baseX = 0;
   @Input() baseY = 0;
-  @Input() baseWidth = 0;
-  @Input() baseHeight = 0;
+  @Input() backgroundWidth = 0;
   @Input() no = 0;
   @Input() isOpen = false;
   @Input() cannotOpen = true;
@@ -26,6 +25,7 @@ export class DoorComponent implements OnChanges, AfterViewInit {
 
   keepClose = false;
   timer!: NodeJS.Timeout;
+  backgroundWidthInPixel = '';
 
   ngAfterViewInit(): void {
     setTimeout(() => this.setBackgroundPosition());
@@ -56,6 +56,7 @@ export class DoorComponent implements OnChanges, AfterViewInit {
       const backgroundPostionY =
         Math.floor(this.baseY - posY).toString() + 'px';
       this.backgroundPosition = `${backgroundPostionX} ${backgroundPostionY}`;
+      this.backgroundWidthInPixel = `${this.backgroundWidth}px`;
       console.log(this.backgroundPosition);
     }
   }

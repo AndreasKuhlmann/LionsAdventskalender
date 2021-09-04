@@ -17,59 +17,14 @@
 }
 .calendar-container {
   display: flex;
-  height: 100%;
-  width: 100%;
-  justify-content: center;
-}
-.grid-1 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  height: 100%;
+  width: 100%;
+  background-image: url(/assets/kalender.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-
-/* mobile first grid layout */
-// https://webdesign.tutsplus.com/tutorials/how-to-build-a-festive-advent-calendar-with-css-grid--cms-30070
-.grid-2 {
-  display: grid;
-  position: absolute;
-  margin-top: 20px;
-  margin-left: 80px;
-  top: 0;
-  left: 0;
-  width: 1920px;
-  height: 1080px;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: auto;
-
-  grid-template-areas:
-    'd7      d8    d14    d6    d23'
-    'd11     d12   d10    d1    d18'
-    'd9      d13   d15    d3    d17'
-    'd24     d21   d20    d2    d19'
-    'd16     d5    d22    d4    d25';
-}
-
-// @media only screen and (min-width: 500px) {
-//   .grid-1 {
-//     background: url(/assets/kalender.jpg);
-//     background-size: cover;
-//     grid-template-columns: repeat(5, 1fr);
-// grid-template-areas:
-//     'd23    d20     d12'
-//     'd2     d14     d4'
-//     'd5     d22     d16'
-//     'd1     d7      d9'
-//     'd10    d11     d18'
-//     'd13    d3      d15'
-//     'd6     d17     d8'
-//     'd19    d24     d21';
-//   }
-// }
 
 /* customizable snowflake styling */
 .snowflake {

@@ -6,13 +6,16 @@
     <div
       class="doorHinge"
       (click)="toggle()"
-      [ngClass]="{'doorOpen': isOpen, 'doorClose': !isOpen && keepClose }"
-      >
+      [ngClass]="{ doorOpen: isOpen, doorClose: !isOpen && keepClose }"
+    >
       <div class="doorInsideCover"></div>
       <div
-        [attr.data-no]="no"
         class="door"
-        [ngStyle]="{ 'background-position': backgroundPosition }"
+        [attr.data-no]="no"
+        [ngStyle]="{
+          'background-position': backgroundPosition,
+          'background-size': backgroundWidthInPixel
+        }"
       ></div>
     </div>
   </div>
