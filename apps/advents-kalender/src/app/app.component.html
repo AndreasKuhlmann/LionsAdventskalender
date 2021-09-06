@@ -1,16 +1,18 @@
 <!-- <div class="header">Oldenburger Adventskalender 2021</div> -->
-<div #container class="calendar-container">
-  <door
-    [baseX]="containerXPosition"
-    [baseY]="containerYPosition"
-    [backgroundWidth]="containerWidth"
-    *ngFor="let day of days.adventDays; let i = index"
-    [no]="i + 1"
-    [isOpen]="day.flipped"
-    [text]="day.content"
-    (click)="flip(day)"
-  >
-  </door>
+<div class="calendar-container">
+  <div #container class="doors-container">
+    <door
+      *ngFor="let day of days.adventDays; let i = index"
+      [baseX]="containerXPosition"
+      [baseY]="containerYPosition"
+      [backgroundWidth]="containerWidth"
+      [no]="i + 1"
+      [isOpen]="day.flipped"
+      [text]="day.content"
+      (click)="flip(day)"
+    >
+    </door>
+  </div>
 </div>
 <div class="snowflakes" aria-hidden="true">
   <div class="snowflake">❅</div>

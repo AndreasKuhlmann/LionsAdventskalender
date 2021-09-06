@@ -19,7 +19,7 @@ export class DoorComponent implements OnChanges, AfterViewInit {
   @Input() no = 0;
   @Input() isOpen = false;
   @Input() cannotOpen = true;
-  @Input() text: string | undefined;
+  @Input() text!: string;
   backgroundPosition = '';
   @ViewChild('door', { read: ElementRef }) door: ElementRef | undefined;
 
@@ -55,8 +55,10 @@ export class DoorComponent implements OnChanges, AfterViewInit {
         Math.floor(this.baseX - posX).toString() + 'px';
       const backgroundPostionY =
         Math.floor(this.baseY - posY).toString() + 'px';
+
       this.backgroundPosition = `${backgroundPostionX} ${backgroundPostionY}`;
       this.backgroundWidthInPixel = `${this.backgroundWidth}px`;
+
       console.log(this.backgroundPosition);
     }
   }

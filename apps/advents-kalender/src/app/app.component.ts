@@ -13,7 +13,7 @@ import { AdventDay, AdventDaysService } from './services/advent-days.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  @ViewChild('container', { read: ElementRef }) container: ElementRef | undefined;
+  @ViewChild('container', { read: ElementRef }) container!: ElementRef;
   title = 'advents-kalender';
   containerXPosition = 0;
   containerYPosition = 0;
@@ -25,10 +25,13 @@ export class AppComponent implements OnInit {
   }
   async ngOnInit() {
     await this.days.loadDays();
-    if (this.container) {
-      this.containerXPosition = this.container.nativeElement.getBoundingClientRect().x;
-      this.containerYPosition = this.container.nativeElement.getBoundingClientRect().y;
-      this.containerWidth = this.container.nativeElement.getBoundingClientRect().width;
-    }
+    setTimeout(() => {
+      this.containerXPosition =
+        this.container.nativeElement.getBoundingClientRect().x;
+      this.containerYPosition =
+        this.container.nativeElement.getBoundingClientRect().y;
+      this.containerWidth =
+        this.container.nativeElement.getBoundingClientRect().width;
+    },100);
   }
 }
