@@ -4,28 +4,45 @@
 :host {
   display: block;
   font-family: sans-serif;
-  height: 100%;
-  width: 100%;
-  background-size: 100% auto;
 }
 
-.header {
-  padding-top: 2rem;
-  padding-left: 18rem;
+.container {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  grid-template-rows: repeat(3, auto);
+  grid-gap: 1.5em;
+}
+
+header {
   font-size: 200%;
   font-weight: bold;
+  grid-column: 1 / 3;
+  grid-row: span 1;
 }
+
 .calendar-container {
+  grid-column: 1 / 2;
+  grid-row: 2 / 4;
   display: flex;
-  justify-content: center;
+}
+
+.side-nav-top {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+.side-nav-bottom {
+  grid-column: 2 / 3;
+  grid-row: 3 / 4;
 }
 
 .doors-container {
+  padding: 1em;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   background-image: url(/assets/kalender.jpg);
-  background-size: contain;
+  background-size: 100% auto;
   background-repeat: repeat-y;
 }
 

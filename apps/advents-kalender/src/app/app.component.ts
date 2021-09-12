@@ -3,7 +3,6 @@ import {
   ElementRef,
   OnInit,
   ViewChild,
-  AfterViewInit,
 } from '@angular/core';
 import { AdventDay, AdventDaysService } from './services/advent-days.service';
 
@@ -23,15 +22,20 @@ export class AppComponent implements OnInit {
   flip(day: AdventDay) {
     this.days.flipDay(day);
   }
+
   async ngOnInit() {
     await this.days.loadDays();
-    setTimeout(() => {
-      this.containerXPosition =
-        this.container.nativeElement.getBoundingClientRect().x;
-      this.containerYPosition =
-        this.container.nativeElement.getBoundingClientRect().y;
-      this.containerWidth =
-        this.container.nativeElement.getBoundingClientRect().width;
-    },100);
+    setTimeout(()=>this.setPositon());
+  }
+  private setPositon() {
+    this.containerXPosition =
+      this.container.nativeElement.getBoundingClientRect().x;
+    this.containerYPosition =
+      this.container.nativeElement.getBoundingClientRect().y;
+    this.containerWidth =
+      this.container.nativeElement.getBoundingClientRect().width;
+  }
+  onResize(element: HTMLDivElement) {
+    this.setPositon();
   }
 }
