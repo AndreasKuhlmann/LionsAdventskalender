@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'advents-kalender',
+  displayName: 'adventskalender',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -8,7 +8,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/apps/advents-kalender',
+  coverageDirectory: '../../coverage/apps/adventskalender',
   transform: {
     '^.+\\.(ts|js|html)$': 'jest-preset-angular',
   },

@@ -4,16 +4,16 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { AdventDay, AdventDaysService } from './services/advent-days.service';
+import { AdventDay, AdventDaysService } from '../../../services/advent-days.service';
 
 @Component({
-  selector: 'lions-adventskalender-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'adventskalender',
+  templateUrl: './adventskalender.component.html',
+  styleUrls: ['./adventskalender.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AdventskalenderComponent implements OnInit {
   @ViewChild('container', { read: ElementRef }) container!: ElementRef;
-  title = 'advents-kalender';
+  title = 'lions-adventskalender';
   containerXPosition = 0;
   containerYPosition = 0;
   containerWidth = 1095;

@@ -27,12 +27,12 @@
     ]
   },
   "projects": {
-    "advents-kalender": {
+    "adventskalender": {
       "tags": []
     },
-    "advents-kalender-e2e": {
+    "adventskalender-e2e": {
       "tags": [],
-      "implicitDependencies": ["advents-kalender"]
+      "implicitDependencies": ["adventskalender"]
     }
   }
 }

@@ -1,0 +1,22 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+:root {
+  box-sizing: border-box;
+}
+
+::before,
+::after {
+  box-sizing: inherit;
+}
+body * + * {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
