@@ -1,7 +1,7 @@
 <div class="container">
-  <header>
-    <h2 class="page-heading">Oldenburger Adventskalender</h2>
-  </header>
+  <!-- <header>
+    <h2 class="page-heading">Oldenburger Kalender</h2>
+  </header> -->
   <div #container class="doors-container" (window:resize)="onResize(container)">
     <door
       *ngFor="let day of days.adventDays; let i = index"

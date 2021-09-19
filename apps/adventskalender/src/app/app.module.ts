@@ -1,6 +1,5 @@
 import { MaterialModule } from './shared/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AdventDaysService } from './services/advent-days.service';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicStorageModule, Storage } from '@ionic/storage-angular';
@@ -17,8 +16,8 @@ export function initializeApp(storage: Storage) {
 }
 
 const routes: Routes = [
-  { path: 'adventskalender', loadChildren: () => import('./adventskalender/adventskalender.module').then(m => m.AdventskalenderModule) },
-  { path: '**', redirectTo: 'adventskalender' }
+  { path: 'kalender', loadChildren: () => import('./kalender-layout/kalender-layout.module').then(m => m.KalenderLayoutModule) },
+  { path: '**', redirectTo: 'kalender' }
 ];
 
 @NgModule({
@@ -35,7 +34,6 @@ const routes: Routes = [
     MaterialModule
   ],
   providers: [
-    AdventDaysService,
     {
       provide: APP_INITIALIZER,
       deps: [Storage],
