@@ -1,26 +1,18 @@
-<div class="container">
-  <!-- <header>
+<!-- <header>
     <h2 class="page-heading">Oldenburger Kalender</h2>
   </header> -->
-  <div #container class="doors-container" (window:resize)="onResize(container)">
-    <door
-      *ngFor="let day of days.adventDays; let i = index"
-      [baseX]="containerXPosition"
-      [baseY]="containerYPosition"
-      [backgroundWidth]="containerWidth"
-      [no]="i + 1"
-      [isOpen]="day.flipped"
-      [text]="day.content"
-      (click)="flip(day)"
-    >
-    </door>
-  </div>
-  <div class="side-nav-top">
-    Informationen top
-  </div>
-  <div class="side-nav-bottom">
-    Informationen bottom
-  </div>
+<div #container class="doors-container" (window:resize)="onResize(container)">
+  <door
+    *ngFor="let day of days.adventDays; let i = index"
+    [baseX]="containerXPosition"
+    [baseY]="containerYPosition"
+    [backgroundWidth]="containerWidth"
+    [no]="i + 1"
+    [isOpen]="day.flipped"
+    [text]="day.content"
+    (click)="flip(day)"
+  >
+  </door>
 </div>
 <div class="snowflakes" aria-hidden="true">
   <div class="snowflake">❅</div>

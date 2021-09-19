@@ -4,8 +4,11 @@ $iconWidth: 56px;
   flex: 1 1 auto;
 }
 
+mat-toolbar {
+  padding: 0;
+}
+
 .sidenav-toggle {
-  display: none;
 
   padding: 0;
   margin: 8px;
