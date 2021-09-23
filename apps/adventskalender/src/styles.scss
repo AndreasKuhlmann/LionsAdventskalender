@@ -1,10 +1,81 @@
 // @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
+/* For use in src/lib/core/theming/_palette.scss */
+$md-lionsyellow: (
+    50 : #fef9e2,
+    100 : #fdefb7,
+    200 : #fce488,
+    300 : #fbd958,
+    400 : #fad134,
+    500 : #f9c910,
+    600 : #f8c30e,
+    700 : #f7bc0c,
+    800 : #f6b509,
+    900 : #f5a905,
+    A100 : #ffffff,
+    A200 : #fff7e9,
+    A400 : #ffe5b6,
+    A700 : #ffdc9d,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+/* For use in src/lib/core/theming/_palette.scss */
+/* For use in src/lib/core/theming/_palette.scss */
+$md-lionsblue: (
+    50 : #e5e9f0,
+    100 : #bfc9da,
+    200 : #95a5c1,
+    300 : #6a80a8,
+    400 : #4a6595,
+    500 : #2a4a82,
+    600 : #25437a,
+    700 : #1f3a6f,
+    800 : #193265,
+    900 : #0f2252,
+    A100 : #8aa7ff,
+    A200 : #5781ff,
+    A400 : #245bff,
+    A700 : #0a47ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+
+
+
 @use '~@angular/material' as mat;
 @include mat.core();
 
-$candy-app-primary: mat.define-palette(mat.$indigo-palette);
-$candy-app-accent:  mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$candy-app-primary: mat.define-palette($md-lionsblue);
+$candy-app-accent:  mat.define-palette($md-lionsyellow, A200, A100, A400);
 $candy-app-warn:    mat.define-palette(mat.$red-palette);
 
 $candy-app-theme: mat.define-light-theme(
