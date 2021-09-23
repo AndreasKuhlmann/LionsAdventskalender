@@ -58,8 +58,6 @@ export class DoorComponent implements OnChanges, AfterViewInit {
 
       this.backgroundPosition = `${backgroundPostionX} ${backgroundPostionY}`;
       this.backgroundWidthInPixel = `${this.backgroundWidth}px`;
-
-      console.log(this.backgroundPosition);
     }
   }
 }
