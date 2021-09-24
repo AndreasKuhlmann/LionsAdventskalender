@@ -1,4 +1,14 @@
-<mat-sidenav-container
+<div class="app-Tiviscontainer" [class.dark-theme]="isDarkTheme">
+  <app-toolbar
+    (toggleTheme)="toggleTheme()"
+    (toggleSidenav)="sidenav.toggle()"
+    (toggleDir)="toggleDir()"
+  >
+  </app-toolbar>
+  <router-outlet></router-outlet>
+</div>
+
+<!-- <mat-sidenav-container
   class="app-sidenav-container"
   [class.dark-theme]="isDarkTheme"
 >
@@ -9,13 +19,13 @@
     [mode]="'over'"
   >
     <mat-toolbar color="primary"></mat-toolbar>
-    <!-- <mat-nav-list>
+    <mat-nav-list>
       <mat-list-item *ngFor="let user of users | async">
         <a matLine [routerLink]="['/contactmanager', user.id]">
           <mat-icon svgIcon="{{ user.avatar }}"></mat-icon> {{ user.name }}
         </a>
       </mat-list-item>
-    </mat-nav-list> -->
+    </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content class="mat-content">
@@ -27,4 +37,4 @@
     </app-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container> -->

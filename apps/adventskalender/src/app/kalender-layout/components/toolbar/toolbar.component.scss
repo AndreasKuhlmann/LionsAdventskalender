@@ -4,12 +4,14 @@ $iconWidth: 56px;
   flex: 1 1 auto;
 }
 
-mat-toolbar {
+.sticky {
   padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .sidenav-toggle {
-
   padding: 0;
   margin: 8px;
   min-width: $iconWidth;
