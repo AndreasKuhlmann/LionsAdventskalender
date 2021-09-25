@@ -39,5 +39,5 @@ jobs:
         app-name: 'adventskalender'
         slot-name: 'production'
         package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_104a373f496843fc8e183d3329d6a0b9 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_b698a5946d1b427a914edcd1353d549f }}
   
