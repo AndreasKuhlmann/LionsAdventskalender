@@ -6,6 +6,7 @@ import {
   OnChanges,
   ViewChild,
 } from '@angular/core';
+import { SafeHtml, DomSanitizer, SafeValue } from '@angular/platform-browser';
 
 @Component({
   selector: 'door',
@@ -20,9 +21,11 @@ export class DoorComponent implements OnChanges, AfterViewInit {
   @Input() isOpen = false;
   @Input() cannotOpen = true;
   @Input() text!: string;
+  content!: SafeHtml;
   backgroundPosition = '';
   @ViewChild('door', { read: ElementRef }) door: ElementRef | undefined;
-
+  constructor(private sanitizer: DomSanitizer) {
+  }
   keepClose = false;
   timer!: NodeJS.Timeout;
   backgroundWidthInPixel = '';
@@ -33,6 +36,7 @@ export class DoorComponent implements OnChanges, AfterViewInit {
 
   ngOnChanges(): void {
     this.setBackgroundPosition();
+    this.content = this.sanitizer.bypassSecurityTrustHtml(this.text)
   }
 
   toggle(): void {

@@ -1,7 +1,6 @@
 <div class="door-wrapper">
   <div #door class="backDoor">
-    <div *ngIf="isOpen" class="text-container">
-      {{ text }}
+    <div *ngIf="isOpen" class="text-container" [innerHTML]="content">
     </div>
     <div
       class="doorHinge"
