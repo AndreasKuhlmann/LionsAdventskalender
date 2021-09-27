@@ -1,5 +1,3 @@
-using Microsoft.Azure.Functions.Worker.Configuration;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
 using AdventskalenderApi.DataAccess;
@@ -10,7 +8,6 @@ using AdventskalenderApi.Services.Interfaces;
 using BeerBest.Infrastructure.Interfaces;
 using ComApp.Core.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
