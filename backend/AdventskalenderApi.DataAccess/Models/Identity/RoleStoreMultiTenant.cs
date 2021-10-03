@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using BeerBest.Infrastructure.Abstract;
 using BeerBest.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -8,15 +9,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventskalenderApi.DataAccess.Models.Identity
 {
-    public class RoleStoreMultiTenant<TRole, TKey, TTenantId> : RoleStore<TRole,AdventskalenderApiContext, TKey>
+    public class RoleStoreMultiTenant<TRole, TKey, TTenantId> : RoleStore<TRole,AdventskalenderApiContext, TKey>, IHasTenantId<TTenantId>
         where TRole : IdentiyRoleMultiTenant<TKey, TTenantId>
         where TKey : IEquatable<TKey>
         where TTenantId : IEquatable<TTenantId>
     {
-        public TTenantId TenantKey { get; set; }
+        public TTenantId TenantId { get; set; }
         public RoleStoreMultiTenant(AdventskalenderApiContext context, ITenantIdProvider<TTenantId> tenantProvider, IdentityErrorDescriber describer = null) : base(context, describer)
         {
-            TenantKey = tenantProvider.TenantId;
+            TenantId = tenantProvider.TenantId;
         }
         public override async Task<IdentityResult> CreateAsync(TRole role, CancellationToken cancellationToken = default)
         {
@@ -26,7 +27,7 @@ namespace AdventskalenderApi.DataAccess.Models.Identity
             {
                 throw new ArgumentNullException(nameof(role));
             }
-            role.TenantId = TenantKey;
+            role.TenantId = TenantId;
             Context.Add(role);
             if (AutoSaveChanges)
             {
@@ -38,7 +39,7 @@ namespace AdventskalenderApi.DataAccess.Models.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-            return Roles.FirstOrDefaultAsync(r => r.NormalizedName == normalizedName && r.TenantId.Equals(TenantKey), cancellationToken);
+            return Roles.FirstOrDefaultAsync(r => r.NormalizedName == normalizedName && r.TenantId.Equals(TenantId), cancellationToken);
         }
     }
 }

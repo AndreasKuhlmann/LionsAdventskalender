@@ -7,7 +7,7 @@ namespace AdventskalenderApi.DataAccess.Models.Identity
     {
         public ApplicationRoleStore(AdventskalenderApiContext context, ITenantIdProvider<string> tenantProvider) : base(context, tenantProvider)
         {
-            this.TenantKey = tenantProvider.TenantId;
+            this.TenantId = tenantProvider.TenantId;
         }
     }
 }

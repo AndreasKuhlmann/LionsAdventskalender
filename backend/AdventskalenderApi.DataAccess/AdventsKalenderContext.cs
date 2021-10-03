@@ -26,13 +26,14 @@ namespace AdventskalenderApi.DataAccess
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.SetQueryFilterOnAllEntities<IHasTenantId>(p => p.TenantId == TenantId);
+            base.OnModelCreating(builder);
+            builder.SetQueryFilterOnAllEntities<IHasTenantId<string>>(p => p.TenantId == TenantId);
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = this._configuration.GetConnectionString("ConnectionStrings:ApplicationDBContext");
+                var connectionString = this._configuration["ConnectionStrings:ApplicationDBContext"];
                 optionsBuilder.UseSqlServer(connectionString, opt =>
                 {
                     opt.MigrationsAssembly("AdventskalenderApi.DataAccess");

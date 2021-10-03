@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using BeerBest.Infrastructure.Abstract;
 using AdventskalenderApi.DataAccess.Models;
+using AdventskalenderApi.Repository.Interfaces;
 using AdventskalenderApi.Services.Interfaces;
-using ComApp.Core.Repository.Interfaces;
 
 namespace AdventskalenderApi.Services
 {
@@ -19,6 +19,14 @@ namespace AdventskalenderApi.Services
         public Gewinn GetById(Guid settingsId)
         {
             return this._settingRepository.ReadSingle(s => s.Id == settingsId);
+        }
+        public void Add(Gewinn gewinn)
+        {
+            this._settingRepository.Add(gewinn);
+        }
+        public void Add(IEnumerable<Gewinn> gewinne)
+        {
+            this._settingRepository.AddRange(gewinne);
         }
     }
 }

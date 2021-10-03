@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using BeerBest.Infrastructure.Abstract;
 using BeerBest.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdventskalenderApi.DataAccess.Models.Identity
 {
-    public class UserStoreMultiTenant<TUser, TRole, TKey, TTenantId> : UserStore<TUser, TRole,AdventskalenderApiContext, TKey>
+    public class UserStoreMultiTenant<TUser, TRole, TKey, TTenantId> : UserStore<TUser, TRole,AdventskalenderApiContext, TKey>, IHasTenantId<TTenantId>
         where TUser : IdentiyUserMultiTenant<TKey, TTenantId>
         where TRole : IdentiyRoleMultiTenant<TKey, TTenantId>
         where TKey : IEquatable<TKey>

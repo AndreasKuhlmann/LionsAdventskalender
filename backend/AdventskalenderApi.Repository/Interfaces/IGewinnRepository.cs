@@ -2,9 +2,8 @@
 using BeerBest.Infrastructure.Abstract;
 using AdventskalenderApi.DataAccess;
 using AdventskalenderApi.DataAccess.Models;
-using AdventskalenderApi.Repository;
 
-namespace ComApp.Core.Repository.Interfaces
+namespace AdventskalenderApi.Repository.Interfaces
 {
     public interface IGewinnRepository : IEntityBaseRepository<Gewinn, Guid, AdventskalenderApiContext> { }
     public class GewinnRepository :

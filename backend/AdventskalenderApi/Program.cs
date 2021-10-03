@@ -2,11 +2,11 @@ using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
 using AdventskalenderApi.DataAccess;
 using AdventskalenderApi.DataAccess.Models.Identity;
-using AdventskalenderApi.Provider;
+using AdventskalenderApi.Infrastructure.Provider;
+using AdventskalenderApi.Repository.Interfaces;
 using AdventskalenderApi.Services;
 using AdventskalenderApi.Services.Interfaces;
 using BeerBest.Infrastructure.Interfaces;
-using ComApp.Core.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -32,11 +32,17 @@ namespace AdventskalenderApi
                 })
                 .ConfigureServices(s =>
                 {
+                    // Database services...
+                    s.AddSingleton<ITenantIdProvider<string>>(new TenantIdProvider(() => "adventskalender"));
+                    s.AddDbContext<AdventskalenderApiContext>();
+
+                    // Identity services...
                     s.AddIdentityCore<ApplicationUser>();
                     s.AddScoped<IUserStore<ApplicationUser>, ApplicationUserStore>();
                     s.AddScoped<IRoleStore<ApplicationRole>, ApplicationRoleStore>();
-                    s.AddDbContext<AdventskalenderApiContext>();
-                    s.AddScoped<ITenantIdProvider<string>, TenantIdProvider>();
+                    
+
+                    // Application services...
                     s.AddScoped<IAppSettingRepository, AppSettingRepository>();
                     s.AddScoped<IAppSettingService, AppSettingService>();
                     s.AddScoped<IGewinnRepository, GewinnRepository>();

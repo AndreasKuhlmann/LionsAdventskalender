@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using BeerBest.Infrastructure.Abstract;
 using AdventskalenderApi.DataAccess.Models;
+using AdventskalenderApi.Repository.Interfaces;
 using AdventskalenderApi.Services.Interfaces;
-using ComApp.Core.Repository.Interfaces;
 
 namespace AdventskalenderApi.Services
 {

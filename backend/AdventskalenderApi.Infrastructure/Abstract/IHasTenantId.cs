@@ -2,8 +2,8 @@
 
 namespace BeerBest.Infrastructure.Abstract
 {
-    public interface IHasTenantId
+    public interface IHasTenantId<T>
     {
-        public string TenantId { get; protected internal set; }
+        public T TenantId { get; set; }
     }
 }
