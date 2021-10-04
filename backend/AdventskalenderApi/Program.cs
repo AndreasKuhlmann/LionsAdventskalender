@@ -10,6 +10,7 @@ using BeerBest.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace AdventskalenderApi
 {
@@ -32,15 +33,19 @@ namespace AdventskalenderApi
                 })
                 .ConfigureServices(s =>
                 {
+                    var config = new ConfigurationBuilder()
+                        .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+                        .AddEnvironmentVariables()
+                        .Build();
                     // Database services...
-                    s.AddSingleton<ITenantIdProvider<string>>(new TenantIdProvider(() => "adventskalender"));
+                    s.AddSingleton<ITenantIdProvider<string>>(new TenantIdProvider(() => config["TenantId"]));
                     s.AddDbContext<AdventskalenderApiContext>();
 
                     // Identity services...
                     s.AddIdentityCore<ApplicationUser>();
                     s.AddScoped<IUserStore<ApplicationUser>, ApplicationUserStore>();
                     s.AddScoped<IRoleStore<ApplicationRole>, ApplicationRoleStore>();
-                    
+
 
                     // Application services...
                     s.AddScoped<IAppSettingRepository, AppSettingRepository>();

@@ -17,7 +17,7 @@ namespace AdventskalenderApi.DataAccess
                 .Build();
             var optionsBuilder = new DbContextOptionsBuilder<AdventskalenderApiContext>();
             optionsBuilder.UseSqlServer(config.GetConnectionString("ApplicationDBContext"));
-            return new AdventskalenderApiContext(optionsBuilder.Options, new TenantIdProvider(() => "adventskalender"), config);
+            return new AdventskalenderApiContext(optionsBuilder.Options, new TenantIdProvider(() => config["TenantId"]), config);
         }
     }
 }
