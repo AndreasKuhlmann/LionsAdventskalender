@@ -23,7 +23,7 @@ export class AdventDaysService {
       this.adventDays = days;
     } else {
       this.adventDays = await this.http
-        .get<AdventDay[]>('https://kalenderapi.azurewebsites.net/api/Gifts')
+        .get<AdventDay[]>('http://localhost:7071/api/Gewinne')
         .toPromise();
     }
   }
