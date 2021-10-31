@@ -19,10 +19,13 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "apps/adventskalender/src/favicon.ico",
-              "apps/adventskalender/src/assets"
+              "apps/adventskalender/src/assets",
+              "apps/adventskalender/src/manifest.webmanifest"
             ],
             "styles": ["apps/adventskalender/src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "serviceWorker": true,
+            "ngswConfigPath": "apps/adventskalender/ngsw-config.json"
           },
           "configurations": {
             "production": {

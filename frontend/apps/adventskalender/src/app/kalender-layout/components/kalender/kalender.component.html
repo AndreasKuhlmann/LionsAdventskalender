@@ -1,7 +1,7 @@
 <!-- <header>
     <h2 class="page-heading">Oldenburger Kalender</h2>
   </header> -->
-<div #container class="doors-container" (window:resize)="onResize(container)" (window:scroll)="onResize(container)">
+<div #container class="doors-container" (window:resize)="onResize(container)" (window:scroll)="onResize(container)" [style.min-height]="containerHeight">
   <door
     *ngFor="let day of days.adventDays; let i = index"
     [baseX]="containerXPosition"

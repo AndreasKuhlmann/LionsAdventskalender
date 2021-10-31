@@ -10,11 +10,12 @@
 }
 
 .doors-container {
-  padding: 1em;
+  width: 100%;
+  height: calc(width*0.711);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  background-image: url(/assets/kalender.jpg);
+  background-image: url(/assets/kalender.png);
   background-size: 100% auto;
   background-repeat: repeat-y;
 }

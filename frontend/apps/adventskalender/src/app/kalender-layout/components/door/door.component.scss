@@ -1,8 +1,8 @@
 .door-wrapper {
   margin: 3em;
   transition: all 0.5s ease-in-out;
-  width: 13rem;
-  height: 13rem;
+  width: 17rem;
+  height: 17rem;
 }
 .text-container {
   position: absolute;
@@ -57,7 +57,7 @@
   border-top: 2px dashed #333;
   border-right: 2px dashed #333;
   border-bottom: 2px dashed #333;
-  background: brown url(/assets/kalender.jpg);
+  background: brown url(/assets/kalender.png);
   background-size: 100% auto;
   background-repeat: repeat-y;
 }
@@ -65,7 +65,7 @@
 .door:before {
   content: attr(data-no);
   color: #fff;
-  font-size: 30px;
+  font-size: 60px;
   font-weight: bold;
   font-family: arial, sans-serif;
   text-shadow: 0 1px 2px #333;

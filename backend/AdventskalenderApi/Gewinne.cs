@@ -141,6 +141,62 @@ namespace AdventskalenderApi
                     Tag = 6,
                     Losnummer = 5274,
                     Beschreibung = "Hankens Apotheke, Einkaufsgutschein, 100 €"
+                },
+                new Gewinn
+                {
+                    Id = Guid.NewGuid(),
+                    Tag = 3,
+                    Losnummer = 1776,
+                    Beschreibung = "GVO Versicherung, 2 Gutscheine fürs Casablanca Kino à 50 €, 100 €"
+                },
+                new Gewinn
+                {
+                    Id = Guid.NewGuid(),
+                    Tag = 4,
+                    Losnummer = 4647,
+                    Beschreibung = " Buchhandlung Thye, Einkaufsgutschein, 150 €"
+                },
+                new Gewinn
+                {
+                    Id = Guid.NewGuid(),
+                    Tag = 4,
+                    Losnummer = 1379,
+                    Beschreibung = "Landessparkasse zu Oldenburg (LzO), 1 x Wahlabo Schauspiel Oldenburger Staatstheater, 256 €"
+                },
+                new Gewinn
+                {
+                    Id = Guid.NewGuid(),
+                    Tag = 4,
+                    Losnummer = 5786,
+                    Beschreibung = "Hankens Apotheke, Einkaufsgutschein, 100 €"
+                },
+                new Gewinn
+                {
+                    Id = Guid.NewGuid(),
+                    Tag = 5,
+                    Losnummer = 5274,
+                    Beschreibung = "Hankens Apotheke, Einkaufsgutschein, 100 €"
+                },
+                new Gewinn
+                {
+                    Id = Guid.NewGuid(),
+                    Tag = 5,
+                    Losnummer = 1379,
+                    Beschreibung = "Landessparkasse zu Oldenburg (LzO), 1 x Wahlabo Schauspiel Oldenburger Staatstheater, 256 €"
+                },
+                new Gewinn
+                {
+                    Id = Guid.NewGuid(),
+                    Tag = 5,
+                    Losnummer = 5786,
+                    Beschreibung = "Hankens Apotheke, Einkaufsgutschein, 100 €"
+                },
+                new Gewinn
+                {
+                    Id = Guid.NewGuid(),
+                    Tag = 6,
+                    Losnummer = 5274,
+                    Beschreibung = "Hankens Apotheke, Einkaufsgutschein, 100 €"
                 }
                 };
             gewinneService.Add(data);

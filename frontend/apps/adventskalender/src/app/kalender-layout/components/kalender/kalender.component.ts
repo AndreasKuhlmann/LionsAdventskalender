@@ -16,8 +16,8 @@ export class KalenderComponent implements OnInit {
   title = 'lions-kalender';
   containerXPosition = 0;
   containerYPosition = 0;
-  containerWidth = 1095;
-  containerHeight = 768;
+  containerWidth = 1208;
+  containerHeight = "859px";
   constructor(public days: AdventDaysService) {}
   flip(day: AdventDay) {
     this.days.flipDay(day);
@@ -34,6 +34,8 @@ export class KalenderComponent implements OnInit {
       this.container.nativeElement.getBoundingClientRect().y;
     this.containerWidth =
       this.container.nativeElement.getBoundingClientRect().width;
+    this.containerHeight =
+      (this.container.nativeElement.getBoundingClientRect().width * 0.711).toString() + 'px';
   }
   onResize(element: HTMLDivElement) {
     this.setPositon();
