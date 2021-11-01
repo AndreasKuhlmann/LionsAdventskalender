@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { environment } from '../../../environments/environment';
 export interface AdventDay {
   front: string;
   unlockAt: string;
@@ -23,7 +24,7 @@ export class AdventDaysService {
       this.adventDays = days;
     } else {
       this.adventDays = await this.http
-        .get<AdventDay[]>('http://kalenderapi.azurewebsites.net/api/Gewinne')
+        .get<AdventDay[]>(environment.url)
         .toPromise();
     }
   }
