@@ -5,11 +5,11 @@ import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 
 @Component({
-  selector: 'app-new-contact-dialog',
-  templateUrl: './new-contact-dialog.component.html',
-  styleUrls: ['./new-contact-dialog.component.scss']
+  selector: 'app-zweck-dialog',
+  templateUrl: './impressum-dialog.component.html',
+  styleUrls: ['./impressum-dialog.component.scss']
 })
-export class NewContactDialogComponent implements OnInit {
+export class ImpressumDialogComponent implements OnInit {
 
   avatars = [
     'svg-1', 'svg-2', 'svg-3', 'svg-4'
@@ -17,7 +17,7 @@ export class NewContactDialogComponent implements OnInit {
 
   user!: User;
   constructor(
-    private dialogRef: MatDialogRef<NewContactDialogComponent>,
+    private dialogRef: MatDialogRef<ImpressumDialogComponent>,
     private userService: UserService) { }
 
   name = new FormControl('', [Validators.required]);

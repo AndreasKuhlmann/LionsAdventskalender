@@ -5,7 +5,7 @@
     alt="Lions Club"
   />
 
-  <span>Oldenburger Adventskalender 2021</span>
+  <span>Oldenburger Adventskalender</span>
 
   <span class="example-spacer"></span>
 
@@ -13,8 +13,8 @@
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="openAddContactDialog()">New Contact</button>
-    <button mat-menu-item (click)="toggleTheme.emit()">Toggle theme</button>
-    <button mat-menu-item (click)="toggleDir.emit()">Toggle dir</button>
+    <button mat-menu-item (click)="openZweckDialog()">Für einen guten Zweck</button>
+    <button mat-menu-item (click)="openFoerdererDialog()">Die Förderer</button>
+    <button mat-menu-item (click)="openImpressumDialog()">Impressum</button>
   </mat-menu>
 </mat-toolbar>

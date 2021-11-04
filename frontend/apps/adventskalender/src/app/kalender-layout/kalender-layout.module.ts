@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule, Routes } from '@angular/router';
 import { DoorComponent } from './components/door/door.component';
-import { NewContactDialogComponent } from './components/new-contact-dialog/new-contact-dialog.component';
+import { ZweckDialogComponent } from './components/zweck-dialog/zweck-dialog.component';
 import { NotesComponent } from './components/notes/notes.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
@@ -14,6 +14,8 @@ import { KalenderComponent } from './components/kalender/kalender.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KalenderLayoutComponent } from './kalender-layout.component';
 import { UserService } from './services/user.service';
+import { ImpressumDialogComponent } from './components/impressum-dialog/impressum-dialog.component';
+import { FoerdererDialogComponent } from './components/foerderer-dialog copy/foerderer-dialog.component';
 
 const routes: Routes = [
   {
@@ -41,7 +43,9 @@ const routes: Routes = [
     ToolbarComponent,
     SidenavComponent,
     NotesComponent,
-    NewContactDialogComponent,
+    ZweckDialogComponent,
+    FoerdererDialogComponent,
+    ImpressumDialogComponent,
   ],
 })
 export class KalenderLayoutModule {}
