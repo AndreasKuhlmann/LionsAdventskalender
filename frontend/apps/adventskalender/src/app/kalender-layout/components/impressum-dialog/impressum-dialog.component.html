@@ -1,4 +1,9 @@
-<h2 mat-dialog-title>Impressum</h2>
+<div style="display: flex; justify-content: space-between; align-items: baseline;">
+  <h2 mat-dialog-title>Impressum</h2>
+  <button mat-icon-button (click)="dismiss()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
 <mat-dialog-content>
   <div><strong>Lions Club Oldenburg Lappan</strong></div>
   <br />
@@ -26,8 +31,3 @@
     >Haftungsausschluss</a
   >
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button color="primary" (click)="dismiss()">
-    <mat-icon>check</mat-icon> Ok
-  </button>
-</mat-dialog-actions>

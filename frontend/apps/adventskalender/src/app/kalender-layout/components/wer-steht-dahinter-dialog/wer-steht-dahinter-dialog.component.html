@@ -1,4 +1,9 @@
-<h2 mat-dialog-title>Wer steht dahinter?</h2>
+<div style="display: flex; justify-content: space-between; align-items: baseline;">
+  <h2 mat-dialog-title>Wer steht dahinter?</h2>
+  <button mat-icon-button (click)="dismiss()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
 <mat-dialog-content>
   <div>Es sind die Fördervereine des Lions Clubs Oldenburg Lappan und des Lions Clubs Oldenburg Willa Thorade mit Unterstützung des Leo Clubs Oldenburg, die sich gemäß der 1917 in Chicago gegründeten Lions Service-Organisation das allgemeine Ziel gesetzt haben, Nächstenliebe und Gemeinsinn auf regionaler Ebene zu pflegen und fördern. Mit unterschiedlichsten Aktivitäten engagieren sich die Mitglieder von Lions und Leos, um dort zu helfen, wo Hilfe benötigt wird und sinnvoll ist. Mehr Infos im Internet unter http://www.leo-clubs.de oder http://www.lions.de.</div>
   <br>
@@ -16,8 +21,3 @@
   <div>Der Lions-Club Oldenburg Lappan wurde 1975 gegründet. Der Club unterstützt neben vielen Einzelprojekten seit Jahren die "Oldenburger Tafel".</div>
 
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button color="primary" (click)="dismiss()">
-    <mat-icon>check</mat-icon> Ok
-  </button>
-</mat-dialog-actions>

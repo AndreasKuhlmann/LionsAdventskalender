@@ -1,4 +1,9 @@
-<h2 mat-dialog-title>Förderer</h2>
+<div style="display: flex; justify-content: space-between; align-items: baseline;">
+  <h2 mat-dialog-title>Förderer</h2>
+  <button mat-icon-button (click)="dismiss()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
 <mat-dialog-content>
   <span
     >An dieser Stelle möchten wir uns bei allen nachfolgend genannten Förderern
@@ -110,8 +115,3 @@
     <li>wohnen + ideen, Herbartgang 12</li>
   </ul>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button color="primary" (click)="dismiss()">
-    <mat-icon>check</mat-icon> Ok
-  </button>
-</mat-dialog-actions>

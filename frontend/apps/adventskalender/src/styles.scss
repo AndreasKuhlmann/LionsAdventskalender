@@ -71,17 +71,17 @@ $md-lionsblue: (
 @use '~@angular/material' as mat;
 @include mat.core();
 
-$candy-app-primary: mat.define-palette($md-lionsblue);
-$candy-app-accent: mat.define-palette($md-lionsyellow, A200, A100, A400);
-$candy-app-warn: mat.define-palette(mat.$red-palette);
+$kalendar-app-primary: mat.define-palette($md-lionsblue);
+$kalendar-app-accent: mat.define-palette($md-lionsyellow, A200, A100, A400);
+$kalendar-app-warn: mat.define-palette(mat.$red-palette);
 
-$candy-app-theme: mat.define-light-theme(
-  $candy-app-primary,
-  $candy-app-accent,
-  $candy-app-warn
+$kalendar-app-theme: mat.define-light-theme(
+  $kalendar-app-primary,
+  $kalendar-app-accent,
+  $kalendar-app-warn
 );
 
-@include mat.all-component-themes($candy-app-theme);
+@include mat.all-component-themes($kalendar-app-theme);
 
 .dark-theme {
   $primary-dark: mat.define-palette(mat.$pink-palette, 700);

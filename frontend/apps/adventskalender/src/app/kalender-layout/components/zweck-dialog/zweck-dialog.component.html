@@ -1,4 +1,9 @@
-<h2 mat-dialog-title>Wer bekommt die Erlöse aus der Adventskalender-Aktion?</h2>
+<div style="display: flex; justify-content: space-between; align-items: baseline;">
+  <h2 mat-dialog-title>Wer bekommt die Erlöse aus der Adventskalender-Aktion?</h2>
+  <button mat-icon-button (click)="dismiss()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
 <mat-dialog-content>
   <span
     >Der Reinerlös aus der diesjährigen Adventskalender-Aktion ist bestimmt
@@ -17,8 +22,3 @@
     <li>die NWZ Weihnachtsaktion 2021</li>
   </ul>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button color="primary" (click)="dismiss()">
-    <mat-icon>check</mat-icon> Ok
-  </button>
-</mat-dialog-actions>
