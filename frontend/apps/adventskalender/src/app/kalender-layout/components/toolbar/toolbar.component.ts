@@ -9,6 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { FoerdererDialogComponent } from '../foerderer-dialog copy/foerderer-dialog.component';
 import { ZweckDialogComponent } from '../zweck-dialog/zweck-dialog.component';
+import { WerStehtDahinterDialogComponent } from '../wer-steht-dahinter-dialog/wer-steht-dahinter-dialog.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -43,7 +44,11 @@ export class ToolbarComponent {
       width: '28em',
     });
   }
-
+  werStehtDahinterDialog(): void {
+    this.dialog.open(WerStehtDahinterDialogComponent, {
+      width: '28em',
+    });
+  }
   openAddContactDialog(): void {
     const dialogRef = this.dialog.open(ZweckDialogComponent, {
       width: '450px',

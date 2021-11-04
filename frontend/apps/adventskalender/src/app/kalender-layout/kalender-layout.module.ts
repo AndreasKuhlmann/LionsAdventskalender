@@ -16,6 +16,7 @@ import { KalenderLayoutComponent } from './kalender-layout.component';
 import { UserService } from './services/user.service';
 import { ImpressumDialogComponent } from './components/impressum-dialog/impressum-dialog.component';
 import { FoerdererDialogComponent } from './components/foerderer-dialog copy/foerderer-dialog.component';
+import { WerStehtDahinterDialogComponent } from './components/wer-steht-dahinter-dialog/wer-steht-dahinter-dialog.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,7 @@ const routes: Routes = [
     ZweckDialogComponent,
     FoerdererDialogComponent,
     ImpressumDialogComponent,
+    WerStehtDahinterDialogComponent,
   ],
 })
 export class KalenderLayoutModule {}
