@@ -55,7 +55,7 @@ namespace AdventskalenderApi.Services
                     SmtpPort = "25",
                     SmtpUsername = smtpUsername,
                     SmtpPassword = "Avareto!123",
-                    SmtpSenderEmailAddress = "info@avareto.com",
+                    SmtpSenderEmailAddress = "info@lions-oldenburg-lappan.de",
                 };
                 this._settingRepository.Add(setting);
             }
