@@ -4,7 +4,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { AdventDay, AdventDaysService } from '../../services/advent-days.service';
+import { Gewinn, GewinnService } from '../../services/gewinn.service';
 
 @Component({
   selector: 'kalender',
@@ -18,13 +18,13 @@ export class KalenderComponent implements OnInit {
   containerYPosition = 0;
   containerWidth = 1208;
   containerHeight = "859px";
-  constructor(public days: AdventDaysService) {}
-  flip(day: AdventDay) {
+  constructor(public days: GewinnService) {}
+  flip(day: Gewinn) {
     this.days.flipDay(day);
   }
 
   async ngOnInit() {
-    await this.days.loadDays();
+    await this.days.loadGewinne();
     setTimeout(()=>this.setPositon());
   }
   private setPositon() {

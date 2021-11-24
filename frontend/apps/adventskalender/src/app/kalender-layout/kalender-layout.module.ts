@@ -9,7 +9,7 @@ import { ZweckDialogComponent } from './components/zweck-dialog/zweck-dialog.com
 import { NotesComponent } from './components/notes/notes.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { AdventDaysService } from './services/advent-days.service';
+import { GewinnService } from './services/gewinn.service';
 import { KalenderComponent } from './components/kalender/kalender.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KalenderLayoutComponent } from './kalender-layout.component';
@@ -36,7 +36,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
   ],
-  providers: [UserService, AdventDaysService],
+  providers: [UserService, GewinnService],
   declarations: [
     KalenderLayoutComponent,
     DoorComponent,

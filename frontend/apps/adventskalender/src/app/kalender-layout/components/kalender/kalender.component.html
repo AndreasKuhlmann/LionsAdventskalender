@@ -1,13 +1,19 @@
-<div #container class="doors-container" (window:resize)="onResize(container)" (window:scroll)="onResize(container)" [style.min-height]="containerHeight">
+<div
+  #container
+  class="doors-container"
+  (window:resize)="onResize(container)"
+  (window:scroll)="onResize(container)"
+  [style.min-height]="containerHeight"
+>
   <door
-    *ngFor="let day of days.adventDays; let i = index"
+    *ngFor="let tagesGewinne of days.gewinne;"
     [baseX]="containerXPosition"
     [baseY]="containerYPosition"
     [backgroundWidth]="containerWidth"
-    [no]="i + 1"
-    [isOpen]="day.flipped"
-    [text]="day.content"
-    (click)="flip(day)"
+    [no]="tagesGewinne.Tag"
+    [isOpen]="tagesGewinne.Gewinne[0].flipped"
+    [tagesGewinne]="tagesGewinne.Gewinne"
+    (click)="flip(tagesGewinne.Gewinne[0])"
   >
   </door>
 </div>

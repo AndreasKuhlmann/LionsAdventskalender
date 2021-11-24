@@ -1,6 +1,16 @@
 <div class="door-wrapper">
   <div #door class="backDoor">
-    <div *ngIf="isOpen" class="text-container" [innerHTML]="content">
+    <div
+      *ngIf="isOpen"
+      class="text-container"
+      style="display: flex; flex-direction: column; justify-content: space-around; text-align: center; height: 100%;"
+    >
+      <div *ngFor="let gewinn of tagesGewinne">
+        <div style="color: brown;">
+          <strong>Kalender {{ gewinn.Losnummer }}</strong>
+        </div>
+        <div>{{ gewinn.Beschreibung }}</div>
+      </div>
     </div>
     <div
       class="doorHinge"
