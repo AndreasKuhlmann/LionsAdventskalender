@@ -6,7 +6,7 @@
       style="display: flex; flex-direction: column; justify-content: space-around; text-align: center; height: 100%;"
     >
       <div *ngFor="let gewinn of tagesGewinne">
-        <div style="color: brown;">
+        <div *ngIf="gewinn.Losnummer > 0" style="color: brown;">
           <strong>Kalender {{ gewinn.Losnummer }}</strong>
         </div>
         <div>{{ gewinn.Beschreibung }}</div>

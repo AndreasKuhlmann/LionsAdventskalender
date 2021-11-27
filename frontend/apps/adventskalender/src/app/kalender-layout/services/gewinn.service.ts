@@ -7,16 +7,16 @@ import { toArray } from 'rxjs/internal/operators/toArray';
 import { map } from 'rxjs/internal/operators/map';
 import { environment } from '../../../environments/environment';
 export interface Gewinn {
-  Id: string,
+  Id: string;
   Beschreibung: string;
-  Losnummer: number,
-  Tag: number
+  Losnummer: number;
+  Tag: number;
   flipped: boolean;
 }
 
 export interface TagesGewinne {
-  Tag: number,
-  Gewinne: Gewinn[]
+  Tag: number;
+  Gewinne: Gewinn[];
 }
 
 @Injectable({
@@ -29,45 +29,46 @@ export class GewinnService {
   constructor(private storage: Storage, private http: HttpClient) {}
 
   async loadGewinne() {
-    const tagesGewinne = await this.storage.get('Gewinne');
-    if (tagesGewinne !== null && tagesGewinne.length > 0) {
-      this.gewinne = tagesGewinne;
-    } else {
+    this.gewinne = await this.storage.get('gewinne');
+    const refreshDate: Date = await this.storage.get('lastRefreshDate');
+    // Die Gewinne sollen nur einmal am Tag geladen werden...
+    if (!refreshDate || !this.gewinne || refreshDate.getDate() < new Date().getDate()) {
       this.gewinne = await this.http
-        .get<Gewinn[]>(environment.url).pipe(
-          mergeMap(d=>d),
-          groupBy(d=>d.Tag),
-          mergeMap(groups=>groups.pipe(toArray())),
-          map(group=> {
+        .get<Gewinn[]>(environment.url)
+        .pipe(
+          mergeMap((d) => d),
+          groupBy((d) => d.Tag),
+          mergeMap((groups) => groups.pipe(toArray())),
+          map((group) => {
             return {
               Tag: group[0].Tag,
-              Gewinne: group
-            }
+              Gewinne: group,
+            };
           }),
           toArray()
-        ).toPromise();
+        )
+        .toPromise();
+      // speichere die Gewinne und das letzte Ladedatum...
+      await this.storage.set('gewinne', this.gewinne);
+      await this.storage.set('lastRefreshDate', new Date());
     }
   }
-  saveGewinne() {
-    this.storage.set('Gewinne', this.gewinne);
-  }
 
-  flipDay(day: Gewinn) {
-    const today = new Date();
-    if (today > new Date(today.getFullYear(), 10, 1, 0)) {
-      if (!day.flipped && this.timerRunning) {
-        day.flipped = !day.flipped;
+  async flipDay(gewinn: Gewinn) {
+    if (gewinn.Losnummer > 0) {
+      if (!gewinn.flipped && this.timerRunning) {
+        gewinn.flipped = !gewinn.flipped;
         clearTimeout(this.timer);
-      } else if (day.flipped) {
-        day.flipped = false;
+      } else if (gewinn.flipped) {
+        gewinn.flipped = false;
         this.timerRunning = true;
         this.timer = setTimeout(() => {
-          day.flipped = true;
+          gewinn.flipped = true;
           this.timerRunning = false;
         }, 2000);
       } else {
-        day.flipped = true;
-        this.saveGewinne();
+        gewinn.flipped = true;
+        await this.storage.set('gewinne', this.gewinne);
       }
     }
   }

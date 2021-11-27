@@ -1,9 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Gewinn, GewinnService } from '../../services/gewinn.service';
 
 @Component({
@@ -17,15 +12,24 @@ export class KalenderComponent implements OnInit {
   containerXPosition = 0;
   containerYPosition = 0;
   containerWidth = 1208;
-  containerHeight = "859px";
-  constructor(public days: GewinnService) {}
-  flip(day: Gewinn) {
-    this.days.flipDay(day);
+  containerHeight = '859px';
+  constructor(public service: GewinnService) {
+    // Wenn der Kalender in den Vordergrund kommt aktualisiere die Daten...
+    document.addEventListener('visibilitychange', async (e: any) => {
+      // console.log(e.target.hidden);
+      // console.log(e.target.visibilityState);
+      if (!e.target.hidden) {
+        await this.service.loadGewinne();
+      }
+    });
+  }
+  async flip(gewinne: Gewinn) {
+    this.service.flipDay(gewinne);
   }
 
   async ngOnInit() {
-    await this.days.loadGewinne();
-    setTimeout(()=>this.setPositon());
+    await this.service.loadGewinne();
+    setTimeout(() => this.setPositon());
   }
   private setPositon() {
     this.containerXPosition =
@@ -35,7 +39,9 @@ export class KalenderComponent implements OnInit {
     this.containerWidth =
       this.container.nativeElement.getBoundingClientRect().width;
     this.containerHeight =
-      (this.container.nativeElement.getBoundingClientRect().width * 0.711).toString() + 'px';
+      (
+        this.container.nativeElement.getBoundingClientRect().width * 0.711
+      ).toString() + 'px';
   }
   onResize(element: HTMLDivElement) {
     this.setPositon();
