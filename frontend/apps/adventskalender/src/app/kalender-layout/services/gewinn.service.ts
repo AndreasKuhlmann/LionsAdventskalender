@@ -23,16 +23,24 @@ export interface TagesGewinne {
   providedIn: 'root',
 })
 export class GewinnService {
-  public gewinne!: TagesGewinne[];
   timer!: NodeJS.Timeout;
   timerRunning = false;
+
+  gewinne: TagesGewinne[] = [];
+  refreshDate = new Date();
+
   constructor(private storage: Storage, private http: HttpClient) {}
 
   async loadGewinne() {
-    this.gewinne = await this.storage.get('gewinne');
-    const refreshDate: Date = await this.storage.get('lastRefreshDate');
     // Die Gewinne sollen nur einmal am Tag geladen werden...
-    if (!refreshDate || !this.gewinne || refreshDate.getDate() < new Date().getDate()) {
+    console.log(this.refreshDate);
+    console.log(this.gewinne);
+    if (
+      this.refreshDate.getDate() < new Date().getDate() ||
+      this.gewinne.length == 0
+    ) {
+      console.log('Refresh');
+      this.refreshDate = new Date();
       this.gewinne = await this.http
         .get<Gewinn[]>(environment.url)
         .pipe(
@@ -48,9 +56,6 @@ export class GewinnService {
           toArray()
         )
         .toPromise();
-      // speichere die Gewinne und das letzte Ladedatum...
-      await this.storage.set('gewinne', this.gewinne);
-      await this.storage.set('lastRefreshDate', new Date());
     }
   }
 

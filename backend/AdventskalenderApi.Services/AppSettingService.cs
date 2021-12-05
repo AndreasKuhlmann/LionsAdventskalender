@@ -49,12 +49,12 @@ namespace AdventskalenderApi.Services
                     AppName = appName,
                     Country = "Germany",
                     CultureCode = "de",
-                    AzureNotificationHubConnectionString = "Endpoint=sb://comapps.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=qDjGDVbHT4Mj6YOiqG/ZqrgdQUi7xY1ilnZ8EFa/XUw=",
+                    AzureNotificationHubConnectionString = "",
                     AzureNotificationHubName = appName.ToLower(),
                     SmtpHost = "smtp.office365.com",
                     SmtpPort = "25",
                     SmtpUsername = smtpUsername,
-                    SmtpPassword = "Avareto!123",
+                    SmtpPassword = "",
                     SmtpSenderEmailAddress = "info@lions-oldenburg-lappan.de",
                 };
                 this._settingRepository.Add(setting);
