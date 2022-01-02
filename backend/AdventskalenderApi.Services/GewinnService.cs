@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using BeerBest.Infrastructure.Abstract;
 using AdventskalenderApi.DataAccess.Models;
 using AdventskalenderApi.Repository.Interfaces;

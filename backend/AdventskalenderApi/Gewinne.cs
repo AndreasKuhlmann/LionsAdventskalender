@@ -295,7 +295,7 @@ namespace AdventskalenderApi
                 new Gewinn
                 {
                     Id = Guid.NewGuid(), Tag=15, Beschreibung="Hankens Apotheke in den Höfen, 26121 OL, Gutschein, 100€",
-                    Losnummer=3913
+                    Losnummer=3931
                 },
                 new Gewinn
                 {
@@ -444,11 +444,15 @@ namespace AdventskalenderApi
                     Losnummer=6473
                 },
             };
+
             // Save, just for fun...
             gewinneService.Add(data);
 
             var today = DateTime.Today;
-            var dayOfDecember = today.Month == 12 ? today.Day : 0;
+            var dayOfDecember = 24;
+            if (today.Month == 12)
+                dayOfDecember = today.Day;
+
             data.ToList().ForEach(d =>
             {
                 if (d.Tag > dayOfDecember)
