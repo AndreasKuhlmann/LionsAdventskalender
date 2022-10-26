@@ -3,7 +3,7 @@ import { Note } from './note';
 export class User {
     id!: number;
     birthDate!: Date;
-    name!: string;
+    name!: string | null;
     avatar!: string;
     bio!: string;
 

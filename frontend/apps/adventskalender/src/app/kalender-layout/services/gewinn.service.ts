@@ -26,7 +26,7 @@ export class GewinnService {
   timer!: NodeJS.Timeout;
   timerRunning = false;
 
-  gewinne: TagesGewinne[] = [];
+  gewinne: TagesGewinne[] | undefined = [];
   refreshDate = new Date();
 
   constructor(private storage: Storage, private http: HttpClient) {}
@@ -37,7 +37,7 @@ export class GewinnService {
     console.log(this.gewinne);
     if (
       this.refreshDate.getDate() < new Date().getDate() ||
-      this.gewinne.length == 0
+      this.gewinne?.length == 0
     ) {
       console.log('Refresh');
       this.refreshDate = new Date();
