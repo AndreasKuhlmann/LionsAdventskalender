@@ -12,7 +12,7 @@ export class KalenderComponent implements OnInit {
   containerXPosition = 0;
   containerYPosition = 0;
   containerWidth = 1208;
-  containerHeight = '859px';
+  containerHeight = '906px';
   constructor(public service: GewinnService) {
     // Wenn der Kalender in den Vordergrund kommt aktualisiere die Daten...
     document.addEventListener('visibilitychange', async (e: any) => {
