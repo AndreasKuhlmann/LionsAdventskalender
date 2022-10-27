@@ -5,10 +5,11 @@ $iconWidth: 56px;
 }
 
 .sticky {
-  padding: 0;
+  padding: 0.25em;
   position: sticky;
-  top: 0;
-  z-index: 1;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
 }
 
 .sidenav-toggle {

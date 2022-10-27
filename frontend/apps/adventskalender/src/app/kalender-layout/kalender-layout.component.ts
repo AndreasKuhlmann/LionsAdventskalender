@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'kalender-layout',
-  template: ` <sidenav></sidenav> `,
+  template: '<sidenav></sidenav>',
   styles: [],
 })
 export class KalenderLayoutComponent {

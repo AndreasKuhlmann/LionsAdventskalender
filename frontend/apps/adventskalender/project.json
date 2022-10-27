@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/adventskalender/src",
-  "prefix": "angular-nx",
+  "prefix": "",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -15,9 +15,15 @@
         "polyfills": "apps/adventskalender/src/polyfills.ts",
         "tsConfig": "apps/adventskalender/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/adventskalender/src/favicon.ico", "apps/adventskalender/src/assets"],
+        "assets": [
+          "apps/adventskalender/src/favicon.png",
+          "apps/adventskalender/src/assets",
+          "apps/adventskalender/src/manifest.webmanifest"
+        ],
         "styles": ["apps/adventskalender/src/styles.scss"],
-        "scripts": []
+        "scripts": [],
+        "serviceWorker": true,
+        "ngswConfigPath": "apps/adventskalender/ngsw-config.json"
       },
       "configurations": {
         "production": {
