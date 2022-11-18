@@ -12,13 +12,13 @@ namespace AdventskalenderApi.Infrastructure.Provider
         }
         public TenantIdProvider(IHttpContextAccessor contextAccessor)
         {
-            string appName = null;
-            if (contextAccessor.HttpContext != null && contextAccessor.HttpContext.Request.Headers.ContainsKey("AppName"))
-                appName = contextAccessor.HttpContext.Request.Headers["AppName"];
-            else if (contextAccessor.HttpContext != null && contextAccessor.HttpContext.Request.Query.ContainsKey("AppName"))
-                appName = contextAccessor.HttpContext.Request.Query["AppName"][0];
-            if (!string.IsNullOrWhiteSpace(appName))
-                this.TenantId = appName;
+            string tenantId = null;
+            if (contextAccessor.HttpContext != null && contextAccessor.HttpContext.Request.Headers.ContainsKey("TenantId"))
+                tenantId = contextAccessor.HttpContext.Request.Headers["TenantId"];
+            else if (contextAccessor.HttpContext != null && contextAccessor.HttpContext.Request.Query.ContainsKey("TenantId"))
+                tenantId = contextAccessor.HttpContext.Request.Query["TenantId"][0];
+            if (!string.IsNullOrWhiteSpace(tenantId))
+                this.TenantId = tenantId;
         }
         public string TenantId { get; }
     }

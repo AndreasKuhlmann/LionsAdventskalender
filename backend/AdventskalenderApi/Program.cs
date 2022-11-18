@@ -46,7 +46,6 @@ namespace AdventskalenderApi
                     s.AddScoped<IUserStore<ApplicationUser>, ApplicationUserStore>();
                     s.AddScoped<IRoleStore<ApplicationRole>, ApplicationRoleStore>();
 
-
                     // Application services...
                     s.AddScoped<IAppSettingRepository, AppSettingRepository>();
                     s.AddScoped<IAppSettingService, AppSettingService>();
