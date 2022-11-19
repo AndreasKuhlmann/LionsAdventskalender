@@ -6,17 +6,18 @@ import { mergeMap } from 'rxjs/internal/operators/mergeMap';
 import { toArray } from 'rxjs/internal/operators/toArray';
 import { map } from 'rxjs/internal/operators/map';
 import { environment } from '../../../environments/environment';
+import { firstValueFrom, tap } from 'rxjs';
 export interface Gewinn {
   Id: string;
   Beschreibung: string;
   Losnummer: number;
   Tag: number;
-  flipped: boolean;
 }
 
 export interface TagesGewinne {
   Tag: number;
   Gewinne: Gewinn[];
+  flipped: boolean;
 }
 
 @Injectable({
@@ -25,23 +26,23 @@ export interface TagesGewinne {
 export class GewinnService {
   timer!: NodeJS.Timeout;
   timerRunning = false;
-
-  gewinne: TagesGewinne[] | undefined = [];
+  tagesGewinne: TagesGewinne[] = [];
   refreshDate = new Date();
 
   constructor(private storage: Storage, private http: HttpClient) {}
 
   async loadGewinne() {
     // Die Gewinne sollen nur einmal am Tag geladen werden...
-    console.log(this.refreshDate);
-    console.log(this.gewinne);
+    // console.log(this.refreshDate);
+    // console.log(this.gewinne);
+    const tagesGewinneFromStorage: TagesGewinne[] = await this.storage.get('tagesGewinne');
     if (
       this.refreshDate.getDate() < new Date().getDate() ||
-      this.gewinne?.length == 0
+      this.tagesGewinne?.length == 0
     ) {
       console.log('Refresh');
-      this.refreshDate = new Date();
-      this.gewinne = await this.http
+      // reload all Gewinne...
+      this.tagesGewinne = await firstValueFrom(this.http
         .get<Gewinn[]>(environment.url)
         .pipe(
           mergeMap((d) => d),
@@ -51,29 +52,36 @@ export class GewinnService {
             return {
               Tag: group[0].Tag,
               Gewinne: group,
+              flipped: false
             };
           }),
           toArray()
-        )
-        .toPromise();
-    }
+        ));
+      // set flipped=true, when the door was already before...
+      this.tagesGewinne.forEach( g => {
+          const tg = tagesGewinneFromStorage.find(tg=>tg.Tag == g.Tag);
+          g.flipped = tg ? tg.flipped : false;
+        });
+      // update refreshDate...
+      this.refreshDate = new Date();
+      }
   }
 
-  async flipDay(gewinn: Gewinn) {
-    if (gewinn.Losnummer > 0) {
-      if (!gewinn.flipped && this.timerRunning) {
-        gewinn.flipped = !gewinn.flipped;
+  async flipDay(tagesGewinn: TagesGewinne) {
+    if (tagesGewinn.Gewinne && tagesGewinn.Gewinne.length > 0 && tagesGewinn.Gewinne[0].Losnummer > 0) {
+      if (!tagesGewinn.flipped && this.timerRunning) {
+        tagesGewinn.flipped = !tagesGewinn.flipped;
         clearTimeout(this.timer);
-      } else if (gewinn.flipped) {
-        gewinn.flipped = false;
+      } else if (tagesGewinn.flipped) {
+        tagesGewinn.flipped = false;
         this.timerRunning = true;
         this.timer = setTimeout(() => {
-          gewinn.flipped = true;
+          tagesGewinn.flipped = true;
           this.timerRunning = false;
         }, 2000);
       } else {
-        gewinn.flipped = true;
-        await this.storage.set('gewinne', this.gewinne);
+        tagesGewinn.flipped = true;
+        await this.storage.set('tagesGewinne', this.tagesGewinne);
       }
     }
   }

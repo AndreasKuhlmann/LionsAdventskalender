@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Gewinn, GewinnService } from '../../services/gewinn.service';
+import { GewinnService, TagesGewinne } from '../../services/gewinn.service';
 
 @Component({
   selector: 'kalender',
@@ -23,7 +23,7 @@ export class KalenderComponent implements OnInit {
       }
     });
   }
-  async flip(gewinne: Gewinn) {
+  async flip(gewinne: TagesGewinne) {
     this.service.flipDay(gewinne);
   }
 

@@ -6,14 +6,14 @@
   [style.min-height]="containerHeight"
 >
   <door
-    *ngFor="let tagesGewinne of service.gewinne;"
+    *ngFor="let tagesGewinn of service.tagesGewinne;"
     [baseX]="containerXPosition"
     [baseY]="containerYPosition"
     [backgroundWidth]="containerWidth"
-    [no]="tagesGewinne.Tag"
-    [isOpen]="tagesGewinne.Gewinne[0].flipped"
-    [tagesGewinne]="tagesGewinne.Gewinne"
-    (click)="flip(tagesGewinne.Gewinne[0])"
+    [no]="tagesGewinn.Tag"
+    [isOpen]="tagesGewinn.flipped"
+    [tagesGewinne]="tagesGewinn.Gewinne"
+    (click)="flip(tagesGewinn)"
   >
   </door>
 </div>
