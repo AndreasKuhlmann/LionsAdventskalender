@@ -60,11 +60,12 @@ export class GewinnService {
       // set flipped=true, when the door was already before...
       this.tagesGewinne.forEach( g => {
           const tg = tagesGewinneFromStorage.find(tg=>tg.Tag == g.Tag);
-          g.flipped = tg ? tg.flipped : false;
+          g.flipped = tg ? tg.flipped && g.Gewinne[0].Losnummer != 0 : false;
         });
-      // update refreshDate...
+      // update...
+      await this.storage.set('tagesGewinne', this.tagesGewinne);
       this.refreshDate = new Date();
-      }
+    }
   }
 
   async flipDay(tagesGewinn: TagesGewinne) {

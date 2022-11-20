@@ -542,12 +542,11 @@ namespace AdventskalenderApi
             gewinneService.Add(data);
 
             var today = DateTime.Today;
-            var dayOfDecember = 24;
-            if (today.Month == 12)
-                dayOfDecember = today.Day;
 
+            int dayOfDecember = today.Month == 12 ? today.Day : (today.Month > 0 && today.Month < 11 ? 24 : 0);
             data.ToList().ForEach(d =>
             {
+                // clear only in december before christmas day...
                 if (d.Tag > dayOfDecember)
                 {
                     d.Beschreibung = String.Empty;
