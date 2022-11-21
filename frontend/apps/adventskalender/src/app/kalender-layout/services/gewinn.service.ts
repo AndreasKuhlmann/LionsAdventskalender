@@ -36,10 +36,7 @@ export class GewinnService {
     // Die Gewinne sollen nur einmal am Tag geladen werden...
     // console.log(this.refreshDate);
     // console.log(this.gewinne);
-    if (
-      this.refreshDate.getDate() < new Date().getDate() ||
-      this.tagesGewinne?.length == 0
-    ) {
+    if (this.refreshDate.getDate() < new Date().getDate() || this.tagesGewinne?.length == 0) {
       console.log('Refresh');
       // reload all Gewinne...
       this.tagesGewinne = await firstValueFrom(this.http
