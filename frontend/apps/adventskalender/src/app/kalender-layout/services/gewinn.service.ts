@@ -69,7 +69,7 @@ export class GewinnService {
   }
 
   async flipDay(tagesGewinn: TagesGewinne) {
-    if (tagesGewinn.Gewinne && tagesGewinn.Gewinne.length > 0 && tagesGewinn.Gewinne[0].Losnummer > 0) {
+    if (tagesGewinn.Gewinne?.length > 0 && tagesGewinn.Gewinne[0].Losnummer > 0) {
       if (!tagesGewinn.flipped && this.timerRunning) {
         tagesGewinn.flipped = !tagesGewinn.flipped;
         clearTimeout(this.timer);
