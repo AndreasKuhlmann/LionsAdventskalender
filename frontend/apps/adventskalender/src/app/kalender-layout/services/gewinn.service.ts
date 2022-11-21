@@ -29,13 +29,13 @@ export class GewinnService {
   tagesGewinne: TagesGewinne[] = [];
   refreshDate = new Date();
 
-  constructor(private storage: Storage, private http: HttpClient) {}
+  constructor(private storage: Storage, private http: HttpClient) { }
 
   async loadGewinne() {
+
     // Die Gewinne sollen nur einmal am Tag geladen werden...
     // console.log(this.refreshDate);
     // console.log(this.gewinne);
-    const tagesGewinneFromStorage: TagesGewinne[] = await this.storage.get('tagesGewinne');
     if (
       this.refreshDate.getDate() < new Date().getDate() ||
       this.tagesGewinne?.length == 0
@@ -57,11 +57,14 @@ export class GewinnService {
           }),
           toArray()
         ));
-      // set flipped=true, when the door was already before...
-      this.tagesGewinne.forEach( g => {
-          const tg = tagesGewinneFromStorage.find(tg=>tg.Tag == g.Tag);
+      const tagesGewinneFromStorage: TagesGewinne[] = await this.storage.get('tagesGewinne');
+      if (tagesGewinneFromStorage) {
+        // set flipped=true, when the door was already opened before...
+        this.tagesGewinne.forEach(g => {
+          const tg = tagesGewinneFromStorage.find(tg => tg.Tag == g.Tag);
           g.flipped = tg ? tg.flipped && g.Gewinne[0].Losnummer != 0 : false;
         });
+      }
       // update...
       await this.storage.set('tagesGewinne', this.tagesGewinne);
       this.refreshDate = new Date();
