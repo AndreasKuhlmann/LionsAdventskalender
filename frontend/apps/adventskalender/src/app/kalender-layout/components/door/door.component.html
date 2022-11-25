@@ -7,7 +7,7 @@
     >
       <div *ngFor="let gewinn of tagesGewinne">
         <div *ngIf="gewinn.Losnummer > 0" style="color: brown;">
-          <strong>Kalender {{ gewinn.Losnummer }}</strong>
+          <strong>Kalender {{ pad(gewinn.Losnummer, 4) }}</strong>
         </div>
         <div>{{ gewinn.Beschreibung }}</div>
       </div>

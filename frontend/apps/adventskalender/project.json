@@ -22,7 +22,7 @@
         ],
         "styles": ["apps/adventskalender/src/styles.scss"],
         "scripts": [],
-        "serviceWorker": true,
+        "serviceWorker": false,
         "ngswConfigPath": "apps/adventskalender/ngsw-config.json"
       },
       "configurations": {

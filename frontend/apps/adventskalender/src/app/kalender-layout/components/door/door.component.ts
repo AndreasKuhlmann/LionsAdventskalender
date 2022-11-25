@@ -34,7 +34,11 @@ export class DoorComponent implements OnChanges, AfterViewInit {
   ngOnChanges(): void {
     this.setBackgroundPosition();
   }
-
+  pad(num: number, size: number) {
+    let n = num.toString();
+    while (n.length < size) n = "0" + n;
+    return n;
+  }
   toggle(): void {
     if (!this.isOpen) {
       if (this.keepClose) {
