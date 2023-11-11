@@ -24,7 +24,7 @@ export interface TagesGewinne {
   providedIn: 'root',
 })
 export class GewinnService {
-  timer!: NodeJS.Timeout;
+  timer!: any;
   timerRunning = false;
   tagesGewinne: TagesGewinne[] = [];
   refreshDate = new Date();

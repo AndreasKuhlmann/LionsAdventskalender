@@ -24,7 +24,7 @@ export class DoorComponent implements OnChanges, AfterViewInit {
   backgroundPosition = '';
   @ViewChild('door', { read: ElementRef }) door: ElementRef | undefined;
   keepClose = false;
-  timer!: NodeJS.Timeout;
+  timer!: any;
   backgroundWidthInPixel = '';
 
   ngAfterViewInit(): void {
