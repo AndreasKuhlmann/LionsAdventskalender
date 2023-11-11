@@ -99,6 +99,10 @@ $kalendar-app-theme: mat.define-light-theme(
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   height: 100%;
+  // Scrollbar hidden, but still scrollable...
+  ::-webkit-scrollbar {
+    display: none;
+}
 }
 
 ::before,
