@@ -1,11 +1,20 @@
 {
-  "name": "adventskalender",
-  "short_name": "adventskalender",
-  "theme_color": "#A61815",
-  "background_color": "#A61815",
+  "dir": "ltr",
+  "lang": "de",
+  "name": "Oldenbuger Lions Aventskalender",
+  "start_url": "https://www.oldenburger-adventskalender.de",
+  "id": "/kalender",
+  "scope": "/kalender",
+  "short_name": "Oldenbuger Lions Aventskalender",
+  "theme_color": "transparent",
+  "description": "Oldenbuger Lions Aventskalender",
+  "orientation": "any",
+  "background_color": "transparent",
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "display_override": ["window-control-overlay", "fullscreen", "minimal-ui"],
+  "categories": ["social", "networking", "fundraising", "community", "events", "productivity"],
   "display": "standalone",
-  "scope": "./",
-  "start_url": "./",
   "icons": [
     {
       "src": "assets/icons/manifest-icon-192.maskable.png",
@@ -17,6 +26,22 @@
       "src": "assets/icons/manifest-icon-512.maskable.png",
       "sizes": "512x512",
       "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/icons/manifest-icon-512.maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/manifest-icon-512.maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
       "purpose": "any"
     }
   ]
