@@ -71,38 +71,49 @@ $md-lionsblue: (
 @use '@angular/material' as mat;
 @include mat.core();
 
-$kalendar-app-primary: mat.define-palette($md-lionsblue);
+$kalendar-app-primary: mat.define-palette($md-lionsblue, 500);
 $kalendar-app-accent: mat.define-palette($md-lionsyellow, A200, A100, A400);
 $kalendar-app-warn: mat.define-palette(mat.$red-palette);
 
-$kalendar-app-theme: mat.define-light-theme(
-  $kalendar-app-primary,
-  $kalendar-app-accent,
-  $kalendar-app-warn
-);
+$kalendar-app-theme: mat.define-light-theme((
+  color: (
+    primary: $kalendar-app-primary,
+    accent: $kalendar-app-accent,
+    warn: $kalendar-app-warn
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+  ));
 
 @include mat.all-component-themes($kalendar-app-theme);
 
 .dark-theme {
+
   $primary-dark: mat.define-palette(mat.$pink-palette, 700);
   $accent-dark: mat.define-palette(mat.$green-palette);
   $warn-dark: mat.define-palette(mat.$red-palette);
 
-  $theme-dark: mat.define-dark-theme($primary-dark, $accent-dark, $warn-dark);
-
-  @include mat.all-component-themes($theme-dark);
+  $theme-dark: mat.define-dark-theme((
+    color: (
+      primary: $primary-dark,
+      accent: $accent-dark,
+      warn: $warn-dark
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  ));
+  // https://github.com/angular/components/blob/main/guides/duplicate-theming-styles.md
+  @include mat.all-component-colors($theme-dark);
 }
 
 :root {
   box-sizing: border-box;
-  font-size: 1em;
   margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
   height: 100%;
   // Scrollbar hidden, but still scrollable...
   ::-webkit-scrollbar {
     display: none;
-}
+  }
 }
 
 ::before,
