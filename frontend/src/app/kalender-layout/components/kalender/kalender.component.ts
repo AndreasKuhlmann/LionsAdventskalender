@@ -1,5 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { GewinnService, TagesGewinne } from '../../services/gewinn.service';
+import { App } from '@capacitor/app';
 
 @Component({
   selector: 'kalender',
@@ -13,15 +14,26 @@ export class KalenderComponent implements OnInit {
   containerYPosition = 0;
   containerWidth = 1208;
   containerHeight = '906px';
-  constructor(public service: GewinnService) {
+  constructor(public service: GewinnService, private _ngZone: NgZone) {
     // Wenn der Kalender in den Vordergrund kommt aktualisiere die Daten...
     document.addEventListener('visibilitychange', async (e: any) => {
       // console.log(e.target.hidden);
       // console.log(e.target.visibilityState);
-      if (!e.target.hidden) {
-        await this.service.loadGewinne();
-      }
+      this._ngZone.run(async () => {
+        if (!e.target.hidden) {
+          await this.service.loadGewinne();
+        }
+      });
     });
+    // // nur für iOS and aktivieren...
+    // App.addListener('appStateChange', (state) => {
+    //   this._ngZone.run(async () => {
+    //     if (state.isActive) {
+    //       console.log('App has come to the foreground!');
+    //       await this.service.loadGewinne();
+    //     }
+    //   });
+    // });
   }
   async flip(gewinne: TagesGewinne) {
     this.service.flipDay(gewinne);
