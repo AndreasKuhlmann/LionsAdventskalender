@@ -29,12 +29,9 @@ export class ToolbarComponent {
     private _platform: Platform
   ) {
     this._platform.ready().then(() => {
-      if ((!this._platform.is('ios') && !this._platform.is('android')) && !this._platform.is('pwa')) {
+      if (!this._platform.is('ios') && !this._platform.is('android') && !this._platform.is('pwa')) {
         this.showInstallButton = true;
         this.isDesktop = true;
-      } else if (!this._platform.is('pwa')) {
-        this.showInstallButton = true;
-        this.isDesktop = false;
       }
     });
   }
