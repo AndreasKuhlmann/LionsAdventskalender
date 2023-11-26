@@ -72,7 +72,7 @@ $md-lionsblue: (
 @include mat.core();
 
 $kalendar-app-primary: mat.define-palette($md-lionsblue, 500);
-$kalendar-app-accent: mat.define-palette($md-lionsyellow, A200, A100, A400);
+$kalendar-app-accent: mat.define-palette($md-lionsyellow, 500);
 $kalendar-app-warn: mat.define-palette(mat.$red-palette);
 
 $kalendar-app-theme: mat.define-light-theme((

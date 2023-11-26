@@ -2,7 +2,7 @@
   "dir": "ltr",
   "lang": "de",
   "name": "Oldenbuger Lions Aventskalender",
-  "start_url": "https://www.oldenburger-adventskalender.de/",
+  "start_url": "/",
   "id": "/",
   "scope": "/",
   "short_name": "Oldenbuger Lions Aventskalender",
@@ -11,8 +11,8 @@
   "related_applications": [],
   "prefer_related_applications": false,
   "display_override": ["window-control-overlay", "fullscreen", "minimal-ui"],
-  "categories": ["social", "networking", "fundraising", "community", "events", "productivity"],
   "display": "standalone",
+  "categories": ["social", "networking", "fundraising", "community", "events", "productivity"],
   "icons": [
     {
       "src": "assets/icons/manifest-icon-192.maskable.png",

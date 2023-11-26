@@ -5,6 +5,7 @@
 }
 
 .sticky {
+  display: flex;
   padding: 0.25em;
   position: sticky;
   position: -webkit-sticky; /* For macOS/iOS Safari */

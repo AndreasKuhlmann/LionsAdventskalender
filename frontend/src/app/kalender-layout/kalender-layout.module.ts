@@ -15,6 +15,8 @@ import { UserService } from './services/user.service';
 import { ImpressumDialogComponent } from './components/impressum-dialog/impressum-dialog.component';
 import { FoerdererDialogComponent } from './components/foerderer-dialog copy/foerderer-dialog.component';
 import { WerStehtDahinterDialogComponent } from './components/wer-steht-dahinter-dialog/wer-steht-dahinter-dialog.component';
+import { InstallablePromptComponent } from './components/installable-prompt/installable-prompt.component';
+import { InstallablePromptService } from './services/installable-prompt.service';
 
 const routes: Routes = [
   {
@@ -28,12 +30,11 @@ const routes: Routes = [
   imports: [
     CommonModule,
     HttpClientModule,
-    MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
   ],
-  providers: [UserService, GewinnService],
+  providers: [UserService, GewinnService, InstallablePromptService],
   declarations: [
     KalenderLayoutComponent,
     DoorComponent,
@@ -44,6 +45,7 @@ const routes: Routes = [
     FoerdererDialogComponent,
     ImpressumDialogComponent,
     WerStehtDahinterDialogComponent,
+    InstallablePromptComponent,
   ],
 })
 export class KalenderLayoutModule {}

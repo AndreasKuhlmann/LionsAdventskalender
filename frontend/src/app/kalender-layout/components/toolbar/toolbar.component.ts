@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { FoerdererDialogComponent } from '../foerderer-dialog copy/foerderer-dialog.component';
 import { ZweckDialogComponent } from '../zweck-dialog/zweck-dialog.component';
 import { WerStehtDahinterDialogComponent } from '../wer-steht-dahinter-dialog/wer-steht-dahinter-dialog.component';
+import { InstallablePromptService } from '../../services/installable-prompt.service';
+import { Platform } from '@ionic/angular';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
@@ -16,12 +19,25 @@ export class ToolbarComponent {
   @Output() toggleSidenav = new EventEmitter<void>();
   @Output() toggleTheme = new EventEmitter<void>();
   @Output() toggleDir = new EventEmitter<void>();
-
+  isDesktop = false
+  showInstallButton = false;
   constructor(
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private router: Router
-  ) {}
+    private router: Router,
+    private installablePromptService: InstallablePromptService,
+    private _platform: Platform
+  ) {
+    this._platform.ready().then(() => {
+      if ((!this._platform.is('ios') && !this._platform.is('android')) && !this._platform.is('pwa')) {
+        this.showInstallButton = true;
+        this.isDesktop = true;
+      } else if (!this._platform.is('pwa')) {
+        this.showInstallButton = true;
+        this.isDesktop = false;
+      }
+    });
+  }
 
   openZweckDialog(): void {
     this.dialog.open(ZweckDialogComponent, {
@@ -56,7 +72,7 @@ export class ToolbarComponent {
       if (result) {
         this.openSnackBar("Contact added", "Navigate")
           .onAction().subscribe(() => {
-              this.router.navigate(['/contactmanager', result.id]);
+            this.router.navigate(['/contactmanager', result.id]);
           });
       }
     });
@@ -69,5 +85,12 @@ export class ToolbarComponent {
     return this.snackBar.open(message, action, {
       duration: 5000,
     });
+  }
+  async installApp() {
+    await this.installablePromptService.showPrompt().pipe(take(1)).subscribe((result => {
+      if (result == true) {
+        this.showInstallButton = false;
+      }
+    }));
   }
 }
