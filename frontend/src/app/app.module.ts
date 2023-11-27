@@ -2,8 +2,8 @@ import { MaterialModule } from './shared/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { APP_INITIALIZER, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { Drivers } from '@ionic/storage';
 import { IonicStorageModule, Storage } from '@ionic/storage-angular';
-import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -12,7 +12,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 export function initializeApp(storage: Storage) {
   return () => {
     console.log('initializeApp: isDevMode() -> ', isDevMode());
-    storage.defineDriver(CordovaSQLiteDriver);
     return storage.create();
   };
 }
@@ -26,7 +25,11 @@ const routes: Routes = [
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot({
+      name: 'adventsKalender',
+      storeName: 'DB',
+      driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage]
+    }),
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
@@ -48,4 +51,4 @@ const routes: Routes = [
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -7,8 +7,10 @@ import { FoerdererDialogComponent } from '../foerderer-dialog copy/foerderer-dia
 import { ZweckDialogComponent } from '../zweck-dialog/zweck-dialog.component';
 import { WerStehtDahinterDialogComponent } from '../wer-steht-dahinter-dialog/wer-steht-dahinter-dialog.component';
 import { InstallablePromptService } from '../../services/installable-prompt.service';
-import { Platform } from '@ionic/angular';
 import { take } from 'rxjs';
+import { Platform } from '@angular/cdk/platform';
+
+declare var window: any;
 
 @Component({
   selector: 'app-toolbar',
@@ -28,12 +30,21 @@ export class ToolbarComponent {
     private installablePromptService: InstallablePromptService,
     private _platform: Platform
   ) {
-    this._platform.ready().then(() => {
-      if (!this._platform.is('ios') && !this._platform.is('android') && !this._platform.is('pwa')) {
-        this.showInstallButton = true;
-        this.isDesktop = true;
-      }
-    });
+    if (!this._platform.IOS && !this._platform.ANDROID && !this.isPwa()) {
+      this.showInstallButton = true;
+      this.isDesktop = true;
+    }
+  }
+
+  private isPwa(): boolean {
+    if ((window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true)) {
+      window.addEventListener('resize', () => {
+        // window.resizeTo(window.screen.availWidth * 0.55, window.screen.availHeight * 0.78);
+        window.resizeTo( 1440, 1100);
+      });
+      return true;
+    }
+    return false
   }
 
   openZweckDialog(): void {
