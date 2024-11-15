@@ -2,7 +2,7 @@
 @REM %-Zeichen müssen im SAS-Token in Batch-Datei immer mit %% ersetzt werden!!!!
 
 
-azcopy sync dist\apps\adventskalender "https://kalendar.blob.core.windows.net/$web??sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2024-11-11T20:26:12Z&st=2023-11-10T12:26:12Z&spr=https&sig=nGWE%%2Bjaq9pMdfWsHKBbtOO4VWa8WS5nmGyW3CkzImdM%%3D" --recursive=true --delete-destination=true
+azcopy sync dist\advents-kalender\browser "https://kalendar.blob.core.windows.net/$web??sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2026-11-16T00:16:25Z&st=2024-11-15T16:16:25Z&spr=https&sig=Z%%2Fqv22bl1uU2Qac1uqPX290VYpbrH3Pw7OL70iUzUgU%%3D" --recursive=true --delete-destination=true
 
 @REM azcopy remove "https://kalendar.blob.core.windows.net/$web??sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2024-11-11T20:26:12Z&st=2023-11-10T12:26:12Z&spr=https&sig=nGWE%%2Bjaq9pMdfWsHKBbtOO4VWa8WS5nmGyW3CkzImdM%%3D" --recursive=true
 @REM azcopy copy "dist\apps\adventskalender\*" "https://kalendar.blob.core.windows.net/$web??sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2024-11-11T20:26:12Z&st=2023-11-10T12:26:12Z&spr=https&sig=nGWE%%2Bjaq9pMdfWsHKBbtOO4VWa8WS5nmGyW3CkzImdM%%3D" --recursive=true --overwrite=true

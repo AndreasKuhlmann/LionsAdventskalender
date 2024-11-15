@@ -5,8 +5,22 @@
   display: block;
 }
 
+
 .calendar-container {
   display: flex;
+}
+
+@media (width > 800px) {
+  door {
+    margin-top: 1rem;
+    margin-right: 2rem;
+  }
+}
+@media (width < 800px) {
+  door {
+    margin-top: -2.25rem;
+    margin-right: 2rem;
+  }
 }
 
 .doors-container {
