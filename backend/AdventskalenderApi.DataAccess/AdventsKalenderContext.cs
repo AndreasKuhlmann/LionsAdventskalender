@@ -36,9 +36,9 @@ namespace AdventskalenderApi.DataAccess
                 var connectionString = this._configuration["ConnectionStrings:ApplicationDBContext"];
                 optionsBuilder.UseSqlServer(connectionString, opt =>
                 {
-                    opt.MigrationsAssembly("AdventskalenderApi.DataAccess");
-                    //opt.CommandTimeout(150000);
-                    opt.EnableRetryOnFailure();
+                       opt.MigrationsAssembly("AdventskalenderApi.DataAccess");
+                       //opt.CommandTimeout(150000);
+                       opt.EnableRetryOnFailure();
                 });
             }
         }

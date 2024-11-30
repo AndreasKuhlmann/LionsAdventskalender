@@ -30,8 +30,8 @@ namespace AdventskalenderApi.DataAccess
                 .Where(t => typeof(TEntityInterface).IsAssignableFrom(t)))
             {
                 builder.SetEntityQueryFilter(
-                    type,
-                    filterExpression);
+                       type,
+                       filterExpression);
             }
         }
 
@@ -70,7 +70,7 @@ namespace AdventskalenderApi.DataAccess
             {
                 var currentQueryFilter = entityTypeBuilder.Metadata.GetQueryFilter();
                 var currentExpressionFilter = ReplacingExpressionVisitor.Replace(
-                    currentQueryFilter.Parameters.Single(), parameterType, currentQueryFilter.Body);
+                       currentQueryFilter.Parameters.Single(), parameterType, currentQueryFilter.Body);
                 expressionFilter = Expression.AndAlso(currentExpressionFilter, expressionFilter);
             }
 
@@ -98,7 +98,7 @@ namespace AdventskalenderApi.DataAccess
             protected override Expression VisitParameter(ParameterExpression node)
             {
                 return _parameters?.FirstOrDefault(p => p.Name == node.Name)
-                       ?? (node.Type == typeof(TSource) ? Expression.Parameter(typeof(TTarget), node.Name) : node);
+                          ?? (node.Type == typeof(TSource) ? Expression.Parameter(typeof(TTarget), node.Name) : node);
             }
 
             protected override Expression VisitLambda<T>(Expression<T> node)

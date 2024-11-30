@@ -20,37 +20,37 @@ namespace AdventskalenderApi
         {
             var host = new HostBuilder()
                 .ConfigureFunctionsWorkerDefaults(
-                    //workerApplication =>
-                    //{
-                    //    // Register our custom middleware with the worker
-                    //    workerApplication.UseMiddleware<MyCustomMiddleware>();
-                    //}
-                    )
+                       //workerApplication =>
+                       //{
+                       //    // Register our custom middleware with the worker
+                       //    workerApplication.UseMiddleware<MyCustomMiddleware>();
+                       //}
+                       )
                 .ConfigureLogging(logging =>
                 {
-                    logging.ClearProviders();
-                    logging.AddConsole();
+                       logging.ClearProviders();
+                       logging.AddConsole();
                 })
                 .ConfigureServices(s =>
                 {
-                    var config = new ConfigurationBuilder()
-                        .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
-                        .AddEnvironmentVariables()
-                        .Build();
-                    // Database services...
-                    s.AddSingleton<ITenantIdProvider<string>>(new TenantIdProvider(() => config["TenantId"]));
-                    s.AddDbContext<AdventskalenderApiContext>();
+                       var config = new ConfigurationBuilder()
+                           .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+                           .AddEnvironmentVariables()
+                           .Build();
+                       // Database services...
+                       s.AddSingleton<ITenantIdProvider<string>>(new TenantIdProvider(() => config["TenantId"]));
+                       s.AddDbContext<AdventskalenderApiContext>();
 
-                    // Identity services...
-                    s.AddIdentityCore<ApplicationUser>();
-                    s.AddScoped<IUserStore<ApplicationUser>, ApplicationUserStore>();
-                    s.AddScoped<IRoleStore<ApplicationRole>, ApplicationRoleStore>();
+                       // Identity services...
+                       s.AddIdentityCore<ApplicationUser>();
+                       s.AddScoped<IUserStore<ApplicationUser>, ApplicationUserStore>();
+                       s.AddScoped<IRoleStore<ApplicationRole>, ApplicationRoleStore>();
 
-                    // Application services...
-                    s.AddScoped<IAppSettingRepository, AppSettingRepository>();
-                    s.AddScoped<IAppSettingService, AppSettingService>();
-                    s.AddScoped<IGewinnRepository, GewinnRepository>();
-                    s.AddScoped<IGewinnService, GewinnService>();
+                       // Application services...
+                       s.AddScoped<IAppSettingRepository, AppSettingRepository>();
+                       s.AddScoped<IAppSettingService, AppSettingService>();
+                       s.AddScoped<IGewinnRepository, GewinnRepository>();
+                       s.AddScoped<IGewinnService, GewinnService>();
                 })
                 .Build();
 

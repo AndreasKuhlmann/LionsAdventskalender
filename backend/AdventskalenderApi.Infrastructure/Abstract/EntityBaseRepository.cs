@@ -43,7 +43,7 @@ namespace BeerBest.Infrastructure.Abstract
                 IQueryable<TEntity> query = this.DbContext.Set<TEntity>().AsNoTracking();
                 foreach (var includeProperty in includeProperties)
                 {
-                    query = query.Include(includeProperty).AsNoTracking();
+                       query = query.Include(includeProperty).AsNoTracking();
                 }
                 return query;
             }

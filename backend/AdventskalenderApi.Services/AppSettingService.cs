@@ -23,12 +23,12 @@ namespace AdventskalenderApi.Services
         public AppSetting GetByAppName(string appname)
         {
             var setting = this._settingRepository.ReadSingle(s =>
-                        // try to find the setting for the requested culture...
-                        (s.AppName.ToLower() == appname && (s.CultureCode.ToLower() == CultureInfo.CurrentCulture.Name.ToLower() || s.CultureCode.ToLower().StartsWith(CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToLower()))) ||
-                        // other wise try to find the setting for en culture...
-                        (s.AppName.ToLower() == appname && s.CultureCode.ToLower().StartsWith("en")) ||
-                        // other wise just return the first available setting...
-                        (s.AppName.ToLower() == appname));
+                           // try to find the setting for the requested culture...
+                           (s.AppName.ToLower() == appname && (s.CultureCode.ToLower() == CultureInfo.CurrentCulture.Name.ToLower() || s.CultureCode.ToLower().StartsWith(CultureInfo.CurrentCulture.TwoLetterISOLanguageName.ToLower()))) ||
+                           // other wise try to find the setting for en culture...
+                           (s.AppName.ToLower() == appname && s.CultureCode.ToLower().StartsWith("en")) ||
+                           // other wise just return the first available setting...
+                           (s.AppName.ToLower() == appname));
 
             return setting;
         }
@@ -45,17 +45,17 @@ namespace AdventskalenderApi.Services
             {
                 setting = new AppSetting
                 {
-                    Id = Guid.NewGuid(),
-                    AppName = appName,
-                    Country = "Germany",
-                    CultureCode = "de",
-                    AzureNotificationHubConnectionString = "",
-                    AzureNotificationHubName = appName.ToLower(),
-                    SmtpHost = "smtp.office365.com",
-                    SmtpPort = "25",
-                    SmtpUsername = smtpUsername,
-                    SmtpPassword = "",
-                    SmtpSenderEmailAddress = "info@lions-oldenburg-lappan.de",
+                       Id = Guid.NewGuid(),
+                       AppName = appName,
+                       Country = "Germany",
+                       CultureCode = "de",
+                       AzureNotificationHubConnectionString = "",
+                       AzureNotificationHubName = appName.ToLower(),
+                       SmtpHost = "smtp.office365.com",
+                       SmtpPort = "25",
+                       SmtpUsername = smtpUsername,
+                       SmtpPassword = "",
+                       SmtpSenderEmailAddress = "info@lions-oldenburg-lappan.de",
                 };
                 this._settingRepository.Add(setting);
             }
