@@ -36,508 +36,508 @@ namespace AdventskalenderApi
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=1,
-                    Beschreibung="Michael Stephan - Photograph,Haubentaucherring 13a,26135 OL,Fotoshooting,100€",
-                    Losnummer=1664,
+                    Tag = 1,
+                    Beschreibung = "Michael Stephan - Photograph, Haubentaucherring 13a, 26135 Oldenburg, Fotoshooting im Wert von 100 €",
+                    Losnummer = 3394
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=1,
-                    Beschreibung="Gemeinnützige Werkstätten OL e. V.,Rennplatzstraße 203,26125 OL,2xGutscheine,50€",
-                    Losnummer=5102,
+                    Tag = 1,
+                    Beschreibung = "Gemeinnützige Werkstätten Oldenburg e. V., Rennplatzstraße  203, 26125 Oldenburg, 2 Gutscheine je 50,- €",
+                    Losnummer = 6754
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=1,
-                    Beschreibung="Hautnah,Herbartgang 13,26122 OL,Gutschein,150€",
-                    Losnummer=5935,
+                    Tag = 1,
+                    Beschreibung = "Hankens Apotheke in den Höfen, Grüne Straße 10, 26121 Oldenburg, Einkaufsgutschein im Wert von 100 €",
+                    Losnummer = 80
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=2,
-                    Beschreibung="Brillen Hess,Hauptstraße 61,26122 OL,Gutschein,100€",
-                    Losnummer=6582,
+                    Tag = 2,
+                    Beschreibung = "Brillen Hess, Hauptstraße 61, 26122 Oldenburg, Brillengutschein im Wert von 100 €",
+                    Losnummer = 6191
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=2,
-                    Beschreibung="OLer Wohngarten,Stubbenweg 29,26125 OL,Gutschein,100€",
-                    Losnummer=1455,
+                    Tag = 2,
+                    Beschreibung = "Oldenburger Wohngarten, Stubbenweg 29, 26125 Oldenburg, Einkaufsgutschein im Wert von 100 €",
+                    Losnummer = 3029
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=2,
-                    Beschreibung="bruns Männermode,Haarenstraße 57-60,26122 OL,Gutschein,100€",
-                    Losnummer=324,
+                    Tag = 2,
+                Beschreibung = "bruns Männermode, Haarenstraße 57-60, 26122 Oldenburg, Einkaufsgutschein im Wert von 100 €",
+                Losnummer = 6185
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=3,
-                    Beschreibung="CEWE Stiftung & CO. KGaA,Meerweg 30 - 32,26133 OL,3 Gutscheine für Fotobuch,50€",
-                    Losnummer=2927,
+                    Tag = 3,
+                    Beschreibung = "Scharmann`s, Haarenstraße 58, 26122 Oldenburg, Einkaufsgutschein im Wert von 100 €",
+                    Losnummer = 3530
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=3,
-                    Beschreibung="Scharmann`s,Haarenstraße 58,26122 OL,Gutschein,100€",
-                    Losnummer=2578,
+                    Tag = 3,
+                    Beschreibung = "CEWE Stiftung & CO. KGaA, Meerweg 30 - 32, 26133 Oldenburg, 2 Gutscheine für Fotobuch je 50 €",
+                    Losnummer = 2879
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=3,
-                    Beschreibung="GSG Bau- und Wohngesellschaft,Straßburger Str. 8,26123 OL,5 Theatergutscheine für Theater Laboratorium,25€",
-                    Losnummer=478,
+                    Tag = 3,
+                    Beschreibung = "GSG Bau- und Wohngesellschaft, Straßburger Str. 8, 26123 Oldenburg, 5 Theatergutscheine für Theater Laboratorium je 25 €",
+                    Losnummer = 910
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=4,
-                    Beschreibung="Innenleben,Baumgartenstraße 4,26122 OL,Gutschein,100€",
-                    Losnummer=4938,
+                    Tag = 4,
+                    Beschreibung = "Innenleben, Baumgartenstraße 4, 26122 Oldenburg, Gutschein im Wert von 100 €",
+                    Losnummer = 4517
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=4,
-                    Beschreibung="Bettenhaus Uwe Heintzen GmbH,Hauptstraße 109,26131 OL,Gutschein,250€",
-                    Losnummer=2020,
+                    Tag = 4,
+                    Beschreibung = "Nölker & Nölker Teehandel, Mottenstraße 2, 26122 Oldenburg, Gutschein im Wert von 100 €",
+                    Losnummer = 6572
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=4,
-                    Beschreibung="Nölker & Nölker Teehandel,Mottenstraße 2,26122 OL,Gutschein,100€",
-                    Losnummer=1133,
+                    Tag = 4,
+                    Beschreibung = "Rosemarie und Dieter Krah, LC Oldenburg Lappan, 26180 Rastede, Bargeld 120 €",
+                    Losnummer = 4414
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=5,
-                    Beschreibung="Park der Gärten gGmbH,Elmendorfer Str.40,26160 Bad Zwischenahn,2 Jahreskarten",
-                    Losnummer=1452,
+                    Tag = 5,
+                    Beschreibung = "bruns Männermode Grosse Grössen, Haarenstraße 57-60, 26122 Oldenburg, Einkaufsgutschein im Wert von 100 €",
+                    Losnummer = 5577
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=5,
-                    Beschreibung="laufrausch,Hauptstraße 28,26122 OL,Gutschein,100€",
-                    Losnummer=735,
+                    Tag = 5,
+                    Beschreibung = "laufrausch, Hauptstraße 28, 26122 Oldenburg, Gutschein im Wert von 100 €",
+                    Losnummer = 6801
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=5,
-                    Beschreibung="bruns Männermode Grosse Grössen,Haarenstraße 57-60,26122 OL,Gutschein,100€",
-                    Losnummer=5237,
+                    Tag = 5,
+                    Beschreibung = "Marien-Apotheke, Marienstraße 1, 26121 Oldenburg, Gutschein im Wert von 100 €",
+                    Losnummer = 4583
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=6,
-                    Beschreibung="Friseur Jens Runge,Nadorster Straße 162,26123 OL,Gutschein Behandlung oder Produkte,100€",
-                    Losnummer=2395,
+                    Tag = 6,
+                    Beschreibung = "Onken, Lange Straße 62, 26122 Oldenburg, Einkaufsgutschein im Wert von 150 €",
+                    Losnummer = 5464
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=6,
-                    Beschreibung="Onken,Lange Straße 62,26122 OL,Gutschein,150€",
-                    Losnummer=350,
+                    Tag = 6,
+                    Beschreibung = "Buch Brader, Haarenstraße 8, 26122 Oldenburg, Büchergutschein im Wert von 150 €",
+                    Losnummer = 3932
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=6,
-                    Beschreibung="Buch Brader,Haarenstraße 8,26122 OL,Büchergutschein,100€",
-                    Losnummer=1665,
+                    Tag = 6,
+                    Beschreibung = "Landessparkasse zu Oldenburg (LzO), Berliner Platz 1, 26123 Oldenburg, Gutscheine für das Oldenburgisches Staatstheater im Wert von 200 €",
+                    Losnummer = 1110
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=7,
-                    Beschreibung="Landessparkasse zu OL (LzO),Berliner Platz 1,26123 OL,Gutscheine für den theater hof 19,100€",
-                    Losnummer=1525,
+                    Tag = 7,
+                Beschreibung = "Klosterschänke Hude, Von-Witzleben-Allee 3, 27798 Hude, Gutschein Klosterschänke plus Neotaste Geschenkbox je 50,- €",
+                Losnummer = 5948
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=7,
-                    Beschreibung="Klosterschänke Hude,Von-Witzleben-Allee 3,27798 Hude,Gutschein,100€",
-                    Losnummer=6171,
+                    Tag = 7,
+                Beschreibung = "Landessparkasse zu Oldenburg (LzO), Berliner Platz 1, 26123 Oldenburg, Gutscheine für den theater hof 19 im Wert von 100 €",
+                Losnummer = 2563
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=7,
-                    Beschreibung="Bäckerei Janssen,Scharreler Damm 11,26188 Edewecht,Geschenkgutschein,100€",
-                    Losnummer=848,
+                    Tag = 7,
+                Beschreibung = "Wachsstübchen, Alexanderstraße 116,  26121 Oldenburg, 4 Gutscheine je 25 € ",
+                Losnummer = 5759
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=8,
-                    Beschreibung="Heinrich v. d. Pütten,Gerhard-Stalling-Straße 51,26135 OL,Glasreinigung,100€",
-                    Losnummer=3416,
+                    Tag = 8,
+                Beschreibung = "CEWE Stiftung & CO. KGaA, Meerweg 30 - 32, 26133 Oldenburg, 2 Gutscheine für Fotobuch je 50 €",
+                Losnummer = 1077
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=8,
-                    Beschreibung="Sonnen-Apotheke,Eichenstraße 17,26131 OL,Gutschein,100€",
-                    Losnummer=1909,
+                    Tag = 8,
+                Beschreibung = "Heinrich v. d. Pütten, Gerhard-Stalling-Straße 51, 26135 Oldenburg, Fensterreinigung im Wert von 100 €",
+                Losnummer = 3050
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=8,
-                    Beschreibung="Landessparkasse zu OL (LzO),Berliner Platz 1,26123 OL,Gutscheine für das OLisches Staatstheater",
-                    Losnummer=5180,
+                    Tag = 8,
+                Beschreibung = "Sonnen-Apotheke, Eichenstraße 17, 26131 Oldenburg, Gutschein im Wert von 100 €",
+                Losnummer = 5837
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=9,
-                    Beschreibung="Optiker Schulz,Achternstraße 30/31,26122 OL,Gutschein einmalig 50% Rabatt beim Kauf einer Brille",
-                    Losnummer=886,
+                    Tag = 9,
+                Beschreibung = "TiTo. Manufaktur, Bergstr. 2, 26122 Oldenburg, Anfertigung eines Schmuckstückes im Wert von 100 €",
+                Losnummer = 5876
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=9,
-                    Beschreibung="TiTo. Manufaktur,Bergstr. 2,26122 OL,Gutschein,150€",
-                    Losnummer=2299,
+                    Tag = 9,
+                Beschreibung = "bruns Berufsmode, Posthalterweg 17, 26129 Oldenburg, Einkaufsgutschein im Wert von 100 €",
+                Losnummer = 4491
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=9,
-                    Beschreibung="bruns Berufsmode,Posthalterweg 17,26129 OL,Gutschein,100€",
-                    Losnummer=371,
+                    Tag = 9,
+                Beschreibung = "Michael Stephan - Photograph, Haubentaucherring 13a, 26135 Oldenburg, Fotoshooting im Wert von 100 €",
+                Losnummer = 4277
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=10,
-                    Beschreibung="Optik im Jaguarhaus,Heiligengeistwall 8,26122 OL,Gutschein,100€",
-                    Losnummer=4278,
+                    Tag = 10,
+                Beschreibung = "Corpus Sport-und Gesundheitszentrum, Giesenweg 19, 26133 Oldenburg, Ärztl. Trainingsberatung 1/4 Jahr physioth. Anleitung",
+                Losnummer = 2994
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=10,
-                    Beschreibung="Landessparkasse zu OL,Berliner Platz 1,26123 OL,Gutscheine für das Staatstheater OL,100€",
-                    Losnummer=6812,
+                    Tag = 10,
+                    Beschreibung = "Optik im Jaguarhaus, Heiligengeistwall 8, 26122 Oldenburg, Gutschein im Wert von 100 €",
+                    Losnummer = 2979
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=10,
-                    Beschreibung="Corpus Sport-und Gesundheitszentrum,Giesenweg 19,26133 OL,Ärztl. Trainingsberatung 1/4 Jahr physioth. Anleitung",
-                    Losnummer=2709,
+                    Tag = 10,
+                    Beschreibung = "Landessparkasse zu Oldenburg (LzO), Berliner Platz 1, 26123 Oldenburg, Gutschein für das Oldenburgisches Staatstheater im Wert von 100 €",
+                    Losnummer = 415
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=11,
-                    Beschreibung="Brillen Hess,Hauptstraße 61,26122 OL,Gutschein,100€",
-                    Losnummer=5998,
+                    Tag = 11,
+                    Beschreibung = "Brillen Hess, Hauptstraße 61, 26122 Oldenburg, Brillengutschein im Wert von 100 €",
+                    Losnummer = 4622
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=11,
-                    Beschreibung="Dr. Bönkhoff und Gilbers mbB,Hauptstraße 35,26122 OL,10xOL Gutscheine,10€",
-                    Losnummer=4752,
+                    Tag = 11,
+                    Beschreibung = "Schmidt, Lauterbach & Partner Steuerberater, Brombeerweg 55, 26180 Rastede, Gutschein Uhren, Schmuck Pareigat im Wert von 150 €",
+                    Losnummer = 6089
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=11,
-                    Beschreibung="Schmidt,Lauterbach & Partner Steuerberater,Brombeerweg 55,26180 Rastede,Gutschein für Uhren,Schmuck Pareigat,150€",
-                    Losnummer=6793,
+                    Tag = 11,
+                Beschreibung = "Dr. Bönkhoff und Gilbers mbB, Hauptstraße 35, 26122 Oldenburg, Oldenburggutschein im Wert von 100 €",
+                Losnummer = 2528
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=12,
-                    Beschreibung="Hankens Flora Apotheke,Bahnhofstraße 15,26209 Hatten,Gutschein,100€",
-                    Losnummer=169,
+                    Tag = 12,
+                Beschreibung = "Hankens Flora Apotheke, Bahnhofstraße 15, 26209 Hatten, Einkaufsgutschein im Wert von 100 €",
+                Losnummer = 25
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=12,
-                    Beschreibung="Barometer M-Verlag,Raiffeisenstr. 25,26122 OL,2xDas Barometer (Buch/App),50€",
-                    Losnummer=3079,
+                    Tag = 12,
+                    Beschreibung = "Barometer M-Verlag, Raiffeisenstr. 25, 26122 Oldenburg, 2xDas Barometer (Buch/App) je 50 €",
+                    Losnummer = 5629
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=12,
-                    Beschreibung="Autohaus Frank Voigt,Bloherfelder Str. 242-244,26129 OL,Gutschein,200€",
-                    Losnummer=1489,
+                    Tag = 12,
+                    Beschreibung = "Bäckerei Janssen, Scharreler Damm 11, 26188 Edewecht, Geschenkgutschein im Wert von 100 €",
+                    Losnummer = 3842
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=13,
-                    Beschreibung="GVO Versicherung,GVO Platz 1,26160 Bad Zwischenahn,Gutscheine für das Hotel Kolb - Urlaub am Meer,100€",
-                    Losnummer=1602,
+                    Tag = 13,
+                    Beschreibung = "Florian Isensee GmbH, Haarenstraße 20, 26122 Oldenburg, Einkaufsgutschein im Wert von 100 €",
+                    Losnummer = 6583
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=13,
-                    Beschreibung="Florian Isensee GmbH,Haarenstraße 20,26122 OL,Gutschein,100€",
-                    Losnummer=4257,
+                    Tag = 13,
+                    Beschreibung = "GVO Versicherung, GVO Platz, 26160 Bad Zwischenahn, Gutscheine für das Hotel 53 Grad - Bad Zwischenahn im Wert von 100 €",
+                    Losnummer = 6725
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=13,
-                    Beschreibung="Ev. Familien-Bildungsstätte OL,Haareneschstraße 58a,26121 OL,Kurse bei der Ev. Familien-Bildungsstätte OL,150€",
-                    Losnummer=2524,
+                    Tag = 13,
+                    Beschreibung = "GVO Versicherung, GVO Platz, 26160 Bad Zwischenahn, 2 Gutscheine Rundfahrt und Frühstück auf dem Zwischenahner Meer im Wert von 100 €",
+                    Losnummer = 4337
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=14,
-                    Beschreibung="GVO Versicherung,GVO Platz 1,26160 Bad Zwischenahn,Gutscheine für das Restaurant Ahrenshof,100€",
-                    Losnummer=3806,
+                    Tag = 14,
+                    Beschreibung = "Schmidt, Lauterbach & Partner Steuerberater, Brombeerweg 55, 26180 Rastede, Einkaufsgutscheine für Rasteder Geschäfte im Wert von 150 €",
+                    Losnummer = 3566
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=14,
-                    Beschreibung="Schmidt,Lauterbach & Partner Steuerberater,Brombeerweg 55,26180 Rastede,Gutscheine für Rasteder Geschäfte,150€",
-                    Losnummer=541,
+                    Tag = 14,
+                    Beschreibung = "GVO Versicherung, GVO Platz, 26160 Bad Zwischenahn, 2 Gutscheine für das Restaurant Ahrenshof je 50 €",
+                    Losnummer = 263
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=14,
-                    Beschreibung="Neotaste GmbH,Saarbrücker Str. 37 AB,10405 Berlin,2x 12 Monate Geschenkbox,50€",
-                    Losnummer=660,
+                    Tag = 14,
+                    Beschreibung = "Neotaste GmbH, Saarbrücker Str. 37 AB, 10405 Berlin, 2x12 Monate Geschenkbox je 50 €",
+                    Losnummer = 5563
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=15,
-                    Beschreibung="Hankens Alexander Apotheke,Alexanderstraße 125,26121 OL,Gutschein,100€",
-                    Losnummer=3289,
+                    Tag = 15,
+                    Beschreibung = "Hankens Alexander Apotheke, Alexanderstraße 125,  26121 Oldenburg, Einkaufsgutschein im Wert von 100 €",
+                    Losnummer = 2597
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=15,
-                    Beschreibung="OLisches Staatstheater,Theaterwall 28,26122 OL,Theatergutscheine,150€",
-                    Losnummer=2881,
+                    Tag = 15,
+                    Beschreibung = "Oldenburgisches Staatstheater, Theaterwall 28, 26122 Oldenburg, Theatergutscheine im Wert von 150 € ",
+                    Losnummer = 6753
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=15,
-                    Beschreibung="Cassens GmbH&CoKG,Bremer Heerstraße 460,26135 OL,3 Gutscheine,50€",
-                    Losnummer=3074,
+                    Tag = 15,
+                    Beschreibung = "Löschau, Melkbrink 15, 26121 Oldenburg, Einkaufsgutschein im Wert von 100 €",
+                    Losnummer = 3657
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=16,
-                    Beschreibung="Optik am Haarenufer,Inh. Niko Bolle,Haarenufer 31,26122 OL,Gutschein,100€",
-                    Losnummer=5599,
+                    Tag = 16,
+                    Beschreibung = "Optik am Haarenufer, Inh. Niko Bolle, Haarenufer 31, 26122 Oldenburg, Gutschein im Wert von 100 €",
+                    Losnummer = 5964
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=16,
-                    Beschreibung="Tecis Finanzdienstleistungen AG,Cloppenburger Straße 3,26135 OL,Gutschein,100€",
-                    Losnummer=941,
+                    Tag = 16,
+                    Beschreibung = "Tecis Finanzdienstleistungen AG, Cloppenburger Straße 3, 26135 Oldenburg, Gutschein im Wert von 100 €",
+                    Losnummer = 4678
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=16,
-                    Beschreibung="Phönix Bar & Restaurant,Ehnernstraße 15,26121 OL,Gutschein,150€",
-                    Losnummer=5750,
+                    Tag = 16,
+                    Beschreibung = "Hankens Haaren Apotheke , Haarenstraße 38, 26122 Oldenburg, Einkaufsgutschein im Wert von 100 €",
+                    Losnummer = 1483
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=17,
-                    Beschreibung="Marien-Apotheke,Marienstraße 1,26121 OL,Gutschein,100€",
-                    Losnummer=6806,
+                    Tag = 17,
+                    Beschreibung = "Park der Gärten gGmbH, Elmendorfer Str.40, 26160 Bad Zwischenahn, 2 Jahreskarten",
+                    Losnummer = 2726
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=17,
-                    Beschreibung="Landessparkasse zu OL (LzO),Berliner Platz 1,26123 OL,Gutscheine für das OLisches Staatstheater,100€",
-                    Losnummer=5350,
+                    Tag = 17,
+                    Beschreibung = "Landessparkasse zu Oldenburg (LzO), Berliner Platz 1, 26123 Oldenburg, Gutschein für das Oldenburgische Staatstheater im Wert von 100 €",
+                    Losnummer = 4597
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=17,
-                    Beschreibung="La Vista Das Brillen Atelier,Gaststraße. 28,26122 OL,Gutschein,150€",
-                    Losnummer=4655,
+                    Tag = 17,
+                    Beschreibung = "La Vista Das Brillen Atelier, Gaststraße. 28, 26122 Oldenburg, Gutschein im Wert von 150 €",
+                    Losnummer = 59
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=18,
-                    Beschreibung="Beauty Concept by Stefanie Junghans,Donnerschweerstr. 57,26123 OL,Gutschein Kosmetik,150€",
-                    Losnummer=659,
+                    Tag = 18,
+                    Beschreibung = "Beauty Concept by Stefanie Junghans, Donnerschweerstr. 57, 26123 Oldenburg, Gutschein Kosmetik im Wert von 150 €",
+                    Losnummer = 1066
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=18,
-                    Beschreibung="Hankens Hansa Apotheke,Alter Postweg 125,26133 OL,Gutschein,100€",
-                    Losnummer=6766,
+                    Tag = 18,
+                    Beschreibung = "Hankens Hansa Apotheke, Alter Postweg 125, 26133 Oldenburg, Einkaufsgutschein im Wert von 100 €",
+                    Losnummer = 1678
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=18,
-                    Beschreibung="CEWE Stiftung & CO. KGaA,Meerweg 30 - 32,26133 OL,3 Gutscheine für Fotobuch,50€",
-                    Losnummer=6314,
+                    Tag = 18,
+                    Beschreibung = "CEWE Stiftung & CO. KGaA, Meerweg 30 - 32, 26133 Oldenburg, 2 Gutscheine für Fotobuch je 50 €",
+                    Losnummer = 666
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=19,
-                    Beschreibung="Vorwerk Gartenwelt,OLer Str. 100,26180 Rastede,Gutschein,100€",
-                    Losnummer=4930,
+                    Tag = 19,
+                    Beschreibung = "Vorwerk Gartenwelt, Oldenburger Str. 100, 26180 Rastede, Einkaufsgutschein im Wert von 100 €",
+                    Losnummer = 2244
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=19,
-                    Beschreibung="Optik am Haarenufer,Inh. Niko Bolle,Haarenufer 31,26122 OL,2 Gutscheine,100€",
-                    Losnummer=3930,
+                    Tag = 19,
+                    Beschreibung = "Optik am Haarenufer, Inh. Niko Bolle, Haarenufer 31, 26122 Oldenburg, Gutschein im Wert von 100 €",
+                    Losnummer = 5148
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=19,
-                    Beschreibung="GSG Bau- und Wohngesellschaft,Straßburger Str. 8,26123 OL,5 Theatergutscheine für Theater Laboratorium,25€",
-                    Losnummer=669,
+                    Tag = 19,
+                    Beschreibung = "GSG Bau- und Wohngesellschaft, Straßburger Str. 8, 26123 Oldenburg, 5 Theatergutscheine für Theater Laboratorium je 25 €",
+                    Losnummer = 1594
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=20,
-                    Beschreibung="GVO Versicherung,GVO Platz 1,26160 Bad Zwischenahn,Gutscheine für das Restaurrant Jagdhaus Eiden,100€",
-                    Losnummer=6896,
+                    Tag = 20,
+                    Beschreibung = "Ev. Familien-Bildungsstätte Oldenburg, Haareneschstraße 58a, 26121 Oldenburg, Kurse bei der Ev. Familien-Bildungsstätte Oldenburg im Wert von 150 €",
+                    Losnummer = 2547
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=20,
-                    Beschreibung="Hankens Haaren Apotheke,Haarenstraße 38,26122 OL,Gutschein,100€",
-                    Losnummer=1326,
+                    Tag = 20,
+                    Beschreibung = "Phönix Bar & Restaurant, Ehnernstraße 15, 26122 Oldenburg, Gutschein im Wert von 150 €",
+                    Losnummer = 207
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=20,
-                    Beschreibung="COMMERZIAL TREUHAND GmbH,Wilhelmsh.-Heerstraße 79,26125 OL,Gutschein für Schuhhaus Schütte,150€",
-                    Losnummer=1588,
+                    Tag = 20,
+                    Beschreibung = "Status Organisationsgesellschaft mbH, Nadorster Straße 222, 26123 Oldenburg, Gutschein für Möbelhaus Buss im Wert von 150 €",
+                    Losnummer = 1983
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=21,
-                    Beschreibung="Schmidt,Lauterbach & Partner Steuerberater,Brombeerweg 55,26180 Rastede,Gutscheine für Restaurant Antalya,150€",
-                    Losnummer=1101,
+                    Tag = 21,
+                    Beschreibung = "Optiker Schulz, Achternstraße 30/31, 26122 Oldenburg, Gutschein einmalig 50% Rabatt beim Kauf einer Brille ",
+                    Losnummer = 4284
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=21,
-                    Beschreibung="Buch Brader,Haarenstraße 8,26122 OL,Büchergutschein,100€",
-                    Losnummer=3925,
+                    Tag = 21,
+                    Beschreibung = "Schmidt, Lauterbach & Partner Steuerberater, Brombeerweg 55, 26180 Rastede, Gutscheine für Restaurant Antalya im Wert von 150 €",
+                    Losnummer = 6034
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=21,
-                    Beschreibung="Michael Stephan - Photograph,Haubentaucherring 13a,26135 OL,Fotoshooting,100€",
-                    Losnummer=411,
+                    Tag = 21,
+                    Beschreibung = "Oldenburger Volksbank, Lange Straße 8/9, 26122 Oldenburg, Fondsanteile der Union Invest",
+                    Losnummer = 4739
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=22,
-                    Beschreibung="Wachsstübchen,Alexanderstraße 116,26121 OL,4xGutscheine für Haarentfernung und Fußpflege,25€",
-                    Losnummer=461,
+                    Tag = 22,
+                    Beschreibung = "Bettenhaus Uwe Heintzen GmbH, Hauptstraße 109, 26131 Oldenburg, Gutschein im Wert von 250 €",
+                    Losnummer = 1967
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=22,
-                    Beschreibung="Rosemarie und Dieter Krah,LC OL Lappan,26180 Rastede,Bargeld 120€",
-                    Losnummer=3281,
+                    Tag = 22,
+                    Beschreibung = "Autohaus Frank Voigt, Bloherfelder Str. 242-244, 26129 Oldenburg, Gutschein im Wer von 200 €",
+                    Losnummer = 4388
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=22,
-                    Beschreibung="Löschau,Melkbrink 15,26121 OL,Gutschein,100€",
-                    Losnummer=5288,
+                    Tag = 22,
+                    Beschreibung = "Cassens GmbH&CoKG, Bremer Heerstraße 460, 26135 Oldenburg, 3 Einkaufsgutscheine je 50,- €",
+                    Losnummer = 3799
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=23,
-                    Beschreibung="Hankens Apotheke in den Höfen,Grüne Straße 10,26121 OL,Gutschein,100€",
-                    Losnummer=1901,
+                    Tag = 23,
+                    Beschreibung = "Hautnah , Herbartgang 13, 26122 Oldenburg, Gutschein im Wert von 150 €",
+                    Losnummer = 5423
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=23,
-                    Beschreibung="Eventhaus Müggenkrug,Elsflether Str. 53,26125 OL,Gutschein,150€",
-                    Losnummer=5458,
+                    Tag = 23,
+                    Beschreibung = "Eventhaus Müggenkrug, Elsflether Str. 53, 26125 Oldenburg, Gutschein im Wert von 150 €",
+                    Losnummer = 5487
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=23,
-                    Beschreibung="Christina Schulz,Galerie für Schmuck,Johannisstraße 15,26121 OL,Gutschein für ein Schmuckstück,150€",
-                    Losnummer=6763,
+                    Tag = 23,
+                    Beschreibung = "Christina Schulz, Galerie für Schmuck, Johannisstraße 15, 26121 Oldenburg, Gutschein im Wert von 150 €",
+                    Losnummer = 6064
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=24,
-                    Beschreibung="D'OR Galerie und Goldschmiede,Herbartgang 11,26122 OL,Schmuckstück,300€",
-                    Losnummer=772,
+                    Tag = 24,
+                    Beschreibung = "D'OR Galerie und Goldschmiede, Herbartgang 11, 26122 Oldenburg, Gutschein für ein Schmuckstück im Wert von 300 €",
+                    Losnummer = 3634
                 },
                 new Gewinn
                 {
                     Id = Guid.NewGuid(),
-                    Tag=24,
-                    Beschreibung="Golfclub am Meer,Ebereschenstraße 10,26160 Bad Zwischenahn,Platzerlaubnis inkl. Prüfungsgebühr für 2 Pers.",
-                    Losnummer=6517,
+                    Tag = 24,
+                    Beschreibung = "Golfclub am Meer, Ebereschenstraße 10, 26160 Bad Zwischenahn, Platzerlaubnis incl. Prüfungsgebühr für 2 Pers.",
+                    Losnummer = 109
                 },
                 new Gewinn
-                { 
+                {
                     Id = Guid.NewGuid(),
-                    Tag=24,
-                    Beschreibung="Volkswagen Zentrum OL,Bremer Heerstraße 1,26135 OL,Fahrt mit einem VW ID in die Autostadt mit 1 ÜN für 2 Pers.",
-                    Losnummer=3234,
-                },
-            };
+                    Tag = 24,
+                    Beschreibung = "Volkswagen Zentrum Oldenburg, Bremer Heerstraße 1, 26135 Oldenburg, Fahrt mit einem VW ID in die Autostadt mit 1 ÜN für 2 Pers.",
+                    Losnummer = 349
+                }
+           };
 
             // Save, just for fun...
             //gewinneService.Add(data);
@@ -551,8 +551,8 @@ namespace AdventskalenderApi
                 // clear only in december before christmas day...
                 if (d.Tag > dayOfDecember)
                 {
-                       d.Beschreibung = String.Empty;
-                       d.Losnummer = 0;
+                    d.Beschreibung = String.Empty;
+                    d.Losnummer = 0;
                 }
             });
             var response = req.CreateResponse(HttpStatusCode.OK);
