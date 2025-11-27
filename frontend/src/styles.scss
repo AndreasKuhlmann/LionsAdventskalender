@@ -71,17 +71,17 @@ $md-lionsblue: (
 @use '@angular/material' as mat;
 @include mat.core();
 
-$kalendar-app-primary: mat.define-palette($md-lionsblue, 500);
-$kalendar-app-accent: mat.define-palette($md-lionsyellow, 500);
-$kalendar-app-warn: mat.define-palette(mat.$red-palette);
+$kalendar-app-primary: mat.m2-define-palette($md-lionsblue, 500);
+$kalendar-app-accent: mat.m2-define-palette($md-lionsyellow, 500);
+$kalendar-app-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
-$kalendar-app-theme: mat.define-light-theme((
+$kalendar-app-theme: mat.m2-define-light-theme((
   color: (
     primary: $kalendar-app-primary,
     accent: $kalendar-app-accent,
     warn: $kalendar-app-warn
   ),
-  typography: mat.define-typography-config(),
+  typography: mat.m2-define-typography-config(),
   density: 0,
   ));
 
@@ -89,17 +89,17 @@ $kalendar-app-theme: mat.define-light-theme((
 
 .dark-theme {
 
-  $primary-dark: mat.define-palette(mat.$pink-palette, 700);
-  $accent-dark: mat.define-palette(mat.$green-palette);
-  $warn-dark: mat.define-palette(mat.$red-palette);
+  $primary-dark: mat.m2-define-palette(mat.$m2-pink-palette, 700);
+  $accent-dark: mat.m2-define-palette(mat.$m2-green-palette);
+  $warn-dark: mat.m2-define-palette(mat.$m2-red-palette);
 
-  $theme-dark: mat.define-dark-theme((
+  $theme-dark: mat.m2-define-dark-theme((
     color: (
       primary: $primary-dark,
       accent: $accent-dark,
       warn: $warn-dark
     ),
-    typography: mat.define-typography-config(),
+    typography: mat.m2-define-typography-config(),
     density: 0,
   ));
   // https://github.com/angular/components/blob/main/guides/duplicate-theming-styles.md
