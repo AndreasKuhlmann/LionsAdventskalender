@@ -5,9 +5,10 @@ import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 
 @Component({
-  selector: 'app-zweck-dialog',
-  templateUrl: './foerderer-dialog.component.html',
-  styleUrls: ['./foerderer-dialog.component.scss']
+    selector: 'app-zweck-dialog',
+    templateUrl: './foerderer-dialog.component.html',
+    styleUrls: ['./foerderer-dialog.component.scss'],
+    standalone: false
 })
 export class FoerdererDialogComponent implements OnInit {
 

@@ -3,9 +3,10 @@ import { GewinnService, TagesGewinne } from '../../services/gewinn.service';
 import { App } from '@capacitor/app';
 
 @Component({
-  selector: 'kalender',
-  templateUrl: './kalender.component.html',
-  styleUrls: ['./kalender.component.scss'],
+    selector: 'kalender',
+    templateUrl: './kalender.component.html',
+    styleUrls: ['./kalender.component.scss'],
+    standalone: false
 })
 export class KalenderComponent implements OnInit {
   @ViewChild('container', { read: ElementRef }) container!: ElementRef;

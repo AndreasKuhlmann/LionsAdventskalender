@@ -5,9 +5,10 @@ import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 
 @Component({
-  selector: 'app-zweck-dialog',
-  templateUrl: './impressum-dialog.component.html',
-  styleUrls: ['./impressum-dialog.component.scss']
+    selector: 'app-zweck-dialog',
+    templateUrl: './impressum-dialog.component.html',
+    styleUrls: ['./impressum-dialog.component.scss'],
+    standalone: false
 })
 export class ImpressumDialogComponent implements OnInit {
 

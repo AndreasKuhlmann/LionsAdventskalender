@@ -9,9 +9,10 @@ import { UserService } from '../../services/user.service';
 const SMALL_WIDTH_BREAKPOINT = 720;
 
 @Component({
-  selector: 'sidenav',
-  templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.scss']
+    selector: 'sidenav',
+    templateUrl: './sidenav.component.html',
+    styleUrls: ['./sidenav.component.scss'],
+    standalone: false
 })
 export class SidenavComponent implements OnInit {
 

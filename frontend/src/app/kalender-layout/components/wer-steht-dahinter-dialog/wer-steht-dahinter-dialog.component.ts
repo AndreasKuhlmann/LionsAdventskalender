@@ -5,9 +5,10 @@ import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 
 @Component({
-  selector: 'app-zweck-dialog',
-  templateUrl: './wer-steht-dahinter-dialog.component.html',
-  styleUrls: ['./wer-steht-dahinter-dialog.component.scss']
+    selector: 'app-zweck-dialog',
+    templateUrl: './wer-steht-dahinter-dialog.component.html',
+    styleUrls: ['./wer-steht-dahinter-dialog.component.scss'],
+    standalone: false
 })
 export class WerStehtDahinterDialogComponent implements OnInit {
 

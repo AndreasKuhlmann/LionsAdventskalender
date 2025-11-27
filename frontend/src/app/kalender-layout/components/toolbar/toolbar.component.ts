@@ -13,9 +13,10 @@ import { Platform } from '@angular/cdk/platform';
 declare var window: any;
 
 @Component({
-  selector: 'app-toolbar',
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss'],
+    selector: 'app-toolbar',
+    templateUrl: './toolbar.component.html',
+    styleUrls: ['./toolbar.component.scss'],
+    standalone: false
 })
 export class ToolbarComponent {
   @Output() toggleSidenav = new EventEmitter<void>();

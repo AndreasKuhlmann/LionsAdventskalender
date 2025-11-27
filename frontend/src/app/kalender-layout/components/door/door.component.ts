@@ -9,9 +9,10 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'door',
-  templateUrl: './door.component.html',
-  styleUrls: ['./door.component.scss'],
+    selector: 'door',
+    templateUrl: './door.component.html',
+    styleUrls: ['./door.component.scss'],
+    standalone: false
 })
 export class DoorComponent implements OnChanges, AfterViewInit {
   @Input() baseX = 0;

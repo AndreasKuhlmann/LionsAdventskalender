@@ -5,9 +5,10 @@ import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 
 @Component({
-  selector: 'app-zweck-dialog',
-  templateUrl: './zweck-dialog.component.html',
-  styleUrls: ['./zweck-dialog.component.scss']
+    selector: 'app-zweck-dialog',
+    templateUrl: './zweck-dialog.component.html',
+    styleUrls: ['./zweck-dialog.component.scss'],
+    standalone: false
 })
 export class ZweckDialogComponent implements OnInit {
 
