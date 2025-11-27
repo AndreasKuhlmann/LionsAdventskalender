@@ -1,22 +1,27 @@
 <div class="door-wrapper">
   <div #door class="backDoor">
-    <div
-      *ngIf="isOpen"
-      class="text-container"
-      style="display: flex; flex-direction: column; justify-content: space-around; text-align: center; height: 100%;"
-    >
-      <div *ngFor="let gewinn of tagesGewinne">
-        <div *ngIf="gewinn.Losnummer > 0" style="color: brown;">
-          <strong>Kalender {{ pad(gewinn.Losnummer, 4) }}</strong>
-        </div>
-        <div>{{ gewinn.Beschreibung }}</div>
+    @if (isOpen) {
+      <div
+        class="text-container"
+        style="display: flex; flex-direction: column; justify-content: space-around; text-align: center; height: 100%;"
+        >
+        @for (gewinn of tagesGewinne; track gewinn) {
+          <div>
+            @if (gewinn.Losnummer > 0) {
+              <div style="color: brown;">
+                <strong>Kalender {{ pad(gewinn.Losnummer, 4) }}</strong>
+              </div>
+            }
+            <div>{{ gewinn.Beschreibung }}</div>
+          </div>
+        }
       </div>
-    </div>
+    }
     <div
       class="doorHinge"
       (click)="toggle()"
       [ngClass]="{ doorOpen: isOpen, doorClose: !isOpen && keepClose }"
-    >
+      >
       <div class="doorInsideCover"></div>
       <div
         class="door"

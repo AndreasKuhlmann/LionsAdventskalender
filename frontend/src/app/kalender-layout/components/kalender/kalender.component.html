@@ -4,18 +4,19 @@
   (window:resize)="onResize(container)"
   (window:scroll)="onResize(container)"
   [style.min-height]="containerHeight"
->
-  <door
-    *ngFor="let tagesGewinn of service.tagesGewinne;"
-    [baseX]="containerXPosition"
-    [baseY]="containerYPosition"
-    [backgroundWidth]="containerWidth"
-    [no]="tagesGewinn.Tag"
-    [isOpen]="tagesGewinn.flipped"
-    [tagesGewinne]="tagesGewinn.Gewinne"
-    (click)="flip(tagesGewinn)"
   >
-  </door>
+  @for (tagesGewinn of service.tagesGewinne; track tagesGewinn) {
+    <door
+      [baseX]="containerXPosition"
+      [baseY]="containerYPosition"
+      [backgroundWidth]="containerWidth"
+      [no]="tagesGewinn.Tag"
+      [isOpen]="tagesGewinn.flipped"
+      [tagesGewinne]="tagesGewinn.Gewinne"
+      (click)="flip(tagesGewinn)"
+      >
+    </door>
+  }
 </div>
 <div class="snowflakes" aria-hidden="true">
   <div class="snowflake">❅</div>

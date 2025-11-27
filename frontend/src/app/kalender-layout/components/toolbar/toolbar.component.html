@@ -4,30 +4,36 @@
     style="max-height: 100%"
     src="/assets/lions.png"
     alt="Lions Club"
-  />
+    />
 
-  <span style="margin-left: 0.5em">Oldenburger Adventskalender</span>
+    <span style="margin-left: 0.5em">Oldenburger Adventskalender</span>
 
-  <span class="example-spacer"></span>
-  <div>
-    <button *ngIf="showInstallButton" mat-icon-button color="accent" (click)="installApp()" matTooltip="Installieren">
-      <mat-icon *ngIf="isDesktop">install_desktop</mat-icon>
-      <mat-icon *ngIf="!isDesktop" >install_mobile</mat-icon>
-    </button>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="openZweckDialog()">
-        Für einen guten Zweck
+    <span class="example-spacer"></span>
+    <div>
+      @if (showInstallButton) {
+        <button mat-icon-button color="accent" (click)="installApp()" matTooltip="Installieren">
+          @if (isDesktop) {
+            <mat-icon>install_desktop</mat-icon>
+          }
+          @if (!isDesktop) {
+            <mat-icon >install_mobile</mat-icon>
+          }
+        </button>
+      }
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
       </button>
-      <button mat-menu-item (click)="openFoerdererDialog()">
-        Die Förderer
-      </button>
-      <button mat-menu-item (click)="werStehtDahinterDialog()">
-        Wer steht dahinter?
-      </button>
-      <button mat-menu-item (click)="openImpressumDialog()">Impressum</button>
-    </mat-menu>
-  </div>
-</mat-toolbar>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openZweckDialog()">
+          Für einen guten Zweck
+        </button>
+        <button mat-menu-item (click)="openFoerdererDialog()">
+          Die Förderer
+        </button>
+        <button mat-menu-item (click)="werStehtDahinterDialog()">
+          Wer steht dahinter?
+        </button>
+        <button mat-menu-item (click)="openImpressumDialog()">Impressum</button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
