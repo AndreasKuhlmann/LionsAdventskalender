@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  url: 'https://kalenderapi.azurewebsites.net/api/Gewinne'
-  // url: 'http://localhost:7071/api/Gewinne/',
+  // url: 'https://kalenderapi.azurewebsites.net/api/Gewinne'
+  url: 'http://localhost:7071/api/Gewinne/',
 };
 
 /*
