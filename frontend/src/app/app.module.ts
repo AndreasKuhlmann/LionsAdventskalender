@@ -6,7 +6,7 @@ import { Drivers } from '@ionic/storage';
 import { IonicStorageModule, Storage } from '@ionic/storage-angular';
 import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 export function initializeApp(storage: Storage) {
@@ -21,34 +21,28 @@ const routes: Routes = [
   { path: '**', redirectTo: '' }
 ];
 
-@NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    IonicStorageModule.forRoot({
-      name: 'adventsKalender',
-      storeName: 'DB',
-      driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage]
-    }),
-    BrowserAnimationsModule,
-    HttpClientModule,
-    RouterModule.forRoot(routes),
-    MaterialModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    })
-  ],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      deps: [Storage],
-      useFactory: initializeApp,
-      multi: true,
-    },
-  ],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [AppComponent],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        IonicStorageModule.forRoot({
+            name: 'adventsKalender',
+            storeName: 'DB',
+            driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage]
+        }),
+        BrowserAnimationsModule,
+        RouterModule.forRoot(routes),
+        MaterialModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            // Register the ServiceWorker as soon as the application is stable
+            // or after 30 seconds (whichever comes first).
+            registrationStrategy: 'registerWhenStable:30000'
+        })], providers: [
+        {
+            provide: APP_INITIALIZER,
+            deps: [Storage],
+            useFactory: initializeApp,
+            multi: true,
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule { }

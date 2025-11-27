@@ -1,7 +1,7 @@
 import { MaterialModule } from '../shared/material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { DoorComponent } from './components/door/door.component';
 import { ZweckDialogComponent } from './components/zweck-dialog/zweck-dialog.component';
@@ -26,27 +26,20 @@ const routes: Routes = [
   },
   { path: '**', redirectTo: '' },
 ];
-@NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    MaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes),
-  ],
-  providers: [UserService, GewinnService, InstallablePromptService],
-  declarations: [
-    KalenderLayoutComponent,
-    DoorComponent,
-    KalenderComponent,
-    ToolbarComponent,
-    SidenavComponent,
-    ZweckDialogComponent,
-    FoerdererDialogComponent,
-    ImpressumDialogComponent,
-    WerStehtDahinterDialogComponent,
-    InstallablePromptComponent,
-  ],
-})
+@NgModule({ declarations: [
+        KalenderLayoutComponent,
+        DoorComponent,
+        KalenderComponent,
+        ToolbarComponent,
+        SidenavComponent,
+        ZweckDialogComponent,
+        FoerdererDialogComponent,
+        ImpressumDialogComponent,
+        WerStehtDahinterDialogComponent,
+        InstallablePromptComponent,
+    ], imports: [CommonModule,
+        MaterialModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule.forChild(routes)], providers: [UserService, GewinnService, InstallablePromptService, provideHttpClient(withInterceptorsFromDi())] })
 export class KalenderLayoutModule {}
