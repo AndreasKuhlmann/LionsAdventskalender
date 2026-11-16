@@ -1,20 +1,21 @@
-import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
 import { GewinnService, TagesGewinne } from '../../services/gewinn.service';
 import { App } from '@capacitor/app';
+import { DoorComponent } from '../door/door.component';
 
 @Component({
     selector: 'kalender',
     templateUrl: './kalender.component.html',
     styleUrls: ['./kalender.component.scss'],
-    standalone: false
+    imports: [DoorComponent]
 })
 export class KalenderComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('container', { read: ElementRef }) container!: ElementRef;
+  readonly container = viewChild.required('container', { read: ElementRef });
   title = 'lions-kalender';
-  containerXPosition = 0;
-  containerYPosition = 0;
-  containerWidth = 1208;
-  containerHeight = '906px';
+  readonly containerXPosition = signal(0);
+  readonly containerYPosition = signal(0);
+  readonly containerWidth = signal(1208);
+  readonly containerHeight = signal('906px');
   private resizeObserver?: ResizeObserver;
   constructor(public service: GewinnService, private _ngZone: NgZone) {
     // Wenn der Kalender in den Vordergrund kommt aktualisiere die Daten...
@@ -52,23 +53,18 @@ export class KalenderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.resizeObserver = new ResizeObserver(() =>
       this._ngZone.run(() => this.setPositon())
     );
-    this.resizeObserver.observe(this.container.nativeElement);
+    this.resizeObserver.observe(this.container().nativeElement);
   }
 
   ngOnDestroy() {
     this.resizeObserver?.disconnect();
   }
   private setPositon() {
-    this.containerXPosition =
-      this.container.nativeElement.getBoundingClientRect().x;
-    this.containerYPosition =
-      this.container.nativeElement.getBoundingClientRect().y;
-    this.containerWidth =
-      this.container.nativeElement.getBoundingClientRect().width;
-    this.containerHeight =
-      (
-        this.container.nativeElement.getBoundingClientRect().width * 0.711
-      ).toString() + 'px';
+    const rect = this.container().nativeElement.getBoundingClientRect();
+    this.containerXPosition.set(rect.x);
+    this.containerYPosition.set(rect.y);
+    this.containerWidth.set(rect.width);
+    this.containerHeight.set(`${rect.width * 0.711}px`);
   }
   onResize(element: HTMLDivElement) {
     this.setPositon();

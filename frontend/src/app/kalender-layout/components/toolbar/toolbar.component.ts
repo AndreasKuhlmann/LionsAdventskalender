@@ -1,14 +1,17 @@
 import { ImpressumDialogComponent } from './../impressum-dialog/impressum-dialog.component';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
-import { FoerdererDialogComponent } from '../foerderer-dialog copy/foerderer-dialog.component';
+import { FoerdererDialogComponent } from '../foerderer-dialog/foerderer-dialog.component';
 import { ZweckDialogComponent } from '../zweck-dialog/zweck-dialog.component';
 import { WerStehtDahinterDialogComponent } from '../wer-steht-dahinter-dialog/wer-steht-dahinter-dialog.component';
 import { InstallablePromptService } from '../../services/installable-prompt.service';
 import { take } from 'rxjs';
 import { Platform } from '@angular/cdk/platform';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 
 declare var window: any;
 
@@ -16,24 +19,19 @@ declare var window: any;
     selector: 'app-toolbar',
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
-    standalone: false
+    imports: [MatToolbar, MatIconButton, MatTooltip, MatIcon, MatMenuTrigger, MatMenu, MatMenuItem]
 })
 export class ToolbarComponent {
-  @Output() toggleSidenav = new EventEmitter<void>();
-  @Output() toggleTheme = new EventEmitter<void>();
-  @Output() toggleDir = new EventEmitter<void>();
-  isDesktop = false
-  showInstallButton = false;
+  readonly isDesktop = signal(false);
+  readonly showInstallButton = signal(false);
   constructor(
     private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private router: Router,
     private installablePromptService: InstallablePromptService,
     private _platform: Platform
   ) {
     if (!this._platform.IOS && !this._platform.ANDROID && !this.isPwa()) {
-      this.showInstallButton = true;
-      this.isDesktop = true;
+      this.showInstallButton.set(true);
+      this.isDesktop.set(true);
     }
   }
 
@@ -70,35 +68,10 @@ export class ToolbarComponent {
       width: '35rem',
     });
   }
-  openAddContactDialog(): void {
-    const dialogRef = this.dialog.open(ZweckDialogComponent, {
-      width: '450px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result);
-
-      if (result) {
-        this.openSnackBar("Contact added", "Navigate")
-          .onAction().subscribe(() => {
-            this.router.navigate(['/contactmanager', result.id]);
-          });
-      }
-    });
-  }
-
-  openSnackBar(
-    message: string,
-    action: string
-  ): MatSnackBarRef<SimpleSnackBar> {
-    return this.snackBar.open(message, action, {
-      duration: 5000,
-    });
-  }
   async installApp() {
     await this.installablePromptService.showPrompt().pipe(take(1)).subscribe((result => {
       if (result == true) {
-        this.showInstallButton = false;
+        this.showInstallButton.set(false);
       }
     }));
   }

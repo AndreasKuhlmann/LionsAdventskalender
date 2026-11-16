@@ -1,17 +1,9 @@
 import { Component } from '@angular/core';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 @Component({
-    selector: 'kalender-layout',
-    template: '<sidenav></sidenav>',
-    styles: [],
-    standalone: false
+  selector: 'kalender-layout',
+  template: '<sidenav></sidenav>',
+  imports: [SidenavComponent],
 })
-export class KalenderLayoutComponent {
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIconSet(
-      sanitizer.bypassSecurityTrustResourceUrl('assets/avatars.svg')
-    );
-  }
-}
+export class KalenderLayoutComponent {}

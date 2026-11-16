@@ -1,47 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import { User } from '../../models/user';
-import { UserService } from '../../services/user.service';
+import { Component } from '@angular/core';
+import { MatDialogRef, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { CdkScrollable } from '@angular/cdk/scrolling';
 
 @Component({
-    selector: 'app-zweck-dialog',
-    templateUrl: './wer-steht-dahinter-dialog.component.html',
-    styleUrls: ['./wer-steht-dahinter-dialog.component.scss'],
-    standalone: false
+  selector: 'app-wer-steht-dahinter-dialog',
+  templateUrl: './wer-steht-dahinter-dialog.component.html',
+  styleUrls: ['./wer-steht-dahinter-dialog.component.scss'],
+  imports: [MatDialogTitle, MatIconButton, MatIcon, CdkScrollable, MatDialogContent],
 })
-export class WerStehtDahinterDialogComponent implements OnInit {
-
-  avatars = [
-    'svg-1', 'svg-2', 'svg-3', 'svg-4'
-  ];
-
-  user!: User;
-  constructor(
-    private dialogRef: MatDialogRef<WerStehtDahinterDialogComponent>,
-    private userService: UserService) { }
-
-  name = new FormControl('', [Validators.required]);
-
-  getErrorMessage() {
-    return this.name.hasError('required') ? 'You must enter a name' : '';
-  }
-
-  ngOnInit(): void {
-    this.user = new User();
-  }
-
-  save() {
-    this.user.name = this.name.value;
-
-    this.userService.addUser(this.user).then(user => {
-      this.dialogRef.close(user);
-    });
-
-  }
+export class WerStehtDahinterDialogComponent {
+  constructor(private dialogRef: MatDialogRef<WerStehtDahinterDialogComponent>) {}
 
   dismiss() {
     this.dialogRef.close(null);
   }
-
 }

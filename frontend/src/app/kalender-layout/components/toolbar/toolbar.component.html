@@ -10,12 +10,12 @@
 
     <span class="example-spacer"></span>
     <div>
-      @if (showInstallButton) {
+      @if (showInstallButton()) {
         <button mat-icon-button color="accent" (click)="installApp()" matTooltip="Installieren">
-          @if (isDesktop) {
+          @if (isDesktop()) {
             <mat-icon>install_desktop</mat-icon>
           }
-          @if (!isDesktop) {
+          @if (!isDesktop()) {
             <mat-icon >install_mobile</mat-icon>
           }
         </button>

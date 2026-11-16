@@ -4,8 +4,8 @@ import { KalenderComponent } from './kalender.component';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [KalenderComponent],
-    }).compileComponents();
+    imports: [KalenderComponent],
+}).compileComponents();
   });
 
   it('should create the app', () => {

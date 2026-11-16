@@ -3,13 +3,13 @@
   class="doors-container"
   (window:resize)="onResize(container)"
   (window:scroll)="onResize(container)"
-  [style.min-height]="containerHeight"
+  [style.min-height]="containerHeight()"
   >
-  @for (tagesGewinn of service.tagesGewinne; track tagesGewinn) {
+  @for (tagesGewinn of service.tagesGewinne(); track tagesGewinn.Tag) {
     <door
-      [baseX]="containerXPosition"
-      [baseY]="containerYPosition"
-      [backgroundWidth]="containerWidth"
+      [baseX]="containerXPosition()"
+      [baseY]="containerYPosition()"
+      [backgroundWidth]="containerWidth()"
       [no]="tagesGewinn.Tag"
       [isOpen]="tagesGewinn.flipped"
       [tagesGewinne]="tagesGewinn.Gewinne"
