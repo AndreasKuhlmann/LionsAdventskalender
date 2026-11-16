@@ -5,6 +5,7 @@ import { FoerdererDialogComponent } from '../foerderer-dialog/foerderer-dialog.c
 import { ZweckDialogComponent } from '../zweck-dialog/zweck-dialog.component';
 import { WerStehtDahinterDialogComponent } from '../wer-steht-dahinter-dialog/wer-steht-dahinter-dialog.component';
 import { InstallablePromptService } from '../../services/installable-prompt.service';
+import { DoorSoundService } from '../../services/door-sound.service';
 import {
   InstallablePromptComponent,
   InstallablePromptData,
@@ -23,6 +24,7 @@ import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 })
 export class ToolbarComponent {
   private readonly installablePromptService = inject(InstallablePromptService);
+  readonly sound = inject(DoorSoundService);
 
   /** Install-Button nur anbieten, wenn der Browser die Installation erlaubt (bzw. auf iOS als Anleitung). */
   readonly showInstallButton = this.installablePromptService.canInstall;
