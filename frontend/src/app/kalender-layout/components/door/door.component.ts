@@ -6,11 +6,13 @@ import {
   input,
   signal,
   viewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 @Component({
   selector: 'door',
   templateUrl: './door.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./door.component.scss'],
 })
 export class DoorComponent {

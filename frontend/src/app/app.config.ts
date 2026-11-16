@@ -6,7 +6,7 @@ import {
   provideAppInitializer,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
@@ -18,7 +18,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection(),
     provideRouter(APP_ROUTES),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withXhr(), withInterceptorsFromDi()),
     provideAnimationsAsync(),
     importProvidersFrom(
       IonicStorageModule.forRoot({

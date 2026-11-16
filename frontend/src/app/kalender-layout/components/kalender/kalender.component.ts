@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { GewinnService, TagesGewinne } from '../../services/gewinn.service';
 import { App } from '@capacitor/app';
 import { DoorComponent } from '../door/door.component';
@@ -7,6 +7,7 @@ import { DoorComponent } from '../door/door.component';
     selector: 'kalender',
     templateUrl: './kalender.component.html',
     styleUrls: ['./kalender.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DoorComponent]
 })
 export class KalenderComponent implements OnInit, AfterViewInit, OnDestroy {
