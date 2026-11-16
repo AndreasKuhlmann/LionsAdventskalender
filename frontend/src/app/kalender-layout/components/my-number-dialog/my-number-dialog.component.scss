@@ -15,6 +15,13 @@
   }
 }
 
+// deutlich als Button erkennbar: kräftiger Rahmen in der Primärfarbe
+.add-button {
+  flex-shrink: 0;
+  border: 2px solid #2a4a82;
+  margin-bottom: 0.25rem;
+}
+
 .message {
   margin: 0.75rem 0 0;
   color: #c62828;

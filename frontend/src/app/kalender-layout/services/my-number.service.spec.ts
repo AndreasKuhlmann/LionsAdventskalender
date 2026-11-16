@@ -18,6 +18,20 @@ describe('MyNumberService', () => {
     expect(service.count()).toBe(4);
   });
 
+  it('accepts at most 4 digits (1 to 9999)', () => {
+    const service = TestBed.inject(MyNumberService);
+    const result = service.add('9999, 0042, 10000, 00042');
+
+    expect(result.added).toEqual([9999, 42]);
+    expect(result.invalid).toEqual(['10000', '00042']);
+    expect(service.numbers()).toEqual([42, 9999]);
+  });
+
+  it('ignores stored numbers with more than 4 digits (from an older version)', () => {
+    localStorage.setItem('adventskalender.meineKalendernummern', JSON.stringify([42, 12345]));
+    expect(TestBed.inject(MyNumberService).numbers()).toEqual([42]);
+  });
+
   it('reports invalid input and keeps the valid numbers', () => {
     const service = TestBed.inject(MyNumberService);
     const result = service.add('42, abc, 0, 123456, -5');

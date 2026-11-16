@@ -5,8 +5,10 @@ const STORAGE_KEY = 'adventskalender.meineKalendernummern';
 /** Früherer Schlüssel (nur eine Nummer) - wird beim ersten Laden übernommen. */
 const LEGACY_STORAGE_KEY = 'adventskalender.meineKalendernummer';
 
-/** Höchste zulässige Kalendernummer (Plausibilitätsprüfung der Eingabe). */
-export const MAX_KALENDERNUMMER = 99999;
+/** Kalendernummern haben höchstens 4 Ziffern (wie auf dem Kalender, z.B. 0042). */
+export const MAX_ZIFFERN = 4;
+/** Höchste zulässige Kalendernummer. */
+export const MAX_KALENDERNUMMER = 10 ** MAX_ZIFFERN - 1; // 9999
 /** Wie viele Nummern höchstens hinterlegt werden können. */
 export const MAX_ANZAHL_NUMMERN = 50;
 
@@ -40,7 +42,8 @@ export class MyNumberService {
     const current = new Set(this.numbers());
 
     for (const token of input.split(/[\s,;]+/).filter((t) => t.length > 0)) {
-      const value = /^\d+$/.test(token) ? Number(token) : NaN;
+      // höchstens 4 Ziffern - auch "00042" (5 Zeichen) ist ungültig
+      const value = token.length <= MAX_ZIFFERN && /^\d+$/.test(token) ? Number(token) : NaN;
       if (!Number.isInteger(value) || value < 1 || value > MAX_KALENDERNUMMER) {
         result.invalid.push(token);
       } else if (current.has(value)) {
@@ -91,7 +94,9 @@ function read(): number[] {
     if (stored) {
       const parsed: unknown = JSON.parse(stored);
       if (Array.isArray(parsed)) {
-        return parsed.filter((n): n is number => Number.isInteger(n) && n > 0).sort((a, b) => a - b);
+        return parsed
+          .filter((n): n is number => Number.isInteger(n) && n > 0 && n <= MAX_KALENDERNUMMER)
+          .sort((a, b) => a - b);
       }
     }
     // Übernahme der früher gespeicherten einzelnen Nummer

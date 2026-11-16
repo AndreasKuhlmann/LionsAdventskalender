@@ -18,6 +18,7 @@ import { MatFormField, MatHint, MatLabel } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import {
   MAX_ANZAHL_NUMMERN,
+  MAX_ZIFFERN,
   MAX_KALENDERNUMMER,
   MyNumberService,
   formatKalendernummer,
@@ -38,7 +39,6 @@ import {
     MatDialogActions,
     MatFormField,
     MatLabel,
-    MatHint,
     MatChipGrid,
     MatChipRow,
     MatChipRemove,
@@ -54,6 +54,8 @@ export class MyNumberDialogComponent {
   readonly numbers = this.myNumber.numbers;
   readonly separatorKeys = [ENTER, COMMA, SEMICOLON, SPACE];
   readonly maxAnzahl = MAX_ANZAHL_NUMMERN;
+  /** Kalendernummern haben höchstens 4 Ziffern - mehr lässt das Eingabefeld nicht zu */
+  readonly maxZiffern = MAX_ZIFFERN;
   readonly format = formatKalendernummer;
 
   /** Rückmeldung zur letzten Eingabe (Fehler/Hinweis) */
