@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 /** Anzahl gleichzeitig fallender Schneeflocken. */
-const FLAKE_COUNT = 100;
+export const FLAKE_COUNT = 100;
 const FLAKE_CHARS = ['❅', '❆', '❄'];
 
 interface Flake {

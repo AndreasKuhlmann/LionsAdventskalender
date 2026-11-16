@@ -8,6 +8,7 @@ import { InstallablePromptService } from '../../services/installable-prompt.serv
 import { DoorSoundService } from '../../services/door-sound.service';
 import { MyNumberService, formatKalendernummer } from '../../services/my-number.service';
 import { WinnerService } from '../../services/winner.service';
+import { TwinkleLightsService } from '../twinkle-lights/twinkle-lights.service';
 import {
   InstallablePromptComponent,
   InstallablePromptData,
@@ -29,6 +30,7 @@ export class ToolbarComponent {
   private readonly installablePromptService = inject(InstallablePromptService);
   readonly sound = inject(DoorSoundService);
   readonly winner = inject(WinnerService);
+  readonly twinkleLights = inject(TwinkleLightsService);
   private readonly myNumber = inject(MyNumberService);
 
   /** Anzahl hinterlegter Kalendernummern (Badge am Los-Symbol) */

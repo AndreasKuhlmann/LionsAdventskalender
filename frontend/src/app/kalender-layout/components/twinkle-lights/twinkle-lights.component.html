@@ -1,0 +1,8 @@
+@for (layer of layers(); track $index) {
+  <div
+    [class]="'layer ' + layer.kind"
+    [style.background-image]="layer.backgroundImage"
+    [style.animation-duration.s]="layer.duration"
+    [style.animation-delay.s]="layer.delay"
+  ></div>
+}

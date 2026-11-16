@@ -1,5 +1,23 @@
-<div class="door-wrapper">
+<div class="door-wrapper" [class.lit]="isOpen() || keepClose()" [class.burst]="lightBurst()">
   <div #door class="backDoor">
+    <!-- warmes Licht hinter der Tür (auch durch den Spalt einer nur kurz aufgehenden Tür) -->
+    <div
+      class="door-glow"
+      [class.visible]="isOpen() || keepClose()"
+      [class.burst]="lightBurst()"
+      aria-hidden="true"
+    ></div>
+    @for (spark of sparks(); track spark.id) {
+      <span
+        class="spark"
+        aria-hidden="true"
+        [style.left.%]="spark.x"
+        [style.animation-delay.ms]="spark.delay"
+        [style.animation-duration.ms]="spark.duration"
+        [style.--drift]="spark.drift + 'px'"
+        [style.--size]="spark.size + 'px'"
+      ></span>
+    }
     @if (isOpen()) {
       <div
         class="text-container"
@@ -27,7 +45,10 @@
       [class.doorClose]="!isOpen() && keepClose()"
       >
       <div class="doorInsideCover"></div>
-      <div #doorFace class="door" [attr.data-no]="no()"></div>
+      <div #doorFace class="door" [attr.data-no]="no()">
+        <!-- die Tür zeigt einen Ausschnitt des Bildes - die Lichter darin sollen auch funkeln -->
+        <app-twinkle-lights class="on-door" />
+      </div>
     </div>
   </div>
 </div>

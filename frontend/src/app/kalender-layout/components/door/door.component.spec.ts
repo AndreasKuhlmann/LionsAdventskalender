@@ -55,6 +55,47 @@ describe('DoorComponent', () => {
     expect(winner.doorOpened).toHaveBeenLastCalledWith(3, gewinne, false);
   });
 
+  it('lights up with rising sparks when opened, then keeps a calm glow', async () => {
+    const el = fixture.nativeElement as HTMLElement;
+    await fixture.whenStable();
+    expect(el.querySelectorAll('.spark').length).toBe(0);
+
+    vi.useFakeTimers();
+    try {
+      fixture.componentRef.setInput('isOpen', true);
+      fixture.detectChanges();
+      expect(el.querySelectorAll('.spark').length).toBeGreaterThan(0);
+      expect(el.querySelector('.door-glow')?.classList).toContain('burst');
+      expect(el.querySelector('.door-wrapper')?.classList).toContain('lit');
+
+      vi.advanceTimersByTime(2000);
+      fixture.detectChanges();
+      expect(el.querySelectorAll('.spark').length).toBe(0);
+      expect(el.querySelector('.door-glow')?.classList).not.toContain('burst');
+      expect(el.querySelector('.door-glow')?.classList).toContain('visible'); // ruhiger Schein bleibt
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('shows no sparks for a door that is already open when shown', async () => {
+    fixture.componentRef.setInput('isOpen', true);
+    await fixture.whenStable();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelectorAll('.spark').length).toBe(0);
+    expect(el.querySelector('.door-glow')?.classList).toContain('visible');
+  });
+
+  it('shows the twinkling lights on the door face, aligned with its picture section', async () => {
+    fixture.componentRef.setInput('backgroundWidth', 1200);
+    await fixture.whenStable();
+    const face = (fixture.nativeElement as HTMLElement).querySelector<HTMLElement>('.door')!;
+
+    expect(face.querySelector('app-twinkle-lights')).not.toBeNull();
+    expect(face.style.getPropertyValue('--twinkle-size')).toBe('1200px auto');
+    expect(face.style.getPropertyValue('--twinkle-position')).toBe(face.style.backgroundPosition);
+  });
+
   it('highlights the own winning number in an open door', async () => {
     TestBed.inject(MyNumberService).add('42');
     fixture.componentRef.setInput('tagesGewinne', [
@@ -85,6 +126,21 @@ describe('DoorComponent', () => {
       vi.advanceTimersByTime(1300);
       expect(sound.playClose).toHaveBeenCalledOnce();
       expect(fixture.componentInstance.keepClose()).toBe(false);
+    });
+
+    it('lets the light shine out while ajar and turns it off when slamming shut', () => {
+      const el = fixture.nativeElement as HTMLElement;
+      fixture.componentInstance.toggle();
+      fixture.detectChanges();
+      expect(el.querySelector('.door-wrapper')?.classList).toContain('lit');
+      expect(el.querySelector('.door-wrapper')?.classList).toContain('burst');
+      expect(el.querySelectorAll('.spark').length).toBeGreaterThan(0);
+
+      vi.advanceTimersByTime(1300);
+      fixture.detectChanges();
+      expect(el.querySelector('.door-wrapper')?.classList).not.toContain('lit');
+      expect(el.querySelector('.door-wrapper')?.classList).not.toContain('burst');
+      expect(el.querySelector('.door-glow')?.classList).not.toContain('visible');
     });
 
     it('slams shut immediately on a second click', () => {

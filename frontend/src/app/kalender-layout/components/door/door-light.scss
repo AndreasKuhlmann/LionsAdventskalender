@@ -1,0 +1,120 @@
+// Warmes Licht hinter der Tür und aufsteigende Funken beim Öffnen.
+
+.backDoor {
+  position: relative; // Bezugspunkt für Lichtschein und Funken
+}
+
+// Funkelnde Lichter auf der Vorderseite der Tür (die Tür zeigt einen Ausschnitt des Bildes).
+// Die Türnummer liegt darüber. (.door ist über ".doorHinge div" bereits absolut positioniert
+// und damit Bezugspunkt für die Lichter.)
+.door::before {
+  position: relative;
+  z-index: 1;
+}
+
+// Lichtschein im Inneren der Tür
+.door-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  background: radial-gradient(
+    ellipse at 50% 60%,
+    rgba(255, 214, 102, 0.55) 0%,
+    rgba(255, 170, 60, 0.25) 45%,
+    rgba(255, 170, 60, 0) 75%
+  );
+
+  &.visible {
+    opacity: 1;
+  }
+
+  &.burst {
+    animation: glow-burst 1.8s ease-out;
+  }
+}
+
+// Licht, das aus der Tür nach außen fällt
+.door-wrapper {
+  transition:
+    transform 0.5s ease-in-out,
+    box-shadow 0.6s ease;
+
+  &.lit {
+    box-shadow: 0 0 1.5rem 0.3rem rgba(255, 190, 70, 0.45);
+  }
+
+  &.burst {
+    animation: wrapper-burst 1.8s ease-out;
+  }
+}
+
+// Funken
+.spark {
+  position: absolute;
+  bottom: 15%;
+  z-index: 2;
+  width: var(--size, 5px);
+  height: var(--size, 5px);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle, #fff7c2 0%, #ffd34d 45%, rgba(255, 170, 0, 0) 70%);
+  box-shadow: 0 0 6px 2px rgba(255, 200, 80, 0.6);
+  animation-name: spark-rise;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes glow-burst {
+  0% {
+    opacity: 0;
+    filter: brightness(1);
+  }
+  25% {
+    opacity: 1;
+    filter: brightness(1.8);
+  }
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+@keyframes wrapper-burst {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 190, 70, 0);
+  }
+  30% {
+    box-shadow: 0 0 3.5rem 1.2rem rgba(255, 200, 90, 0.85);
+  }
+  100% {
+    box-shadow: 0 0 1.5rem 0.3rem rgba(255, 190, 70, 0.45);
+  }
+}
+
+@keyframes spark-rise {
+  0% {
+    transform: translate(0, 0) scale(0.6);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--drift, 0px), -170px) scale(0.2);
+    opacity: 0;
+  }
+}
+
+// Systemeinstellung "Bewegung reduzieren": nur ruhiger Lichtschein
+@media (prefers-reduced-motion: reduce) {
+  .spark {
+    display: none;
+  }
+  .door-glow.burst,
+  .door-wrapper.burst {
+    animation: none;
+  }
+}

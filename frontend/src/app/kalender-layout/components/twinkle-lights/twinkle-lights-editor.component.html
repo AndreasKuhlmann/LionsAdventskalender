@@ -1,0 +1,41 @@
+<!-- Klickfläche über dem ganzen Kalender (auch über den Türen) -->
+<div class="click-area" [style.background-image]="markers()" (click)="onAreaClick($event)"></div>
+
+<div class="panel" role="dialog" aria-label="Lichter einrichten">
+  <div class="title">✨ Lichter einrichten</div>
+  <p class="help">Klick ins Bild: Licht setzen<br />Klick auf ein Licht: entfernen</p>
+
+  <div class="kinds">
+    @for (kind of kinds; track kind) {
+      <button
+        type="button"
+        class="kind"
+        [class.active]="service.selectedKind() === kind"
+        (click)="service.selectedKind.set(kind)"
+      >
+        <span class="dot" [style.background]="colors[kind]"></span>
+        {{ labels[kind] }}
+        <span class="count">{{ countByKind()[kind] }}</span>
+      </button>
+    }
+  </div>
+
+  <label class="option">
+    <input type="checkbox" [checked]="showMarkers()" (change)="showMarkers.set(!showMarkers())" />
+    Markierungen anzeigen
+  </label>
+
+  <div class="actions">
+    <button type="button" class="primary" (click)="copy()">Liste kopieren</button>
+    <button type="button" (click)="resetToFile()" [disabled]="!service.hasDraft()">Verwerfen</button>
+    <button type="button" (click)="clearAll()">Alle löschen</button>
+    <button type="button" (click)="service.toggleEditMode()">Fertig</button>
+  </div>
+
+  @if (service.hasDraft()) {
+    <p class="note">Ungespeicherte Änderungen – zum Übernehmen kopieren und in twinkle-lights.ts einfügen.</p>
+  }
+  @if (copyMessage(); as msg) {
+    <p class="note success">{{ msg }}</p>
+  }
+</div>

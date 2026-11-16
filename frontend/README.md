@@ -1,27 +1,138 @@
-# Angular17
+# Oldenburger Adventskalender – Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
+Angular-App (Angular 22, Standalone-Komponenten, Signals, zoneless) für den Online-Adventskalender der Oldenburger Lions Clubs. Die App ist als PWA installierbar.
 
-## Development server
+## Voraussetzungen
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Node.js** 22.22 oder neuer bzw. 24.15 oder neuer
+- Abhängigkeiten installieren:
 
-## Code scaffolding
+  ```
+  npm install
+  ```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Die Angular CLI muss nicht global installiert sein. Statt `ng …` funktioniert auch `npx ng …`.
+
+## Entwicklung
+
+```
+ng serve
+```
+
+Danach `http://localhost:4200/` öffnen. Bei Änderungen an den Quelldateien lädt die App automatisch neu.
+
+- **Backend:** Im Entwicklungsmodus holt die App die Gewinne von `http://localhost:7071/api/Gewinne/`, also von den lokal laufenden Azure Functions aus dem Ordner `backend`. Um stattdessen das Live-Backend zu verwenden, in [`src/environments/environment.ts`](src/environments/environment.ts) die URL umstellen.
+- **Service Worker:** Bei `ng serve` ist er abgeschaltet. Offline-Betrieb und Update-Verhalten lassen sich nur mit einem Produktions-Build testen (siehe [Updates und PWA](#updates-und-pwa)).
+
+## Neue Komponenten anlegen
+
+```
+ng generate component komponenten-name
+```
+
+Komponenten werden als Standalone-Komponenten angelegt. Mit `ng generate service|directive|pipe|…` lassen sich auch andere Bausteine erzeugen.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
+ng build
+```
 
-## Running unit tests
+Das Ergebnis liegt in `dist/advents-kalender/browser`.
 
-Run `ng test` to execute the unit tests via [Vitest](https://vitest.dev).
+## Tests
 
-## Running end-to-end tests
+```
+ng test
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Führt die Unit-Tests mit [Vitest](https://vitest.dev) aus (DOM-Simulation über jsdom). Mit `ng test --watch=false` laufen die Tests einmal durch, ohne auf Änderungen zu warten.
 
-## Further help
+## Deployment
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Die App wird in den Container `$web` des Azure Storage Accounts `kalendar` hochgeladen und über Cloudflare unter `www.oldenburger-adventskalender.de` ausgeliefert.
+
+### Mit `deploy.cmd`
+
+Das Skript setzt passende Cache-Header und lädt `ngsw.json` als letzte Datei hoch. Der SAS-Token steht **nicht** in der Datei, sondern wird als Umgebungsvariable übergeben (nur der Teil nach dem `?`, in Anführungszeichen):
+
+```
+ng build
+set "KALENDER_SAS=sv=...&sig=..."
+deploy.cmd
+```
+
+Voraussetzungen: `azcopy` im Pfad bzw. im Ordner `frontend` und `az login`.
+
+### Von Hand (Azure-Extension in VS Code oder Azure Storage Explorer)
+
+- Erst **alle Dateien außer `ngsw.json`** hochladen, dann **`ngsw.json` zuletzt**. Sonst sehen die Service Worker der Nutzer die neue Version, bevor alle Dateien da sind, und das Update verzögert sich.
+- Alte Dateien möglichst **nicht löschen**. Nutzer mit der Vorversion laden sonst Dateien nach, die es nicht mehr gibt. Die App fängt das zwar ab und lädt neu, schöner ist es aber ohne.
+
+### Cloudflare
+
+Die Cache-Header sollten in Cloudflare per Regel gesetzt sein, dann gelten sie unabhängig vom Upload-Weg:
+
+| Dateien | Cloudflare-Cache | `Cache-Control` |
+|---|---|---|
+| `/`, `/index.html`, `/ngsw.json`, `/ngsw-worker.js`, `/safety-worker.js`, `/worker-basic.min.js`, `/manifest.webmanifest` | umgehen | `no-cache` |
+| gehashte Bundles `main-…`, `chunk-…`, `styles-…`, `polyfills-…` | 1 Jahr | `max-age=31536000` |
+
+Nach dem Austausch des Kalenderbildes (gleicher Dateiname) die URL `/assets/kalender.jpg` in Cloudflare per *Custom Purge* leeren.
+
+## Updates und PWA
+
+- Die installierte App sucht nach einer neuen Version, sobald sie wieder in den Vordergrund kommt, und zusätzlich alle 15 Minuten.
+- Ist eine neue Version bereit, erscheint eine Meldung „Neu laden“. Lief die App im Hintergrund, wird beim Zurückkehren automatisch neu geladen.
+- **Update-Verhalten testen:** `ng build`, dann `dist/advents-kalender/browser` über einen lokalen HTTP-Server ausliefern (z. B. `npx http-server dist/advents-kalender/browser`), eine Änderung bauen, Dateien ersetzen und zur offenen App zurückwechseln.
+
+## Funkelnde Lichter im Kalenderbild einrichten
+
+Über dem Kalenderbild funkeln die im Motiv gemalten Lichter (Lichterketten, Tannenbäume, Laternen, Fenster). Die Positionen der Lichtpunkte gelten nur für das jeweilige Motiv und stehen in
+[`src/app/kalender-layout/components/twinkle-lights/twinkle-lights.ts`](src/app/kalender-layout/components/twinkle-lights/twinkle-lights.ts) in der Liste `TWINKLE_LIGHTS`. Ist die Liste leer, wird einfach nichts angezeigt.
+
+Zum Setzen der Punkte gibt es einen **Einrichtungsmodus**. Er ist nur verfügbar, wenn die App lokal mit `ng serve` läuft. In der veröffentlichten App (`ng build`) ist der Button ausgeblendet, und der Editor wird nie geladen.
+
+### So geht's
+
+1. App lokal starten: `ng serve`, dann `http://localhost:4200/` öffnen.
+2. In der Toolbar auf **✨** klicken. Das Symbol leuchtet gelb, solange der Modus aktiv ist.
+3. Im Bedienfeld unten links die **Art** wählen:
+
+   | Art | Markierung | Wirkung |
+   |---|---|---|
+   | Lichterkette | türkis | schnelles, unregelmäßiges Funkeln |
+   | Tannenbaum | grün | ruhigeres Blinken |
+   | Laterne / Schild | magenta | großer Lichtschein, langsames „Atmen“ |
+   | Fenster | gelb | leichtes Kerzenflackern |
+
+4. **Ins Bild klicken** setzt ein Licht der gewählten Art. **Auf ein vorhandenes Licht klicken** entfernt es. Das Funkeln ist sofort zu sehen. Mit „Markierungen anzeigen“ lassen sich die farbigen Ringe ausblenden, um nur den Effekt zu beurteilen.
+5. **Liste kopieren** und in `twinkle-lights.ts` die komplette Liste `TWINKLE_LIGHTS` durch den kopierten Code ersetzen.
+6. **Fertig** beendet den Modus.
+
+Weitere Schaltflächen:
+
+- **Verwerfen:** alle Änderungen verwerfen und wieder den Stand aus `twinkle-lights.ts` laden.
+- **Alle löschen:** alle Lichter entfernen, z. B. für ein neues Motiv.
+
+Hinweise:
+
+- Änderungen werden als **Entwurf** im Browser gespeichert und überstehen ein Neuladen der Seite. Teil der App werden sie erst, wenn der kopierte Code in `twinkle-lights.ts` eingefügt ist.
+- Geklickt werden kann auch in der Handy-Ansicht, in der das Bild 24-mal untereinander steht. Jeder Klick wird auf das Originalbild umgerechnet.
+- Koordinaten werden in Pixeln des Originalbildes (1200 × 847) gespeichert. Hat ein neues Motiv eine andere Größe, müssen `KALENDER_IMAGE_WIDTH` und `KALENDER_IMAGE_HEIGHT` in `twinkle-lights.ts` angepasst werden.
+- Farbe, Größe und Tempo je Lichtart stehen in `KIND_STYLES` in `twinkle-lights.component.ts`, die Stärke des Funkelns in den `@keyframes` von `twinkle-lights.component.scss`.
+
+## Neues Kalenderbild für ein neues Jahr
+
+1. Bild einsetzen wie in [`artwork/README.md`](artwork/README.md) beschrieben, als `src/assets/kalender.jpg`.
+2. Ändert sich das Seitenverhältnis, an drei Stellen anpassen (bisher 1200 × 847):
+   - `aspect-ratio` in `kalender.component.scss`
+   - die Mindesthöhe `(rect.width * 847) / 1200` in `kalender.component.ts`
+   - `KALENDER_IMAGE_WIDTH`/`KALENDER_IMAGE_HEIGHT` in `twinkle-lights.ts`
+3. Lichter neu einrichten (siehe oben): **Alle löschen**, Lichter setzen, **Liste kopieren**, in `twinkle-lights.ts` einfügen.
+4. Nach dem Deployment das Bild in Cloudflare per *Custom Purge* leeren (siehe [Cloudflare](#cloudflare)).
+
+## Weitere Hilfe
+
+- `ng help` zeigt alle Befehle der Angular CLI.
+- Dokumentation der Angular CLI: [angular.dev/cli](https://angular.dev/cli)

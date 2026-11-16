@@ -1,0 +1,95 @@
+// Liegt über dem Kalenderbild, aber unter den Türen.
+:host {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  // exakt wie das Kalenderbild: volle Breite, nach unten wiederholt.
+  // Auf einer Tür setzt die Tür Größe und Verschiebung ihres Bildausschnitts als CSS-Variablen.
+  background-size: var(--twinkle-size, 100% auto);
+  background-position: var(--twinkle-position, 0 0);
+  background-repeat: repeat-y;
+  // wie echtes Licht: hellt das Bild auf, statt es zu überdecken
+  mix-blend-mode: screen;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+}
+
+// Lichterkette: schnelles, unregelmäßiges Funkeln
+.kette {
+  animation-name: twinkle;
+}
+
+// Tannenbaum: etwas ruhigeres Blinken
+.baum {
+  animation-name: twinkle;
+}
+
+// Schilder/Laternen: langsames "Atmen"
+.laterne {
+  animation-name: breathe;
+}
+
+// Fenster: leichtes Kerzenflackern
+.fenster {
+  animation-name: flicker;
+  animation-direction: normal;
+  animation-timing-function: linear;
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.15;
+  }
+  60% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes breathe {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 0.85;
+  }
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  20% {
+    opacity: 0.75;
+  }
+  35% {
+    opacity: 0.5;
+  }
+  55% {
+    opacity: 0.8;
+  }
+  70% {
+    opacity: 0.6;
+  }
+  85% {
+    opacity: 0.7;
+  }
+}
+
+// Systemeinstellung "Bewegung reduzieren": Lichter leuchten ruhig
+@media (prefers-reduced-motion: reduce) {
+  .layer {
+    animation: none;
+    opacity: 0.7;
+  }
+}

@@ -20,6 +20,19 @@
           }
         </button>
       }
+      @if (twinkleLights.editorAvailable) {
+        <!-- nur lokal mit "ng serve" sichtbar -->
+        <button
+          mat-icon-button
+          (click)="twinkleLights.toggleEditMode()"
+          [class.editor-active]="twinkleLights.editMode()"
+          [matTooltip]="twinkleLights.editMode() ? 'Lichter-Einrichtung beenden' : 'Lichter einrichten (nur lokal)'"
+          aria-label="Lichter einrichten"
+          [attr.aria-pressed]="twinkleLights.editMode()"
+          >
+          <mat-icon>auto_awesome</mat-icon>
+        </button>
+      }
       <button
         mat-icon-button
         (click)="winner.editNumbers()"

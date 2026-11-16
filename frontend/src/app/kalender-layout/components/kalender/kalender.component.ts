@@ -1,14 +1,17 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, inject, signal, viewChild } from '@angular/core';
 import { GewinnService, TagesGewinne } from '../../services/gewinn.service';
 import { App } from '@capacitor/app';
 import { DoorComponent } from '../door/door.component';
 import { SnowfallComponent } from '../snowfall/snowfall.component';
+import { TwinkleLightsComponent } from '../twinkle-lights/twinkle-lights.component';
+import { TwinkleLightsEditorComponent } from '../twinkle-lights/twinkle-lights-editor.component';
+import { TwinkleLightsService } from '../twinkle-lights/twinkle-lights.service';
 
 @Component({
     selector: 'kalender',
     templateUrl: './kalender.component.html',
     styleUrls: ['./kalender.component.scss'],
-    imports: [DoorComponent, SnowfallComponent]
+    imports: [DoorComponent, SnowfallComponent, TwinkleLightsComponent, TwinkleLightsEditorComponent]
 })
 export class KalenderComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly container = viewChild.required('container', { read: ElementRef });
@@ -17,6 +20,7 @@ export class KalenderComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly containerYPosition = signal(0);
   readonly containerWidth = signal(1208);
   readonly containerHeight = signal('906px');
+  readonly twinkleLights = inject(TwinkleLightsService);
   private resizeObserver?: ResizeObserver;
   constructor(public service: GewinnService) {
     // Wenn der Kalender in den Vordergrund kommt aktualisiere die Daten...

@@ -14,11 +14,29 @@ import {
 import { DoorSoundService } from '../../services/door-sound.service';
 import { MyNumberService } from '../../services/my-number.service';
 import { WinnerService } from '../../services/winner.service';
+import { TwinkleLightsComponent } from '../twinkle-lights/twinkle-lights.component';
+
+/** Anzahl der Funken, die beim Öffnen aus der Tür aufsteigen. */
+const SPARK_COUNT = 14;
+/** Dauer des Aufleuchtens beim Öffnen (ms) - danach bleibt ein ruhiger Lichtschein. */
+const LIGHT_BURST_MS = 2000;
+
+interface Spark {
+  id: number;
+  /** horizontale Startposition in % der Türbreite */
+  x: number;
+  delay: number;
+  duration: number;
+  /** seitliche Abweichung beim Aufsteigen in px */
+  drift: number;
+  size: number;
+}
 
 @Component({
   selector: 'door',
   templateUrl: './door.component.html',
-  styleUrls: ['./door.component.scss'],
+  styleUrls: ['./door.component.scss', './door-light.scss'],
+  imports: [TwinkleLightsComponent],
 })
 export class DoorComponent {
   readonly baseX = input(0);
@@ -44,6 +62,13 @@ export class DoorComponent {
   /** Wurde die Tür in dieser Sitzung schon einmal vom Nutzer geöffnet? (keine doppelte Feier) */
   private openedBefore = false;
 
+  /** Kurzes helles Aufleuchten beim Öffnen */
+  readonly lightBurst = signal(false);
+  /** Gerade aufsteigende Funken */
+  readonly sparks = signal<Spark[]>([]);
+  private sparkId = 0;
+  private lightTimer?: ReturnType<typeof setTimeout>;
+
   constructor() {
     // Ton (und ggf. Gewinn-Feier) beim Öffnen/Schließen - aber nicht beim ersten Anzeigen
     // (bereits geöffnete Türen werden beim Laden aus dem Speicher wiederhergestellt).
@@ -53,6 +78,7 @@ export class DoorComponent {
       if (wasOpen !== undefined && open !== wasOpen) {
         untracked(() => {
           if (open) {
+            this.lightUp();
             this.winner.doorOpened(this.no(), this.tagesGewinne(), !this.openedBefore);
             this.openedBefore = true;
           } else {
@@ -80,8 +106,31 @@ export class DoorComponent {
         const style = this.doorFace().nativeElement.style;
         style.backgroundPosition = background().position;
         style.backgroundSize = background().size;
+        // gleicher Ausschnitt für die funkelnden Lichter auf der Tür
+        style.setProperty('--twinkle-position', background().position);
+        style.setProperty('--twinkle-size', `${background().size} auto`);
       },
     });
+  }
+
+  /** Beim Öffnen: warmes Licht flammt auf, Funken steigen aus der Tür. */
+  private lightUp(): void {
+    this.sparks.set(
+      Array.from({ length: SPARK_COUNT }, () => ({
+        id: ++this.sparkId, // neue IDs -> Animation startet auch bei erneutem Öffnen neu
+        x: 15 + Math.random() * 70,
+        delay: Math.random() * 500,
+        duration: 900 + Math.random() * 700,
+        drift: (Math.random() - 0.5) * 60,
+        size: 3 + Math.random() * 4,
+      }))
+    );
+    this.lightBurst.set(true);
+    clearTimeout(this.lightTimer);
+    this.lightTimer = setTimeout(() => {
+      this.lightBurst.set(false);
+      this.sparks.set([]);
+    }, LIGHT_BURST_MS);
   }
 
   /** Ist dieser Gewinn auf die eigene Kalendernummer gefallen? (goldene Hervorhebung) */
@@ -109,6 +158,7 @@ export class DoorComponent {
         this.timer = setTimeout(() => this.slamShut(), 1300);
         if (this.isLocked()) {
           this.sound.playOpen({ melody: false });
+          this.lightUp(); // auch durch den Spalt strahlt das Licht heraus
         }
       }
     }
@@ -118,6 +168,8 @@ export class DoorComponent {
     this.keepClose.set(false);
     if (this.isLocked() && !this.isOpen()) {
       this.sound.playClose();
+      // Tür ist zu: Licht verschwindet mit ihr (bereits aufgestiegene Funken verglimmen noch)
+      this.lightBurst.set(false);
     }
   }
 }

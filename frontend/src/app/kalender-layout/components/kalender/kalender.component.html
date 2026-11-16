@@ -5,6 +5,14 @@
   (window:scroll)="onResize(container)"
   [style.min-height]="containerHeight()"
   >
+  <!-- funkelnde Lichter im Bild (über dem Bild, unter den Türen) -->
+  <app-twinkle-lights />
+  <!-- Einrichtungsmodus für die Lichter: nur bei "ng serve", wird erst bei Bedarf geladen -->
+  @if (twinkleLights.editMode()) {
+    @defer {
+      <app-twinkle-lights-editor />
+    }
+  }
   @for (tagesGewinn of service.tagesGewinne(); track tagesGewinn.Tag) {
     <door
       [baseX]="containerXPosition()"

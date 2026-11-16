@@ -1,0 +1,127 @@
+// Liegt über dem Kalender UND den Türen, damit überall geklickt werden kann.
+:host {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.click-area {
+  position: absolute;
+  inset: 0;
+  cursor: crosshair;
+  background-size: 100% auto;
+  background-repeat: repeat-y;
+  // leicht abgedunkelt, damit Markierungen und Lichter gut sichtbar sind
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.panel {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 10001; // über dem Schnee
+  width: 17rem;
+  max-width: calc(100vw - 2rem);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: rgba(20, 30, 50, 0.92);
+  color: #fff;
+  font-size: 13px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.title {
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 0.25rem;
+}
+
+.help {
+  margin: 0 0 0.5rem;
+  opacity: 0.8;
+}
+
+.kinds {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.3rem;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.3rem 0.5rem;
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
+.kind {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: left;
+
+  &.active {
+    border-color: #f9c910;
+    background: rgba(249, 201, 16, 0.2);
+  }
+}
+
+.dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.count {
+  margin-left: auto;
+  opacity: 0.7;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.primary {
+  border-color: #f9c910;
+  background: #f9c910;
+  color: #2a4a82;
+  font-weight: 500;
+
+  &:hover:not(:disabled) {
+    background: #fad134;
+  }
+}
+
+.note {
+  margin: 0.5rem 0 0;
+  font-size: 12px;
+  opacity: 0.85;
+
+  &.success {
+    color: #b9f6ca;
+  }
+}
