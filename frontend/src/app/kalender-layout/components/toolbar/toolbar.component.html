@@ -48,15 +48,6 @@
           >confirmation_number</mat-icon
         >
       </button>
-      <button
-        mat-icon-button
-        (click)="sound.toggleMuted()"
-        [matTooltip]="sound.muted() ? 'Ton und Vibration einschalten' : 'Ton und Vibration ausschalten'"
-        [attr.aria-label]="sound.muted() ? 'Ton und Vibration einschalten' : 'Ton und Vibration ausschalten'"
-        [attr.aria-pressed]="sound.muted()"
-        >
-        <mat-icon>{{ sound.muted() ? 'volume_off' : 'volume_up' }}</mat-icon>
-      </button>
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menü">
         <mat-icon>more_vert</mat-icon>
       </button>

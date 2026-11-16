@@ -43,7 +43,7 @@ describe('ChristmasEveService', () => {
     expect(sound.stopMusic).toHaveBeenCalledOnce();
   });
 
-  it('still shows the scene for a while when there is no sound (muted)', () => {
+  it('still shows the scene for a while when there is no sound (no Web Audio)', () => {
     sound.playChristmasEve.mockReturnValue(0);
     service.start();
     vi.advanceTimersByTime(29_000);

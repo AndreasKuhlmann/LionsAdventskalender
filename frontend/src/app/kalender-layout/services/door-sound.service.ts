@@ -1,7 +1,8 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CHRISTMAS_MELODIES, Melody, STILLE_NACHT, parseMelody } from './christmas-melodies';
 
-const MUTED_STORAGE_KEY = 'adventskalender.soundMuted';
+/** Früher gespeicherte Stumm-Einstellung - der Ton ist nicht mehr abschaltbar, daher wird sie gelöscht. */
+const LEGACY_MUTED_STORAGE_KEY = 'adventskalender.soundMuted';
 
 /** Gesamtlautstärke (0..1) - bewusst eher leise. */
 const MASTER_VOLUME = 0.35;
@@ -59,16 +60,14 @@ const FANFARE: Melody = {
  *            Türen, die nur kurz aufgehen, ohne Melodie
  * - Schließen: kurzes Knarren + Quietschen + "Klack"
  * Zusätzlich vibriert das Handy (nur Android - iOS unterstützt keine Vibration im Browser).
- * Der Stumm-Schalter schaltet Ton und Vibration ab.
+ * Ton und Vibration sind immer an (kein Stumm-Schalter); leiser geht es nur über die
+ * Lautstärke des Geräts.
  *
  * Browser (insbesondere iOS) erlauben Audio erst nach einer Nutzerinteraktion.
  * Der AudioContext wird daher beim ersten Antippen/Klick/Tastendruck entsperrt.
  */
 @Injectable({ providedIn: 'root' })
 export class DoorSoundService {
-  /** Ton aus? Wird im Browser gespeichert. Standard: Ton an. */
-  readonly muted = signal(readMuted());
-
   private ctx: AudioContext | null = null;
   private master: GainNode | null = null;
   private noise: AudioBuffer | null = null;
@@ -79,11 +78,13 @@ export class DoorSoundService {
   private melodyCount = 0;
 
   constructor() {
+    removeLegacyMutedSetting();
+
     // Audio bei jeder Nutzerinteraktion (wieder) freischalten, solange es nicht läuft.
     // Die Listener bleiben bewusst bestehen: iOS unterbricht den AudioContext z.B. beim
     // App-Wechsel oder Anruf ("interrupted") und erlaubt das Fortsetzen nur in einer Interaktion.
     const unlock = () => {
-      if (this.muted() || this.ctx?.state === 'running') {
+      if (this.ctx?.state === 'running') {
         return;
       }
       const ctx = this.context();
@@ -93,16 +94,6 @@ export class DoorSoundService {
     };
     for (const type of UNLOCK_EVENTS) {
       document.addEventListener(type, unlock, { capture: true, passive: true });
-    }
-  }
-
-  toggleMuted(): void {
-    this.muted.update((m) => !m);
-    writeMuted(this.muted());
-    if (this.muted()) {
-      this.stopMelody();
-      // wieder normales iOS-Verhalten (Stummschalter wird beachtet, andere Audio-Apps laufen weiter)
-      setAudioSessionType('ambient');
     }
   }
 
@@ -141,7 +132,7 @@ export class DoorSoundService {
   /**
    * Heiligabend: Kirchenglocken läuten, danach "Stille Nacht" (ganze erste Strophe)
    * auf dem Klavier.
-   * @returns Gesamtdauer in Sekunden - 0, wenn kein Ton abgespielt wird (stumm/kein Audio)
+   * @returns Gesamtdauer in Sekunden - 0, wenn kein Ton abgespielt werden kann (kein Web Audio)
    */
   playChristmasEve(): number {
     this.vibrate(VIBRATION.christmasEve);
@@ -165,7 +156,7 @@ export class DoorSoundService {
 
   /** Kurze Vibration (Android). iOS/Desktop ohne Unterstützung: wird still ignoriert. */
   private vibrate(pattern: readonly number[]): void {
-    if (this.muted() || typeof navigator.vibrate !== 'function') {
+    if (typeof navigator.vibrate !== 'function') {
       return;
     }
     try {
@@ -176,9 +167,6 @@ export class DoorSoundService {
   }
 
   private play(build: (ctx: AudioContext, out: AudioNode, t: number) => void): void {
-    if (this.muted()) {
-      return;
-    }
     // iOS: Ton auch bei lautlos gestelltem iPhone abspielen. Erst hier (beim ersten echten
     // Tür-Geräusch) setzen, nicht schon beim Antippen der Seite - "playback" pausiert andere
     // Audio-Apps (z.B. Musik).
@@ -604,18 +592,11 @@ export function pickRandomIndex(count: number, last: number): number {
   return index;
 }
 
-function readMuted(): boolean {
+/** Entfernt die Stumm-Einstellung früherer Versionen (der Ton ist jetzt immer an). */
+function removeLegacyMutedSetting(): void {
   try {
-    return localStorage.getItem(MUTED_STORAGE_KEY) === 'true';
+    localStorage.removeItem(LEGACY_MUTED_STORAGE_KEY);
   } catch {
-    return false;
-  }
-}
-
-function writeMuted(muted: boolean): void {
-  try {
-    localStorage.setItem(MUTED_STORAGE_KEY, String(muted));
-  } catch {
-    // z.B. privater Modus - Einstellung gilt dann nur für diese Sitzung
+    // ignorieren
   }
 }

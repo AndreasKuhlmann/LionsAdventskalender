@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { DoorSoundService } from './door-sound.service';
 
-/** Dauer der Szene, wenn keine Musik läuft (stumm/kein Audio) - in Sekunden */
+/** Dauer der Szene, wenn keine Musik abgespielt werden kann (kein Web Audio) - in Sekunden */
 const SILENT_SCENE_SECONDS = 30;
 /** Die Szene endet kurz nach dem letzten Ton */
 const AFTER_MUSIC_SECONDS = 3;

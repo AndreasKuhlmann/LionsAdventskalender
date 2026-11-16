@@ -5,29 +5,15 @@ describe('DoorSoundService', () => {
   beforeEach(() => localStorage.clear());
   afterEach(() => vi.unstubAllGlobals());
 
-  it('is not muted by default', () => {
-    const service = TestBed.inject(DoorSoundService);
-    expect(service.muted()).toBe(false);
-  });
-
-  it('remembers the mute setting', () => {
-    TestBed.inject(DoorSoundService).toggleMuted();
-
-    TestBed.resetTestingModule();
-    expect(TestBed.inject(DoorSoundService).muted()).toBe(true);
-  });
-
-  it('does not touch the audio system while muted', () => {
-    const AudioContextMock = vi.fn();
-    vi.stubGlobal('AudioContext', AudioContextMock);
+  it('cannot be muted any more - an old saved mute setting is removed', () => {
+    localStorage.setItem('adventskalender.soundMuted', 'true');
     const service = TestBed.inject(DoorSoundService);
 
-    service.toggleMuted();
-    service.playOpen();
-    service.playClose();
-
-    expect(AudioContextMock).not.toHaveBeenCalled();
+    expect(localStorage.getItem('adventskalender.soundMuted')).toBeNull();
+    expect('muted' in service).toBe(false);
+    expect('toggleMuted' in service).toBe(false);
   });
+
 
   it('silently does nothing when Web Audio is not available', () => {
     vi.stubGlobal('AudioContext', undefined);
@@ -46,17 +32,6 @@ describe('DoorSoundService', () => {
 
     expect(vibrate).toHaveBeenCalledTimes(3);
     expect(vibrate).toHaveBeenNthCalledWith(1, [40, 60, 40]);
-  });
-
-  it('does not vibrate while muted', () => {
-    const vibrate = vi.fn();
-    vi.stubGlobal('navigator', { ...navigator, vibrate });
-    const service = TestBed.inject(DoorSoundService);
-
-    service.toggleMuted();
-    service.playOpen();
-
-    expect(vibrate).not.toHaveBeenCalled();
   });
 
   it('ignores devices without vibration support', () => {
@@ -79,17 +54,6 @@ describe('DoorSoundService', () => {
 
       service.playOpen();
       expect(audioSession.type).toBe('playback');
-    });
-
-    it('switches back to "ambient" when muted', () => {
-      const service = TestBed.inject(DoorSoundService);
-      service.playOpen();
-
-      service.toggleMuted();
-      expect(audioSession.type).toBe('ambient');
-
-      service.playOpen(); // stumm: keine Änderung
-      expect(audioSession.type).toBe('ambient');
     });
   });
 

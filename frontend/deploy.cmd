@@ -20,7 +20,7 @@ if not defined KALENDER_SAS (
 )
 
 set "SRC=dist\advents-kalender\browser"
-set "DEST=https://kalendar.blob.core.windows.net/$web?%KALENDER_SAS%"
+set "DEST=https://kalender.blob.core.windows.net/$web?%KALENDER_SAS%"
 set "WORKERS=ngsw-worker.js;safety-worker.js;worker-basic.min.js"
 
 if not exist "%SRC%\ngsw.json" (

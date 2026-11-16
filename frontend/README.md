@@ -50,7 +50,7 @@ Führt die Unit-Tests mit [Vitest](https://vitest.dev) aus (DOM-Simulation über
 
 ## Deployment
 
-Die App wird in den Container `$web` des Azure Storage Accounts `kalendar` hochgeladen und über Cloudflare unter `www.oldenburger-adventskalender.de` ausgeliefert.
+Die App wird in den Container `$web` des Azure Storage Accounts `kalender` hochgeladen und über Cloudflare unter `www.oldenburger-adventskalender.de` ausgeliefert.
 
 ### Mit `deploy.cmd`
 
@@ -167,7 +167,7 @@ Tür 24 lässt sich erst öffnen, wenn für Tag 24 Gewinne gezogen sind. Damit m
 
 Hinweise:
 
-- Ist der Ton über den Lautsprecher-Button in der Toolbar ausgeschaltet, läuft die Szene ohne Glocken und Musik und endet nach etwa 30 Sekunden.
+- Kann der Browser keinen Ton abspielen, läuft die Szene ohne Glocken und Musik und endet nach etwa 30 Sekunden.
 - Den Ablauf „Gewinn an Heiligabend“ (erst Konfetti, dann die Szene) kann der Button nicht vorführen. Dafür muss das lokale Backend für Tag 24 einen Gewinn mit Losnummer liefern, und diese Nummer muss als eigene Kalendernummer hinterlegt sein.
 
 ## Weitere Hilfe

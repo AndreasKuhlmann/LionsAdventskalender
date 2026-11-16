@@ -5,7 +5,6 @@ import { FoerdererDialogComponent } from '../foerderer-dialog/foerderer-dialog.c
 import { ZweckDialogComponent } from '../zweck-dialog/zweck-dialog.component';
 import { WerStehtDahinterDialogComponent } from '../wer-steht-dahinter-dialog/wer-steht-dahinter-dialog.component';
 import { InstallablePromptService } from '../../services/installable-prompt.service';
-import { DoorSoundService } from '../../services/door-sound.service';
 import { MyNumberService, formatKalendernummer } from '../../services/my-number.service';
 import { WinnerService } from '../../services/winner.service';
 import { TwinkleLightsService } from '../twinkle-lights/twinkle-lights.service';
@@ -28,7 +27,6 @@ import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 })
 export class ToolbarComponent {
   private readonly installablePromptService = inject(InstallablePromptService);
-  readonly sound = inject(DoorSoundService);
   readonly winner = inject(WinnerService);
   readonly twinkleLights = inject(TwinkleLightsService);
   private readonly myNumber = inject(MyNumberService);
