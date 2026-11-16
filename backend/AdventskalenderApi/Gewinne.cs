@@ -542,8 +542,8 @@ namespace AdventskalenderApi
             // Save, just for fun...
             //gewinneService.Add(data);
 
-            //var today = new DateTime(2025, 12, 24);
-            var today = DateTime.Today;
+            var today = new DateTime(2025, 12, 2);
+            //var today = DateTime.Today;
 
             int dayOfDecember = today.Month == 12 ? today.Day : (today.Month is > 0 and < 11 ? 24 : 0);
             data.ToList().ForEach(d =>

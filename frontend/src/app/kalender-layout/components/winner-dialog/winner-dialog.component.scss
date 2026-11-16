@@ -1,0 +1,50 @@
+.title {
+  text-align: center;
+}
+
+.intro {
+  text-align: center;
+  font-size: 1.1em;
+}
+
+.nummer {
+  display: inline-block;
+  padding: 0.1em 0.5em;
+  border-radius: 0.3em;
+  background: #f9c910;
+  color: #2a4a82;
+  letter-spacing: 0.05em;
+}
+
+.win {
+  margin: 0.75rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid #f9c910;
+  background: rgba(249, 201, 16, 0.12);
+  border-radius: 0.3em;
+}
+
+.tag {
+  font-weight: 500;
+  color: #2a4a82;
+  margin-bottom: 0.25rem;
+}
+
+.preis {
+  font-size: 1.05em;
+
+  & + .preis {
+    margin-top: 0.35rem;
+  }
+
+  .nummer {
+    margin-right: 0.4em;
+    font-size: 0.9em;
+  }
+}
+
+.hinweis {
+  margin-top: 1rem;
+  font-size: 0.9em;
+  opacity: 0.8;
+}

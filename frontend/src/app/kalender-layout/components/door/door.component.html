@@ -6,10 +6,13 @@
         style="display: flex; flex-direction: column; justify-content: space-around; text-align: center; height: 100%;"
         >
         @for (gewinn of tagesGewinne(); track gewinn.Id) {
-          <div>
+          <div [class.my-win]="isMine(gewinn)">
             @if (gewinn.Losnummer > 0) {
-              <div style="color: brown;">
+              <div class="losnummer">
                 <strong>Kalender {{ pad(gewinn.Losnummer, 4) }}</strong>
+                @if (isMine(gewinn)) {
+                  <span class="my-win-badge" title="Ihre Kalendernummer">★</span>
+                }
               </div>
             }
             <div>{{ gewinn.Beschreibung }}</div>

@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>Meine Kalendernummern</h2>
+<mat-dialog-content>
+  <p>
+    Geben Sie die Gewinnnummern von der Vorderseite Ihrer Kalender ein. Beim Öffnen jedes
+    Türchens prüfen wir dann automatisch, ob eine Ihrer Nummern gewonnen hat.
+  </p>
+
+  <mat-form-field appearance="outline" class="nummer-field">
+    <mat-label>Kalendernummer</mat-label>
+    <mat-chip-grid #chipGrid aria-label="Meine Kalendernummern">
+      @for (nummer of numbers(); track nummer) {
+        <mat-chip-row (removed)="remove(nummer)">
+          {{ format(nummer) }}
+          <button matChipRemove [attr.aria-label]="'Nummer ' + format(nummer) + ' entfernen'">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
+      }
+    </mat-chip-grid>
+    <div class="input-row">
+      <input
+        #nummerInput
+        [matChipInputFor]="chipGrid"
+        [matChipInputSeparatorKeyCodes]="separatorKeys"
+        [matChipInputAddOnBlur]="true"
+        (matChipInputTokenEnd)="addFromChipInput($event)"
+        placeholder="z.B. 0042"
+        inputmode="numeric"
+        autocomplete="off"
+        aria-label="Kalendernummer hinzufügen"
+        cdkFocusInitial
+      />
+      <button mat-button type="button" (click)="addFromButton(nummerInput)">Hinzufügen</button>
+    </div>
+    <mat-hint>
+      Mehrere Nummern mit Komma trennen. Höchstens {{ maxAnzahl }}. Nur auf diesem Gerät gespeichert.
+    </mat-hint>
+  </mat-form-field>
+
+  @if (message(); as msg) {
+    <p class="message" role="alert">{{ msg }}</p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" type="button" (click)="done()">Fertig</button>
+</mat-dialog-actions>

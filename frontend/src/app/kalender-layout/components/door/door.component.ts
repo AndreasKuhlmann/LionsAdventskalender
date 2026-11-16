@@ -12,6 +12,8 @@ import {
   viewChild
 } from '@angular/core';
 import { DoorSoundService } from '../../services/door-sound.service';
+import { MyNumberService } from '../../services/my-number.service';
+import { WinnerService } from '../../services/winner.service';
 
 @Component({
   selector: 'door',
@@ -33,18 +35,30 @@ export class DoorComponent {
   private timer?: ReturnType<typeof setTimeout>;
 
   private readonly sound = inject(DoorSoundService);
+  private readonly winner = inject(WinnerService);
+  private readonly myNumber = inject(MyNumberService);
 
   /** Die Tür kann erst geöffnet werden, wenn für den Tag Gewinne gezogen wurden. */
   private readonly isLocked = computed(() => !(this.tagesGewinne()[0]?.Losnummer > 0));
 
+  /** Wurde die Tür in dieser Sitzung schon einmal vom Nutzer geöffnet? (keine doppelte Feier) */
+  private openedBefore = false;
+
   constructor() {
-    // Knarren beim Öffnen/Schließen - aber nicht beim ersten Anzeigen
+    // Ton (und ggf. Gewinn-Feier) beim Öffnen/Schließen - aber nicht beim ersten Anzeigen
     // (bereits geöffnete Türen werden beim Laden aus dem Speicher wiederhergestellt).
     let wasOpen: boolean | undefined;
     effect(() => {
       const open = this.isOpen();
       if (wasOpen !== undefined && open !== wasOpen) {
-        untracked(() => (open ? this.sound.playOpen() : this.sound.playClose()));
+        untracked(() => {
+          if (open) {
+            this.winner.doorOpened(this.no(), this.tagesGewinne(), !this.openedBefore);
+            this.openedBefore = true;
+          } else {
+            this.sound.playClose();
+          }
+        });
       }
       wasOpen = open;
     });
@@ -68,6 +82,11 @@ export class DoorComponent {
         style.backgroundSize = background().size;
       },
     });
+  }
+
+  /** Ist dieser Gewinn auf die eigene Kalendernummer gefallen? (goldene Hervorhebung) */
+  isMine(gewinn: Gewinn): boolean {
+    return this.myNumber.isMine(gewinn);
   }
 
   pad(num: number, size: number): string {

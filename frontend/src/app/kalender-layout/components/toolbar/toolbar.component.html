@@ -22,6 +22,21 @@
       }
       <button
         mat-icon-button
+        (click)="winner.editNumbers()"
+        [matTooltip]="myNumberLabel()"
+        [attr.aria-label]="myNumberLabel()"
+        >
+        <mat-icon
+          [matBadge]="myNumberCount()"
+          [matBadgeHidden]="myNumberCount() === 0"
+          matBadgeColor="accent"
+          matBadgeSize="small"
+          aria-hidden="true"
+          >confirmation_number</mat-icon
+        >
+      </button>
+      <button
+        mat-icon-button
         (click)="sound.toggleMuted()"
         [matTooltip]="sound.muted() ? 'Ton und Vibration einschalten' : 'Ton und Vibration ausschalten'"
         [attr.aria-label]="sound.muted() ? 'Ton und Vibration einschalten' : 'Ton und Vibration ausschalten'"

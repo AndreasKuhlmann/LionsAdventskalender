@@ -1,0 +1,55 @@
+:host {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none; // Klicks gehen durch den Schnee hindurch (z.B. auf die Türen)
+  z-index: 9999;
+  user-select: none;
+}
+
+// Äußeres Element: fällt von oben nach unten
+.flake {
+  position: absolute;
+  top: 0;
+  will-change: transform;
+  animation-name: snowflake-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+// Inneres Element: schaukelt seitlich
+.sway {
+  display: inline-block;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+  animation-name: snowflake-sway;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes snowflake-fall {
+  from {
+    transform: translateY(-10vh);
+  }
+  to {
+    transform: translateY(105vh);
+  }
+}
+
+@keyframes snowflake-sway {
+  from {
+    transform: translateX(0) rotate(0deg);
+  }
+  to {
+    transform: translateX(var(--sway-distance, 40px)) rotate(45deg);
+  }
+}
+
+// Systemeinstellung "Bewegung reduzieren": kein Schneefall
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    display: none;
+  }
+}

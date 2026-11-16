@@ -1,5 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { Storage } from '@ionic/storage';
 import { KalenderLayoutComponent } from './kalender-layout.component';
 
 describe('KalenderLayoutComponent', () => {
@@ -9,7 +12,12 @@ describe('KalenderLayoutComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [KalenderLayoutComponent],
-      providers: [provideRouter([])],
+      providers: [
+        provideRouter([]),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: Storage, useValue: { get: vi.fn().mockResolvedValue(null), set: vi.fn() } },
+      ],
     }).compileComponents();
   });
 

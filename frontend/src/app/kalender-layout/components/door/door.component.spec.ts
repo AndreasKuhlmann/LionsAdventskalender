@@ -1,16 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DoorSoundService } from '../../services/door-sound.service';
+import { MyNumberService } from '../../services/my-number.service';
+import { WinnerService } from '../../services/winner.service';
 import { DoorComponent } from './door.component';
 
 describe('DoorComponent', () => {
   let fixture: ComponentFixture<DoorComponent>;
   let sound: { playOpen: ReturnType<typeof vi.fn>; playClose: ReturnType<typeof vi.fn> };
+  let winner: { doorOpened: ReturnType<typeof vi.fn> };
 
   beforeEach(async () => {
+    localStorage.clear();
     sound = { playOpen: vi.fn(), playClose: vi.fn() };
+    winner = { doorOpened: vi.fn() };
     await TestBed.configureTestingModule({
       imports: [DoorComponent],
-      providers: [{ provide: DoorSoundService, useValue: sound }],
+      providers: [
+        { provide: DoorSoundService, useValue: sound },
+        { provide: WinnerService, useValue: winner },
+      ],
     }).compileComponents();
     fixture = TestBed.createComponent(DoorComponent);
   });
@@ -23,20 +31,42 @@ describe('DoorComponent', () => {
   it('plays no sound for a door that is already open when shown', async () => {
     fixture.componentRef.setInput('isOpen', true);
     await fixture.whenStable();
-    expect(sound.playOpen).not.toHaveBeenCalled();
+    expect(winner.doorOpened).not.toHaveBeenCalled();
     expect(sound.playClose).not.toHaveBeenCalled();
   });
 
-  it('creaks when the door opens and closes', async () => {
+  it('reports the opening (sound + win check) and creaks when closing', async () => {
+    const gewinne = [{ Id: '1', Tag: 3, Losnummer: 42, Beschreibung: 'Preis' }];
+    fixture.componentRef.setInput('no', 3);
+    fixture.componentRef.setInput('tagesGewinne', gewinne);
     await fixture.whenStable();
 
     fixture.componentRef.setInput('isOpen', true);
     await fixture.whenStable();
-    expect(sound.playOpen).toHaveBeenCalledOnce();
+    expect(winner.doorOpened).toHaveBeenCalledExactlyOnceWith(3, gewinne, true);
 
     fixture.componentRef.setInput('isOpen', false);
     await fixture.whenStable();
     expect(sound.playClose).toHaveBeenCalledOnce();
+
+    // erneutes Öffnen derselben Tür: keine zweite Feier
+    fixture.componentRef.setInput('isOpen', true);
+    await fixture.whenStable();
+    expect(winner.doorOpened).toHaveBeenLastCalledWith(3, gewinne, false);
+  });
+
+  it('highlights the own winning number in an open door', async () => {
+    TestBed.inject(MyNumberService).add('42');
+    fixture.componentRef.setInput('tagesGewinne', [
+      { Id: '1', Tag: 3, Losnummer: 42, Beschreibung: 'Mein Preis' },
+      { Id: '2', Tag: 3, Losnummer: 7, Beschreibung: 'Anderer Preis' },
+    ]);
+    fixture.componentRef.setInput('isOpen', true);
+    await fixture.whenStable();
+
+    const highlighted = (fixture.nativeElement as HTMLElement).querySelectorAll('.my-win');
+    expect(highlighted.length).toBe(1);
+    expect(highlighted[0].textContent).toContain('Mein Preis');
   });
 
   describe('door of a future day', () => {

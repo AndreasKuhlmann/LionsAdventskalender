@@ -2,12 +2,13 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, signal, viewCh
 import { GewinnService, TagesGewinne } from '../../services/gewinn.service';
 import { App } from '@capacitor/app';
 import { DoorComponent } from '../door/door.component';
+import { SnowfallComponent } from '../snowfall/snowfall.component';
 
 @Component({
     selector: 'kalender',
     templateUrl: './kalender.component.html',
     styleUrls: ['./kalender.component.scss'],
-    imports: [DoorComponent]
+    imports: [DoorComponent, SnowfallComponent]
 })
 export class KalenderComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly container = viewChild.required('container', { read: ElementRef });

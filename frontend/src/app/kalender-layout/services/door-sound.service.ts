@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { CHRISTMAS_MELODIES, parseMelody } from './christmas-melodies';
+import { CHRISTMAS_MELODIES, Melody, parseMelody } from './christmas-melodies';
 
 const MUTED_STORAGE_KEY = 'adventskalender.soundMuted';
 
@@ -24,7 +24,15 @@ const GLOCKENSPIEL_LEVEL = 0.35;
 const VIBRATION = {
   open: [40, 60, 40],
   close: [30],
+  win: [100, 60, 100, 60, 300],
 } as const;
+
+/** Gewinn-Fanfare: aufsteigender Dur-Dreiklang mit Wiederholung des Spitzentons. */
+const FANFARE: Melody = {
+  title: 'Gewinn-Fanfare',
+  bpm: 160,
+  notes: 'C4:0.5 E4:0.5 G4:0.5 C5:1.5 G4:0.5 C5:3',
+};
 
 /**
  * Erzeugt die Tür-Geräusche synthetisch mit der Web Audio API (keine Audiodateien nötig):
@@ -104,6 +112,12 @@ export class DoorSoundService {
       this.squeak(ctx, out, t, { duration: 0.6, freqFrom: 1050, freqTo: 800, gain: 0.08 });
       this.knock(ctx, out, t + 0.6, 1);
     });
+  }
+
+  /** Gewinn! Kurze, festliche Fanfare (Klavier + Glockenspiel zusammen) und lange Vibration. */
+  playFanfare(): void {
+    this.vibrate(VIBRATION.win);
+    this.play((ctx, out, t) => this.playTune(ctx, out, t, FANFARE, MELODY_INSTRUMENTS));
   }
 
   // ---------------------------------------------------------------------------
@@ -296,10 +310,21 @@ export class DoorSoundService {
 
   /** Spielt eine zufällig gewählte Weihnachtsmelodie - abwechselnd auf Klavier und Glockenspiel. */
   private melody(ctx: AudioContext, out: AudioNode, t: number): void {
-    this.stopMelody();
     this.lastMelodyIndex = pickRandomIndex(CHRISTMAS_MELODIES.length, this.lastMelodyIndex);
     const melody = CHRISTMAS_MELODIES[this.lastMelodyIndex];
     const instrument: Instrument = MELODY_INSTRUMENTS[this.melodyCount++ % MELODY_INSTRUMENTS.length];
+    this.playTune(ctx, out, t, melody, [instrument]);
+  }
+
+  /** Spielt eine Melodie auf einem oder mehreren Instrumenten gleichzeitig (ersetzt eine laufende Melodie). */
+  private playTune(
+    ctx: AudioContext,
+    out: AudioNode,
+    t: number,
+    melody: Melody,
+    instruments: readonly Instrument[]
+  ): void {
+    this.stopMelody();
 
     const bus = ctx.createGain();
     bus.gain.value = MELODY_VOLUME;
@@ -310,10 +335,12 @@ export class DoorSoundService {
     let at = t;
     notes.forEach((note, i) => {
       if (note.frequency !== null) {
-        if (instrument === 'glockenspiel') {
-          this.glockenspielNote(ctx, bus, at, note.frequency);
-        } else {
-          this.pianoNote(ctx, bus, at, note.frequency, note.duration, i === notes.length - 1);
+        for (const instrument of instruments) {
+          if (instrument === 'glockenspiel') {
+            this.glockenspielNote(ctx, bus, at, note.frequency);
+          } else {
+            this.pianoNote(ctx, bus, at, note.frequency, note.duration, i === notes.length - 1);
+          }
         }
       }
       at += note.duration;

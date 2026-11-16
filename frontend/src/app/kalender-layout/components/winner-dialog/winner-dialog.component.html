@@ -1,0 +1,28 @@
+<h2 mat-dialog-title class="title">🎉 Herzlichen Glückwunsch! 🎉</h2>
+<mat-dialog-content>
+  <p class="intro">
+    @if (winningNumbers.length === 1) {
+      Ihre Kalendernummer <strong class="nummer">{{ format(winningNumbers[0]) }}</strong> hat gewonnen:
+    } @else {
+      {{ winningNumbers.length }} Ihrer Kalendernummern haben gewonnen:
+    }
+  </p>
+  @for (win of data.wins; track win.tag) {
+    <div class="win">
+      <div class="tag">{{ win.tag }}. Dezember</div>
+      @for (gewinn of win.gewinne; track gewinn.Id) {
+        <div class="preis">
+          <strong class="nummer">{{ format(gewinn.Losnummer) }}</strong>
+          {{ gewinn.Beschreibung }}
+        </div>
+      }
+    </div>
+  }
+  <p class="hinweis">
+    Wo und bis wann Sie Ihren Gewinn abholen können, steht unter „Für einen guten Zweck“.
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="showPickupInfo()">Infos zur Abholung</button>
+  <button mat-flat-button color="primary" mat-dialog-close cdkFocusInitial>Juhu!</button>
+</mat-dialog-actions>
