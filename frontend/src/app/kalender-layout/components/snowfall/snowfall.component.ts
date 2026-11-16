@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
+import { ChristmasEveService } from '../../services/christmas-eve.service';
 
 /** Anzahl gleichzeitig fallender Schneeflocken. */
 export const FLAKE_COUNT = 100;
+/** Zusätzliche Flocken an Heiligabend (dichteres Schneegestöber) */
+export const EXTRA_FLAKES_CHRISTMAS_EVE = 80;
 const FLAKE_CHARS = ['❅', '❆', '❄'];
 
 interface Flake {
@@ -34,20 +37,31 @@ interface Flake {
   host: { 'aria-hidden': 'true' },
 })
 export class SnowfallComponent {
-  readonly flakes: Flake[] = Array.from({ length: FLAKE_COUNT }, () => {
-    const size = 0.6 + Math.random() * 1.1;
-    const fallDuration = 16 - size * 5 + Math.random() * 5; // ca. 8-18 s
-    const swayDuration = 2.5 + Math.random() * 3;
-    return {
-      char: FLAKE_CHARS[Math.floor(Math.random() * FLAKE_CHARS.length)],
-      left: Math.random() * 100,
-      size,
-      opacity: 0.45 + Math.random() * 0.5,
-      fallDuration,
-      fallDelay: -Math.random() * fallDuration,
-      swayDuration,
-      swayDelay: -Math.random() * swayDuration,
-      swayDistance: 20 + Math.random() * 60,
-    };
-  });
+  readonly flakes: Flake[] = Array.from({ length: FLAKE_COUNT }, createFlake);
+
+  /** Zusätzliche Flocken während der Weihnachtsszene an Heiligabend */
+  private readonly extraFlakes: Flake[] = Array.from({ length: EXTRA_FLAKES_CHRISTMAS_EVE }, createFlake);
+  private readonly christmasEve = inject(ChristmasEveService);
+
+  /** Sichtbare Flocken - an Heiligabend schneit es dichter */
+  readonly visibleFlakes = computed(() =>
+    this.christmasEve.active() ? [...this.flakes, ...this.extraFlakes] : this.flakes
+  );
+}
+
+function createFlake(): Flake {
+  const size = 0.6 + Math.random() * 1.1;
+  const fallDuration = 16 - size * 5 + Math.random() * 5; // ca. 8-18 s
+  const swayDuration = 2.5 + Math.random() * 3;
+  return {
+    char: FLAKE_CHARS[Math.floor(Math.random() * FLAKE_CHARS.length)],
+    left: Math.random() * 100,
+    size,
+    opacity: 0.45 + Math.random() * 0.5,
+    fallDuration,
+    fallDelay: -Math.random() * fallDuration,
+    swayDuration,
+    swayDelay: -Math.random() * swayDuration,
+    swayDistance: 20 + Math.random() * 60,
+  };
 }

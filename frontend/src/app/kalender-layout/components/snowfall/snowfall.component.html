@@ -1,4 +1,4 @@
-@for (flake of flakes; track $index) {
+@for (flake of visibleFlakes(); track flake) {
   <div
     class="flake"
     [style.left.%]="flake.left"

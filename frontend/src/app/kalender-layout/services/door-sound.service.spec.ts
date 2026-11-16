@@ -92,4 +92,11 @@ describe('DoorSoundService', () => {
       expect(audioSession.type).toBe('ambient');
     });
   });
+
+  it('returns 0 seconds for Christmas Eve music when no audio is available', () => {
+    vi.stubGlobal('AudioContext', undefined);
+    const service = TestBed.inject(DoorSoundService);
+    expect(service.playChristmasEve()).toBe(0);
+    expect(() => service.stopMusic()).not.toThrow();
+  });
 });

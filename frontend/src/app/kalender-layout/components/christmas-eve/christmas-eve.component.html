@@ -1,0 +1,44 @@
+<div class="sky" aria-hidden="true"></div>
+
+<!-- Stern von Bethlehem -->
+<svg class="star" viewBox="-100 -100 200 200" aria-hidden="true">
+  <defs>
+    <radialGradient id="star-glow">
+      <stop offset="0" stop-color="#fffbe6" stop-opacity="0.95" />
+      <stop offset="0.25" stop-color="#ffe082" stop-opacity="0.55" />
+      <stop offset="1" stop-color="#ffc107" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="star-fill" x1="0" y1="-1" x2="0" y2="1">
+      <stop offset="0" stop-color="#fffde7" />
+      <stop offset="1" stop-color="#ffca28" />
+    </linearGradient>
+  </defs>
+  <circle class="glow" r="95" fill="url(#star-glow)" />
+  <!-- lange Strahlen (unten der längste, wie beim Stern von Bethlehem) -->
+  <g class="rays" fill="url(#star-fill)">
+    <polygon points="0,-90 6,-8 0,0 -6,-8" />
+    <polygon points="0,98 6,8 0,0 -6,8" />
+    <polygon points="-70,0 -8,-6 0,0 -8,6" />
+    <polygon points="70,0 8,-6 0,0 8,6" />
+  </g>
+  <g class="rays small" fill="url(#star-fill)">
+    <polygon points="-38,-38 -3,-8 0,0 -8,-3" />
+    <polygon points="38,-38 8,-3 0,0 3,-8" />
+    <polygon points="-38,38 -8,3 0,0 -3,8" />
+    <polygon points="38,38 3,8 0,0 8,3" />
+  </g>
+  <circle r="7" fill="#fffde7" />
+</svg>
+
+<div class="card" role="dialog" aria-modal="true" aria-labelledby="christmas-eve-title">
+  <h2 id="christmas-eve-title">🎄 {{ texts.title }} 🎄</h2>
+  <p>{{ texts.text }}</p>
+  @if (texts.spendensumme) {
+    <p class="summe">
+      Gemeinsam sind in diesem Jahr <strong>{{ texts.spendensumme }}</strong> für den guten Zweck
+      zusammengekommen.
+    </p>
+  }
+  <p class="signature">{{ texts.signature }}</p>
+  <button mat-flat-button color="primary" type="button" (click)="close()" cdkFocusInitial>Schließen</button>
+</div>

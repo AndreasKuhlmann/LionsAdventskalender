@@ -96,6 +96,17 @@ describe('DoorComponent', () => {
     expect(face.style.getPropertyValue('--twinkle-position')).toBe(face.style.backgroundPosition);
   });
 
+  it('highlights door 24 (Christmas Eve) with a golden frame', async () => {
+    const wrapper = () => (fixture.nativeElement as HTMLElement).querySelector('.door-wrapper')!;
+    fixture.componentRef.setInput('no', 23);
+    await fixture.whenStable();
+    expect(wrapper().classList).not.toContain('heiligabend');
+
+    fixture.componentRef.setInput('no', 24);
+    await fixture.whenStable();
+    expect(wrapper().classList).toContain('heiligabend');
+  });
+
   it('highlights the own winning number in an open door', async () => {
     TestBed.inject(MyNumberService).add('42');
     fixture.componentRef.setInput('tagesGewinne', [

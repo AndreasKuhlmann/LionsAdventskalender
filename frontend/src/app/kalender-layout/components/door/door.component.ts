@@ -35,7 +35,7 @@ interface Spark {
 @Component({
   selector: 'door',
   templateUrl: './door.component.html',
-  styleUrls: ['./door.component.scss', './door-light.scss'],
+  styleUrls: ['./door.component.scss', './door-light.scss', './door-24.scss'],
   imports: [TwinkleLightsComponent],
 })
 export class DoorComponent {

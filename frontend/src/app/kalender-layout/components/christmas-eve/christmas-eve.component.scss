@@ -1,0 +1,153 @@
+// Liegt über dem Kalender, aber unter dem Schnee (z-index 9999).
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: scene-in 1.5s ease-out;
+}
+
+// Nachthimmel
+.sky {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 10%,
+    rgba(40, 60, 110, 0.55) 0%,
+    rgba(10, 15, 40, 0.8) 60%,
+    rgba(5, 8, 25, 0.88) 100%
+  );
+}
+
+.star {
+  position: relative;
+  width: min(42vw, 13rem);
+  height: min(42vw, 13rem);
+  margin-bottom: -1.5rem;
+  filter: drop-shadow(0 0 1.2rem rgba(255, 213, 79, 0.8));
+  animation:
+    star-rise 2.5s ease-out,
+    star-twinkle 3s ease-in-out 2.5s infinite alternate;
+
+  .glow {
+    animation: glow-pulse 2.2s ease-in-out infinite alternate;
+  }
+
+  .rays {
+    transform-origin: 0 0;
+    animation: rays-shimmer 1.7s ease-in-out infinite alternate;
+  }
+
+  .rays.small {
+    animation-duration: 1.3s;
+    animation-direction: alternate-reverse;
+  }
+}
+
+.card {
+  position: relative;
+  max-width: 28rem;
+  padding: 1.5rem 1.5rem 1.25rem;
+  border-radius: 0.75rem;
+  border: 2px solid rgba(249, 201, 16, 0.85);
+  background: rgba(255, 253, 245, 0.96);
+  box-shadow: 0 0 2.5rem rgba(249, 201, 16, 0.45);
+  text-align: center;
+  color: #2a4a82;
+  animation: card-in 1.2s ease-out 0.8s both;
+
+  h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.6rem;
+  }
+
+  p {
+    margin: 0 0 0.75rem;
+    line-height: 1.45;
+    color: #333;
+  }
+
+  .summe {
+    color: #2a4a82;
+  }
+
+  .signature {
+    font-style: italic;
+    color: #2a4a82;
+    margin-bottom: 1rem;
+  }
+}
+
+@keyframes scene-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes star-rise {
+  from {
+    opacity: 0;
+    transform: translateY(2rem) scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes star-twinkle {
+  from {
+    transform: scale(1) rotate(-2deg);
+  }
+  to {
+    transform: scale(1.07) rotate(2deg);
+  }
+}
+
+@keyframes glow-pulse {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rays-shimmer {
+  from {
+    opacity: 0.8;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host,
+  .star,
+  .star .glow,
+  .star .rays,
+  .card {
+    animation: none;
+  }
+}

@@ -6,12 +6,14 @@ import { SnowfallComponent } from '../snowfall/snowfall.component';
 import { TwinkleLightsComponent } from '../twinkle-lights/twinkle-lights.component';
 import { TwinkleLightsEditorComponent } from '../twinkle-lights/twinkle-lights-editor.component';
 import { TwinkleLightsService } from '../twinkle-lights/twinkle-lights.service';
+import { ChristmasEveComponent } from '../christmas-eve/christmas-eve.component';
+import { ChristmasEveService } from '../../services/christmas-eve.service';
 
 @Component({
     selector: 'kalender',
     templateUrl: './kalender.component.html',
     styleUrls: ['./kalender.component.scss'],
-    imports: [DoorComponent, SnowfallComponent, TwinkleLightsComponent, TwinkleLightsEditorComponent]
+    imports: [DoorComponent, SnowfallComponent, TwinkleLightsComponent, TwinkleLightsEditorComponent, ChristmasEveComponent]
 })
 export class KalenderComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly container = viewChild.required('container', { read: ElementRef });
@@ -21,6 +23,7 @@ export class KalenderComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly containerWidth = signal(1208);
   readonly containerHeight = signal('906px');
   readonly twinkleLights = inject(TwinkleLightsService);
+  readonly christmasEve = inject(ChristmasEveService);
   private resizeObserver?: ResizeObserver;
   constructor(public service: GewinnService) {
     // Wenn der Kalender in den Vordergrund kommt aktualisiere die Daten...

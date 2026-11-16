@@ -1,4 +1,9 @@
-<div class="door-wrapper" [class.lit]="isOpen() || keepClose()" [class.burst]="lightBurst()">
+<div
+  class="door-wrapper"
+  [class.lit]="isOpen() || keepClose()"
+  [class.burst]="lightBurst()"
+  [class.heiligabend]="no() === 24"
+>
   <div #door class="backDoor">
     <!-- warmes Licht hinter der Tür (auch durch den Spalt einer nur kurz aufgehenden Tür) -->
     <div

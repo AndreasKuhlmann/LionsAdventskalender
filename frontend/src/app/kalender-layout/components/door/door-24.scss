@@ -1,0 +1,37 @@
+// Tür 24 (Heiligabend): goldener Rahmen, goldene Nummer und ein sanft pulsierender Glanz -
+// schon an den Tagen davor, wie bei vielen echten Adventskalendern.
+
+.heiligabend {
+  .door {
+    border: 3px solid #f9c910;
+    border-left: none; // links sitzt das Scharnier
+    box-shadow: inset 0 0 0.8rem rgba(249, 201, 16, 0.55);
+
+    &::before {
+      color: #ffe082;
+      text-shadow:
+        0 0 0.5rem rgba(249, 201, 16, 0.9),
+        0 1px 2px #333;
+    }
+  }
+
+  &:not(.lit) {
+    animation: heiligabend-shine 3s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes heiligabend-shine {
+  from {
+    box-shadow: 0 0 0.6rem 0.1rem rgba(249, 201, 16, 0.35);
+  }
+  to {
+    box-shadow: 0 0 1.4rem 0.4rem rgba(249, 201, 16, 0.65);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heiligabend:not(.lit) {
+    animation: none;
+    box-shadow: 0 0 1rem 0.3rem rgba(249, 201, 16, 0.5);
+  }
+}

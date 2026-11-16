@@ -32,6 +32,11 @@
     <button type="button" (click)="service.toggleEditMode()">Fertig</button>
   </div>
 
+  <div class="test-section">
+    <div class="test-title">Testen</div>
+    <button type="button" (click)="demoChristmasEve()">🎄 Heiligabend vorführen</button>
+  </div>
+
   @if (service.hasDraft()) {
     <p class="note">Ungespeicherte Änderungen – zum Übernehmen kopieren und in twinkle-lights.ts einfügen.</p>
   }

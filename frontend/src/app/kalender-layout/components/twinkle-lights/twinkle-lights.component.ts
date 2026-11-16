@@ -1,6 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { KALENDER_IMAGE_HEIGHT, KALENDER_IMAGE_WIDTH, LightKind, TwinkleLight } from './twinkle-lights';
 import { TwinkleLightsService } from './twinkle-lights.service';
+import { ChristmasEveService } from '../../services/christmas-eve.service';
 
 interface KindStyle {
   /** Radius des Lichtscheins in Bildpixeln */
@@ -41,10 +42,15 @@ export interface LightLayer {
   selector: 'app-twinkle-lights',
   templateUrl: './twinkle-lights.component.html',
   styleUrls: ['./twinkle-lights.component.scss'],
-  host: { 'aria-hidden': 'true' },
+  host: {
+    'aria-hidden': 'true',
+    // an Heiligabend leuchten die Lichter kräftiger
+    '[class.boost]': 'christmasEve.active()',
+  },
 })
 export class TwinkleLightsComponent {
   private readonly service = inject(TwinkleLightsService);
+  protected readonly christmasEve = inject(ChristmasEveService);
   /** wird neu berechnet, sobald im Einrichtungsmodus Lichter gesetzt/entfernt werden */
   readonly layers = computed(() => buildLayers(this.service.lights()));
 }

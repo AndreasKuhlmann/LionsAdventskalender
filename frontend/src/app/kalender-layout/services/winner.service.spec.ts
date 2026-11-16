@@ -8,6 +8,7 @@ import { DoorSoundService } from './door-sound.service';
 import { Gewinn, GewinnService, TagesGewinne } from './gewinn.service';
 import { MyNumberService } from './my-number.service';
 import { WinnerService } from './winner.service';
+import { ChristmasEveService } from './christmas-eve.service';
 
 describe('WinnerService', () => {
   let service: WinnerService;
@@ -18,6 +19,7 @@ describe('WinnerService', () => {
   let snackBar: { open: ReturnType<typeof vi.fn> };
   let snackAction: Subject<void>;
   let tagesGewinne: WritableSignal<TagesGewinne[]>;
+  let christmasEve: { start: ReturnType<typeof vi.fn> };
 
   const tag3: Gewinn[] = [
     { Id: '1', Tag: 3, Losnummer: 42, Beschreibung: 'Gutschein Buchhandlung' },
@@ -46,6 +48,7 @@ describe('WinnerService', () => {
     snackAction = new Subject<void>();
     snackBar = { open: vi.fn().mockReturnValue({ onAction: () => snackAction }) };
     tagesGewinne = signal<TagesGewinne[]>([]);
+    christmasEve = { start: vi.fn() };
 
     TestBed.configureTestingModule({
       providers: [
@@ -54,6 +57,7 @@ describe('WinnerService', () => {
         { provide: MatDialog, useValue: dialog },
         { provide: MatSnackBar, useValue: snackBar },
         { provide: GewinnService, useValue: { tagesGewinne } },
+        { provide: ChristmasEveService, useValue: christmasEve },
       ],
     });
     service = TestBed.inject(WinnerService);
@@ -165,5 +169,44 @@ describe('WinnerService', () => {
     expect(myNumber.numbers()).toEqual([1234]);
     expect(snackBar.open).not.toHaveBeenCalled();
     expect(confetti.burst).not.toHaveBeenCalled();
+  });
+
+  describe('Heiligabend (Tür 24)', () => {
+    const tag24: Gewinn[] = [{ Id: '24', Tag: 24, Losnummer: 2424, Beschreibung: 'Weihnachtsgans' }];
+
+    it('starts the Christmas Eve scene instead of creaking and a short melody', () => {
+      myNumber.add('1234');
+      service.doorOpened(24, tag24, true);
+
+      expect(christmasEve.start).toHaveBeenCalledOnce();
+      expect(sound.playOpen).not.toHaveBeenCalled();
+      expect(snackBar.open).not.toHaveBeenCalled();
+    });
+
+    it('celebrates a win first and starts the scene after the dialog is closed', () => {
+      myNumber.add('2424');
+      const closed = new Subject<void>();
+      dialog.open.mockReturnValueOnce({ afterClosed: () => closed });
+
+      service.doorOpened(24, tag24, true);
+      vi.advanceTimersByTime(1000);
+      expect(confetti.burst).toHaveBeenCalledOnce();
+      expect(christmasEve.start).not.toHaveBeenCalled();
+
+      closed.next();
+      expect(christmasEve.start).toHaveBeenCalledOnce();
+    });
+  });
+
+  describe('after Christmas', () => {
+    it('greets instead of suggesting to enter numbers', () => {
+      vi.setSystemTime(new Date(2026, 11, 27));
+      service.doorOpened(3, tag3, true);
+      service.doorOpened(4, tag3, true);
+
+      expect(snackBar.open).toHaveBeenCalledOnce(); // nur einmal pro Sitzung
+      expect(snackBar.open.mock.calls[0][0]).toContain('wir sehen uns im nächsten Advent');
+      expect(localStorage.getItem('adventskalender.nummernTippGezeigt')).toBeNull();
+    });
   });
 });

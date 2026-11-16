@@ -1,6 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { KALENDER_IMAGE_HEIGHT, KALENDER_IMAGE_WIDTH, LightKind, TwinkleLight } from './twinkle-lights';
 import { LIGHT_KIND_LABELS, TwinkleLightsService } from './twinkle-lights.service';
+import { ChristmasEveService } from '../../services/christmas-eve.service';
 
 /** Farben der Markierungen im Einrichtungsmodus */
 const MARKER_COLORS: Record<LightKind, string> = {
@@ -24,6 +25,7 @@ const MARKER_RADIUS: Record<LightKind, number> = { kette: 6, baum: 7, laterne: 3
 })
 export class TwinkleLightsEditorComponent {
   readonly service = inject(TwinkleLightsService);
+  private readonly christmasEve = inject(ChristmasEveService);
 
   readonly kinds = Object.keys(LIGHT_KIND_LABELS) as LightKind[];
   readonly labels = LIGHT_KIND_LABELS;
@@ -71,6 +73,16 @@ export class TwinkleLightsEditorComponent {
     if (confirm('Wirklich alle Lichter entfernen?')) {
       this.service.clearAll();
     }
+  }
+
+  /**
+   * Nur zum Testen bei "ng serve": startet die Heiligabend-Szene (Glocken, "Stille Nacht",
+   * Stern, Weihnachtsgruß), ohne dass Tür 24 schon geöffnet werden kann.
+   * Das Bedienfeld wird dafür geschlossen, damit es nicht über der Szene liegt.
+   */
+  demoChristmasEve(): void {
+    this.service.toggleEditMode();
+    this.christmasEve.start();
   }
 
   resetToFile(): void {

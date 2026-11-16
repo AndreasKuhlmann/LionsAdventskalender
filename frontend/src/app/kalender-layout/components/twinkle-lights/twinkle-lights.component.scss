@@ -21,6 +21,11 @@
   animation-timing-function: ease-in-out;
 }
 
+// Heiligabend: alle Lichter leuchten kräftiger
+:host(.boost) .layer {
+  filter: brightness(1.8) saturate(1.2);
+}
+
 // Lichterkette: schnelles, unregelmäßiges Funkeln
 .kette {
   animation-name: twinkle;

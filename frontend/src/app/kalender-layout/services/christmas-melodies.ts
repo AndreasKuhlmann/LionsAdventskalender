@@ -69,6 +69,26 @@ export const CHRISTMAS_MELODIES: readonly Melody[] = [
   },
 ];
 
+/** Heiligabend: "Stille Nacht" - ganze erste Strophe (3/4-Takt, eine Zeile pro Textzeile). */
+export const STILLE_NACHT: Melody = {
+  title: 'Stille Nacht (1. Strophe)',
+  bpm: 105,
+  notes: [
+    'G4:1.5 A4:0.5 G4:1 E4:3', // Stil-le Nacht,
+    'G4:1.5 A4:0.5 G4:1 E4:3', // hei-li-ge Nacht!
+    'D5:2 D5:1 B4:3', // Al-les schläft,
+    'C5:2 C5:1 G4:3', // ein-sam wacht
+    'A4:2 A4:1 C5:1.5 B4:0.5 A4:1', // nur das trau-te
+    'G4:1.5 A4:0.5 G4:1 E4:3', // hoch-hei-li-ge Paar.
+    'A4:2 A4:1 C5:1.5 B4:0.5 A4:1', // Hol-der Kna-be im
+    'G4:1.5 A4:0.5 G4:1 E4:3', // lo-cki-gen Haar,
+    'D5:2 D5:1 F5:1.5 D5:0.5 B4:1', // schlaf in himm-li-scher
+    'C5:3 E5:3', // Ruh, ...
+    'C5:1 G4:1 E4:1 G4:1.5 F4:0.5 D4:1', // schlaf in himm-li-scher
+    'C4:6', // Ruh!
+  ].join(' '),
+};
+
 export interface ParsedNote {
   /** Frequenz in Hz, null = Pause */
   frequency: number | null;

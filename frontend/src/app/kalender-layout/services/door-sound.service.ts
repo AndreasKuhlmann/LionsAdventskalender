@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { CHRISTMAS_MELODIES, Melody, parseMelody } from './christmas-melodies';
+import { CHRISTMAS_MELODIES, Melody, STILLE_NACHT, parseMelody } from './christmas-melodies';
 
 const MUTED_STORAGE_KEY = 'adventskalender.soundMuted';
 
@@ -25,7 +25,25 @@ const VIBRATION = {
   open: [40, 60, 40],
   close: [30],
   win: [100, 60, 100, 60, 300],
+  /** wie Glockenschläge */
+  christmasEve: [250, 500, 250, 500, 250],
 } as const;
+
+/** Lautstärke der Kirchenglocken */
+const BELL_LEVEL = 0.3;
+
+/** Glockenschläge an Heiligabend: [Zeitpunkt in s, Frequenz] - zwei Glocken im Wechsel */
+const CHURCH_BELL_STRIKES: readonly (readonly [number, number])[] = [
+  [0, 392], // G4
+  [0.8, 294], // D4
+  [1.6, 392],
+  [2.4, 294],
+  [3.2, 392],
+  [4.0, 294],
+];
+
+/** "Stille Nacht" beginnt, während die letzten Glockenschläge ausklingen. */
+const CHURCH_BELLS_SECONDS = 5;
 
 /** Gewinn-Fanfare: aufsteigender Dur-Dreiklang mit Wiederholung des Spitzentons. */
 const FANFARE: Melody = {
@@ -118,6 +136,29 @@ export class DoorSoundService {
   playFanfare(): void {
     this.vibrate(VIBRATION.win);
     this.play((ctx, out, t) => this.playTune(ctx, out, t, FANFARE, MELODY_INSTRUMENTS));
+  }
+
+  /**
+   * Heiligabend: Kirchenglocken läuten, danach "Stille Nacht" (ganze erste Strophe)
+   * auf dem Klavier.
+   * @returns Gesamtdauer in Sekunden - 0, wenn kein Ton abgespielt wird (stumm/kein Audio)
+   */
+  playChristmasEve(): number {
+    this.vibrate(VIBRATION.christmasEve);
+    let duration = 0;
+    this.play((ctx, out, t) => {
+      const bus = this.newMelodyBus(ctx, out);
+      CHURCH_BELL_STRIKES.forEach(([offset, freq]) => this.churchBell(ctx, bus, t + offset, freq));
+      duration =
+        CHURCH_BELLS_SECONDS +
+        this.scheduleTune(ctx, bus, t + CHURCH_BELLS_SECONDS, STILLE_NACHT, ['piano']);
+    });
+    return duration;
+  }
+
+  /** Beendet laufende Musik (Melodie, Fanfare, Glocken, "Stille Nacht"). */
+  stopMusic(): void {
+    this.stopMelody();
   }
 
   // ---------------------------------------------------------------------------
@@ -324,13 +365,30 @@ export class DoorSoundService {
     melody: Melody,
     instruments: readonly Instrument[]
   ): void {
-    this.stopMelody();
+    this.scheduleTune(ctx, this.newMelodyBus(ctx, out), t, melody, instruments);
+  }
 
+  /**
+   * Neuer Lautstärkeregler für Musik (beendet laufende Musik). Alles, was darüber läuft,
+   * lässt sich mit stopMelody() gemeinsam ausblenden.
+   */
+  private newMelodyBus(ctx: AudioContext, out: AudioNode): GainNode {
+    this.stopMelody();
     const bus = ctx.createGain();
     bus.gain.value = MELODY_VOLUME;
     bus.connect(out);
     this.melodyBus = bus;
+    return bus;
+  }
 
+  /** Plant die Noten einer Melodie ein. Liefert die Dauer in Sekunden. */
+  private scheduleTune(
+    ctx: AudioContext,
+    bus: AudioNode,
+    t: number,
+    melody: Melody,
+    instruments: readonly Instrument[]
+  ): number {
     const notes = parseMelody(melody);
     let at = t;
     notes.forEach((note, i) => {
@@ -345,6 +403,38 @@ export class DoorSoundService {
       }
       at += note.duration;
     });
+    return at - t;
+  }
+
+  /**
+   * Kirchenglocke: Glocken klingen nicht harmonisch - typisch sind der tiefe "Summton"
+   * (halbe Frequenz), die kleine Terz (1,2-fach), die Quinte und die Oktave darüber.
+   * Tiefe Teiltöne klingen sehr lange nach, hohe verklingen schnell.
+   */
+  private churchBell(ctx: AudioContext, out: AudioNode, t: number, freq: number): void {
+    for (const [ratio, level, decay] of [
+      [0.5, 0.45, 7], // Summton
+      [1, 1, 5.5], // Grundton
+      [1.2, 0.6, 4], // kleine Terz - macht den typischen "Glocken"-Klang
+      [1.5, 0.35, 3.2], // Quinte
+      [2, 0.5, 2.6], // Oktave ("Nominal")
+      [2.5, 0.22, 1.8],
+      [3, 0.15, 1.2],
+      [4.2, 0.08, 0.6],
+    ] as const) {
+      const osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.value = freq * ratio;
+      // leichte Schwebung wie bei einer echten, nicht ganz symmetrischen Glocke
+      osc.detune.value = (Math.random() - 0.5) * 6;
+      const env = ctx.createGain();
+      env.gain.setValueAtTime(0.0001, t);
+      env.gain.linearRampToValueAtTime(level * BELL_LEVEL, t + 0.004);
+      env.gain.exponentialRampToValueAtTime(0.0001, t + decay);
+      osc.connect(env).connect(out);
+      osc.start(t);
+      osc.stop(t + decay + 0.05);
+    }
   }
 
   /**

@@ -10,6 +10,11 @@ import { ConfettiService } from './confetti.service';
 import { DoorSoundService } from './door-sound.service';
 import { Gewinn, GewinnService } from './gewinn.service';
 import { MyNumberService, formatKalendernummer } from './my-number.service';
+import { ChristmasEveService, isAfterChristmas } from './christmas-eve.service';
+import {
+  AFTER_CHRISTMAS_MESSAGE,
+  CHRISTMAS_EVE_DOOR,
+} from '../components/christmas-eve/christmas-eve.texts';
 
 const HINT_SHOWN_KEY = 'adventskalender.nummernTippGezeigt';
 
@@ -28,6 +33,9 @@ export class WinnerService {
   private readonly confetti = inject(ConfettiService);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly christmasEve = inject(ChristmasEveService);
+
+  private afterChristmasGreetingShown = false;
 
   /**
    * Ein Türchen wurde vom Nutzer geöffnet.
@@ -39,11 +47,20 @@ export class WinnerService {
   doorOpened(tag: number, gewinne: readonly Gewinn[], firstOpen: boolean): void {
     const numbers = this.myNumber.numbers();
     const wins = this.myNumber.winsIn(gewinne);
+    const isChristmasEve = tag === CHRISTMAS_EVE_DOOR;
 
     if (wins.length > 0) {
-      // Gewinn: statt der Weihnachtsmelodie gibt es die Fanfare
+      // Gewinn: statt der Weihnachtsmelodie gibt es die Fanfare.
+      // An Heiligabend folgt nach dem Glückwunsch-Dialog die Weihnachtsszene.
       this.sound.playOpen({ melody: false });
-      setTimeout(() => this.celebrate([{ tag, gewinne: wins }]), CELEBRATION_DELAY_MS);
+      const afterCelebration = isChristmasEve ? () => this.christmasEve.start() : undefined;
+      setTimeout(() => this.celebrate([{ tag, gewinne: wins }], afterCelebration), CELEBRATION_DELAY_MS);
+      return;
+    }
+
+    if (isChristmasEve) {
+      // Heiligabend: Glocken und "Stille Nacht" statt Knarren und kurzer Melodie
+      this.christmasEve.start();
       return;
     }
 
@@ -104,18 +121,32 @@ export class WinnerService {
     );
   }
 
-  private celebrate(wins: WinnerDialogData['wins']): void {
+  /** Konfetti, Fanfare und Glückwunsch-Dialog. `afterClosed` läuft nach dem Schließen des Dialogs. */
+  private celebrate(wins: WinnerDialogData['wins'], afterClosed?: () => void): void {
     this.confetti.burst();
     this.sound.playFanfare();
-    this.dialog.open<WinnerDialogComponent, WinnerDialogData>(WinnerDialogComponent, {
+    const dialogRef = this.dialog.open<WinnerDialogComponent, WinnerDialogData>(WinnerDialogComponent, {
       width: '26rem',
       maxWidth: '95vw',
       data: { wins },
     });
+    if (afterClosed) {
+      dialogRef.afterClosed().subscribe(() => afterClosed());
+    }
   }
 
-  /** Einmaliger Tipp für Nutzer ohne hinterlegte Kalendernummer. */
+  /**
+   * Einmaliger Tipp für Nutzer ohne hinterlegte Kalendernummer.
+   * Nach Weihnachten stattdessen (einmal pro Sitzung) ein Weihnachtsgruß.
+   */
   private showNumberHintOnce(): void {
+    if (isAfterChristmas()) {
+      if (!this.afterChristmasGreetingShown) {
+        this.afterChristmasGreetingShown = true;
+        this.snackBar.open(AFTER_CHRISTMAS_MESSAGE, undefined, { duration: 6000 });
+      }
+      return;
+    }
     if (readFlag(HINT_SHOWN_KEY)) {
       return;
     }

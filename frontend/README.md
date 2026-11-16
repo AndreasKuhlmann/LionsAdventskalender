@@ -114,6 +114,7 @@ Weitere Schaltflächen:
 
 - **Verwerfen:** alle Änderungen verwerfen und wieder den Stand aus `twinkle-lights.ts` laden.
 - **Alle löschen:** alle Lichter entfernen, z. B. für ein neues Motiv.
+- **🎄 Heiligabend vorführen** (Abschnitt „Testen“): startet die Weihnachtsszene von Tür 24 zur Vorschau, siehe [Heiligabend-Special](#heiligabend-special-tür-24).
 
 Hinweise:
 
@@ -131,6 +132,43 @@ Hinweise:
    - `KALENDER_IMAGE_WIDTH`/`KALENDER_IMAGE_HEIGHT` in `twinkle-lights.ts`
 3. Lichter neu einrichten (siehe oben): **Alle löschen**, Lichter setzen, **Liste kopieren**, in `twinkle-lights.ts` einfügen.
 4. Nach dem Deployment das Bild in Cloudflare per *Custom Purge* leeren (siehe [Cloudflare](#cloudflare)).
+5. Den Weihnachtsgruß und die Spendensumme für Heiligabend aktualisieren (siehe [Heiligabend-Special](#heiligabend-special-tür-24)).
+
+## Heiligabend-Special (Tür 24)
+
+Tür 24 hat schon vor Heiligabend einen goldenen Rahmen und eine goldene Nummer. Beim Öffnen passiert Folgendes:
+
+1. Zwei **Kirchenglocken** läuten im Wechsel, statt des normalen Knarrens.
+2. **„Stille Nacht“** erklingt als ganze erste Strophe (ca. 40 Sekunden) auf dem Klavier.
+3. Der Bildschirm wird zum **Nachthimmel** mit funkelndem **Stern von Bethlehem**. Es schneit dichter, und die funkelnden Lichter im Bild leuchten kräftiger.
+4. Ein **Weihnachtsgruß** erscheint.
+
+Die Szene endet automatisch kurz nach dem Lied oder über **„Schließen“** bzw. die Escape-Taste. Hat eine eigene Kalendernummer an Heiligabend gewonnen, kommen zuerst Konfetti, Fanfare und Glückwunsch-Dialog, nach dem Schließen des Dialogs folgt die Weihnachtsszene.
+
+Vom 25. Dezember bis Ende Januar erscheint statt des Tipps zur Kalendernummer einmal pro Sitzung der Hinweis „Frohe Weihnachten – wir sehen uns im nächsten Advent!“.
+
+### Texte anpassen
+
+Titel, Grußtext, Unterschrift und Spendensumme stehen in
+[`src/app/kalender-layout/components/christmas-eve/christmas-eve.texts.ts`](src/app/kalender-layout/components/christmas-eve/christmas-eve.texts.ts).
+
+- **`spendensumme`:** z. B. `'35.000 €'`. Dann erscheint zusätzlich „Gemeinsam sind in diesem Jahr 35.000 € für den guten Zweck zusammengekommen.“ Bei `null` fehlt dieser Satz.
+- Den Text am besten jedes Jahr prüfen.
+
+### Vorab ansehen mit dem Test-Button
+
+Tür 24 lässt sich erst öffnen, wenn für Tag 24 Gewinne gezogen sind. Damit man die Szene vorher prüfen kann, gibt es einen Test-Button. Er ist, wie der Einrichtungsmodus der Lichter, **nur verfügbar, wenn die App lokal mit `ng serve` läuft**.
+
+1. App lokal starten: `ng serve`, dann `http://localhost:4200/` öffnen.
+2. In der Toolbar auf **✨** klicken. Unten links öffnet sich das Bedienfeld.
+3. Im Abschnitt **„Testen“** auf **„🎄 Heiligabend vorführen“** klicken.
+4. Das Bedienfeld schließt sich, und die komplette Szene startet: Glocken, „Stille Nacht“, Nachthimmel mit Stern, dichterer Schnee, hellere Lichter und Weihnachtsgruß.
+5. Beenden über **„Schließen“** oder die Escape-Taste. Sonst endet die Szene nach dem Lied von selbst.
+
+Hinweise:
+
+- Ist der Ton über den Lautsprecher-Button in der Toolbar ausgeschaltet, läuft die Szene ohne Glocken und Musik und endet nach etwa 30 Sekunden.
+- Den Ablauf „Gewinn an Heiligabend“ (erst Konfetti, dann die Szene) kann der Button nicht vorführen. Dafür muss das lokale Backend für Tag 24 einen Gewinn mit Losnummer liefern, und diese Nummer muss als eigene Kalendernummer hinterlegt sein.
 
 ## Weitere Hilfe
 

@@ -116,6 +116,21 @@ button {
   }
 }
 
+.test-section {
+  margin-top: 0.75rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+
+  button {
+    width: 100%;
+  }
+}
+
+.test-title {
+  margin-bottom: 0.35rem;
+  opacity: 0.8;
+}
+
 .note {
   margin: 0.5rem 0 0;
   font-size: 12px;

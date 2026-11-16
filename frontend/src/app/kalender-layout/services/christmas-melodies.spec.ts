@@ -33,3 +33,16 @@ describe('christmas melodies', () => {
     }
   });
 });
+
+describe('Stille Nacht (Heiligabend)', () => {
+  it('is the complete first verse and plays for about 40 seconds', async () => {
+    const { STILLE_NACHT } = await import('./christmas-melodies');
+    const notes = parseMelody(STILLE_NACHT);
+    const seconds = notes.reduce((sum, n) => sum + n.duration, 0);
+    expect(notes.length).toBe(46);
+    expect(seconds).toBeGreaterThan(35);
+    expect(seconds).toBeLessThan(50);
+    // endet auf dem Grundton C ("Ruh!")
+    expect(notes[notes.length - 1].frequency).toBeCloseTo(noteToFrequency('C4'));
+  });
+});
