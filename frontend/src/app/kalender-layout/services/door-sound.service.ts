@@ -46,6 +46,9 @@ const CHURCH_BELL_STRIKES: readonly (readonly [number, number])[] = [
 /** "Stille Nacht" beginnt, während die letzten Glockenschläge ausklingen. */
 const CHURCH_BELLS_SECONDS = 5;
 
+/** Nach dem letzten Ton wird das Audio so viele ms später freigegeben (Nachklang + Puffer). */
+const RELEASE_AFTER_MS = 1500;
+
 /** Gewinn-Fanfare: aufsteigender Dur-Dreiklang mit Wiederholung des Spitzentons. */
 const FANFARE: Melody = {
   title: 'Gewinn-Fanfare',
@@ -77,12 +80,16 @@ export class DoorSoundService {
   private lastMelodyIndex = -1;
   private melodyCount = 0;
 
+  /** Zeitpunkt (ms, Date.now()), ab dem nichts mehr klingt und das Audio freigegeben wird. */
+  private releaseAt = 0;
+  private releaseTimer?: ReturnType<typeof setTimeout>;
+
   constructor() {
     removeLegacyMutedSetting();
 
-    // Audio bei jeder Nutzerinteraktion (wieder) freischalten, solange es nicht läuft.
-    // Die Listener bleiben bewusst bestehen: iOS unterbricht den AudioContext z.B. beim
-    // App-Wechsel oder Anruf ("interrupted") und erlaubt das Fortsetzen nur in einer Interaktion.
+    // Audio bei jeder Nutzerinteraktion freischalten: iOS erlaubt das Starten nur innerhalb
+    // einer Berührung/eines Klicks. Danach spielt das Tür-Geräusch (das erst nach dem Klick
+    // ausgelöst wird) auf diesem Kontext. Kommt kein Geräusch, wird er gleich wieder freigegeben.
     const unlock = () => {
       if (this.ctx?.state === 'running') {
         return;
@@ -90,6 +97,7 @@ export class DoorSoundService {
       const ctx = this.context();
       if (ctx) {
         playSilence(ctx); // ältere iOS-Versionen schalten erst frei, wenn wirklich etwas abgespielt wird
+        this.scheduleRelease(0);
       }
     };
     for (const type of UNLOCK_EVENTS) {
@@ -107,8 +115,9 @@ export class DoorSoundService {
       this.creak(ctx, out, t, { duration: 1.0, rateFrom: 16, rateTo: 42, gain: 0.55 });
       this.squeak(ctx, out, t + 0.05, { duration: 1.3, freqFrom: 720, freqTo: 1150, gain: 0.1 });
       if (options.melody) {
-        this.melody(ctx, out, t + MELODY_DELAY);
+        return MELODY_DELAY + this.melody(ctx, out, t + MELODY_DELAY);
       }
+      return 1.4;
     });
   }
 
@@ -120,6 +129,7 @@ export class DoorSoundService {
       this.creak(ctx, out, t, { duration: 0.45, rateFrom: 40, rateTo: 22, gain: 0.5 });
       this.squeak(ctx, out, t, { duration: 0.6, freqFrom: 1050, freqTo: 800, gain: 0.08 });
       this.knock(ctx, out, t + 0.6, 1);
+      return 0.8;
     });
   }
 
@@ -143,6 +153,7 @@ export class DoorSoundService {
       duration =
         CHURCH_BELLS_SECONDS +
         this.scheduleTune(ctx, bus, t + CHURCH_BELLS_SECONDS, STILLE_NACHT, ['piano']);
+      return duration;
     });
     return duration;
   }
@@ -150,6 +161,9 @@ export class DoorSoundService {
   /** Beendet laufende Musik (Melodie, Fanfare, Glocken, "Stille Nacht"). */
   stopMusic(): void {
     this.stopMelody();
+    // nichts klingt mehr nach -> Audio bald freigeben
+    this.releaseAt = 0;
+    this.scheduleRelease(0);
   }
 
   // ---------------------------------------------------------------------------
@@ -166,20 +180,58 @@ export class DoorSoundService {
     }
   }
 
-  private play(build: (ctx: AudioContext, out: AudioNode, t: number) => void): void {
-    // iOS: Ton auch bei lautlos gestelltem iPhone abspielen. Erst hier (beim ersten echten
+  /**
+   * Spielt ein Geräusch ab. `build` plant die Töne ein und liefert, wie lange sie klingen (s).
+   * Danach wird das Audio automatisch wieder freigegeben (siehe release()).
+   */
+  private play(build: (ctx: AudioContext, out: AudioNode, t: number) => number): void {
+    // iOS: Ton auch bei lautlos gestelltem iPhone abspielen. Erst hier (beim echten
     // Tür-Geräusch) setzen, nicht schon beim Antippen der Seite - "playback" pausiert andere
-    // Audio-Apps (z.B. Musik).
+    // Audio-Apps (z.B. Musik) und macht die Seite für iOS zu einem "Medien-Player".
     setAudioSessionType('playback');
     const ctx = this.context();
     if (!ctx || !this.master) {
       return;
     }
     try {
-      build(ctx, this.master, ctx.currentTime + 0.01);
+      this.scheduleRelease(build(ctx, this.master, ctx.currentTime + 0.01));
     } catch (err) {
       console.warn('Tür-Geräusch konnte nicht abgespielt werden:', err);
+      this.scheduleRelease(0);
     }
+  }
+
+  /** Gibt das Audio frei, sobald alles Eingeplante (plus Nachklang) verklungen ist. */
+  private scheduleRelease(soundSeconds: number): void {
+    this.releaseAt = Math.max(this.releaseAt, Date.now() + soundSeconds * 1000 + RELEASE_AFTER_MS);
+    clearTimeout(this.releaseTimer);
+    this.releaseTimer = setTimeout(() => this.release(), this.releaseAt - Date.now());
+  }
+
+  /**
+   * Schließt den AudioContext und meldet iOS, dass nichts mehr spielt.
+   *
+   * Warum: Mit der Audio Session "playback" behandelt iOS die Seite wie einen Podcast. Bleibt der
+   * Kontext offen, erscheint ein Medien-Player auf dem Sperrbildschirm, und nach dem Sperren oder
+   * einem App-Wechsel gilt die Wiedergabe als "pausiert" - Töne kämen erst wieder, wenn man dort
+   * auf Play drückt. Darum gibt es zwischen den Geräuschen keinen offenen Kontext; der nächste
+   * Tipp auf eine Tür legt einen frischen an.
+   */
+  private release(): void {
+    clearTimeout(this.releaseTimer);
+    this.releaseAt = 0;
+    const ctx = this.ctx;
+    this.ctx = null;
+    this.master = null;
+    this.noise = null;
+    this.melodyBus = null;
+    if (ctx && ctx.state !== 'closed') {
+      ctx.close().catch(() => {
+        // ignorieren
+      });
+    }
+    setAudioSessionType('auto');
+    clearMediaSession();
   }
 
   /** Erzeugt den AudioContext bei Bedarf bzw. setzt ihn fort (muss in einer Nutzerinteraktion passieren). */
@@ -338,11 +390,11 @@ export class DoorSoundService {
   }
 
   /** Spielt eine zufällig gewählte Weihnachtsmelodie - abwechselnd auf Klavier und Glockenspiel. */
-  private melody(ctx: AudioContext, out: AudioNode, t: number): void {
+  private melody(ctx: AudioContext, out: AudioNode, t: number): number {
     this.lastMelodyIndex = pickRandomIndex(CHRISTMAS_MELODIES.length, this.lastMelodyIndex);
     const melody = CHRISTMAS_MELODIES[this.lastMelodyIndex];
     const instrument: Instrument = MELODY_INSTRUMENTS[this.melodyCount++ % MELODY_INSTRUMENTS.length];
-    this.playTune(ctx, out, t, melody, [instrument]);
+    return this.playTune(ctx, out, t, melody, [instrument]);
   }
 
   /** Spielt eine Melodie auf einem oder mehreren Instrumenten gleichzeitig (ersetzt eine laufende Melodie). */
@@ -352,8 +404,9 @@ export class DoorSoundService {
     t: number,
     melody: Melody,
     instruments: readonly Instrument[]
-  ): void {
-    this.scheduleTune(ctx, this.newMelodyBus(ctx, out), t, melody, instruments);
+  ): number {
+    // Dauer der Noten plus Nachklang des letzten Tons
+    return this.scheduleTune(ctx, this.newMelodyBus(ctx, out), t, melody, instruments) + 1.6;
   }
 
   /**
@@ -557,7 +610,7 @@ const UNLOCK_EVENTS = ['touchend', 'click', 'keydown'] as const;
  * - "playback": Ton auch bei lautlos gestelltem iPhone, pausiert aber andere Audio-Wiedergabe
  * In anderen Browsern ohne Wirkung.
  */
-function setAudioSessionType(type: 'ambient' | 'playback'): void {
+function setAudioSessionType(type: 'auto' | 'ambient' | 'playback'): void {
   const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession;
   if (session && session.type !== type) {
     try {
@@ -565,6 +618,23 @@ function setAudioSessionType(type: 'ambient' | 'playback'): void {
     } catch {
       // ignorieren
     }
+  }
+}
+
+/**
+ * Meldet dem System (Sperrbildschirm, Kontrollzentrum), dass nichts mehr abgespielt wird,
+ * damit dort kein (pausierter) Medien-Player stehen bleibt.
+ */
+function clearMediaSession(): void {
+  const mediaSession = (navigator as Navigator & { mediaSession?: MediaSession }).mediaSession;
+  if (!mediaSession) {
+    return;
+  }
+  try {
+    mediaSession.metadata = null;
+    mediaSession.playbackState = 'none';
+  } catch {
+    // ignorieren
   }
 }
 
