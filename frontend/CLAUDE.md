@@ -40,6 +40,7 @@ Ausführliche Doku für Menschen: [README.md](README.md). Diese Datei enthält d
 ## Festgelegte Entscheidungen des Nutzers
 
 - **Ton und Vibration sind immer an** – es gibt bewusst **keinen** Stumm-Button. Auf iOS wird `navigator.audioSession.type = 'playback'` gesetzt (Ton auch bei lautlos), erst beim ersten Tür-Geräusch.
+- **Kein dauerhaft offener AudioContext:** Mit `playback` behandelt iOS die Seite wie einen Podcast (Medien-Player auf dem Sperrbildschirm, nach Sperren/App-Wechsel „pausiert“, Ton erst nach Play wieder). Deshalb gibt `DoorSoundService` das Audio ~1,5 s nach dem letzten Ton frei (`release()`: Kontext schließen, Audio Session `auto`, Media Session leeren); jeder Tipp auf eine Tür legt einen frischen Kontext an. Jede Wiedergabe muss dafür ihre Dauer zurückgeben (`play(build)` → Sekunden).
 - Melodien: kurze Zufallsmelodien abwechselnd Klavier/Glockenspiel; „Stille Nacht“ an Heiligabend nur Klavier. Keine Trompete (klang schlecht).
 - Gewinn-Feier auch beim automatischen Wiederöffnen einer Tür erneut.
 - Noch geschlossene Türen werden beim Hinterlegen neuer Kalendernummern **nicht** geprüft (keine Spoiler).
