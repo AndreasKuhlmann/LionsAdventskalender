@@ -1,8 +1,18 @@
 .door-wrapper {
   margin: 3rem;
-  transition: all 0.5s ease-in-out;
+  // Nur transform animieren: würde margin animiert, wäre die Türposition beim
+  // Wechsel Mobil -> Desktop noch "unterwegs" und der Tür-Hintergrund falsch berechnet.
+  transition: transform 0.5s ease-in-out;
   width: 15rem;
   height: 14.15rem;
+}
+// Smartphone & Tablet: Tür wird im Bildabschnitt zentriert, daher kein Außenabstand
+// Breakpoint muss mit kalender.component.scss übereinstimmen.
+@media (width <= 1024px) {
+  .door-wrapper {
+    margin: 0;
+    flex-shrink: 0;
+  }
 }
 .text-container {
   position: absolute;

@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GewinnService, TagesGewinne } from '../../services/gewinn.service';
 import { App } from '@capacitor/app';
 
@@ -8,13 +8,14 @@ import { App } from '@capacitor/app';
     styleUrls: ['./kalender.component.scss'],
     standalone: false
 })
-export class KalenderComponent implements OnInit {
+export class KalenderComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('container', { read: ElementRef }) container!: ElementRef;
   title = 'lions-kalender';
   containerXPosition = 0;
   containerYPosition = 0;
   containerWidth = 1208;
   containerHeight = '906px';
+  private resizeObserver?: ResizeObserver;
   constructor(public service: GewinnService, private _ngZone: NgZone) {
     // Wenn der Kalender in den Vordergrund kommt aktualisiere die Daten...
     document.addEventListener('visibilitychange', async (e: any) => {
@@ -43,6 +44,19 @@ export class KalenderComponent implements OnInit {
   async ngOnInit() {
     await this.service.loadGewinne();
     setTimeout(() => this.setPositon());
+  }
+
+  ngAfterViewInit() {
+    // Reagiert auch auf Größenänderungen ohne window:resize-Event,
+    // z.B. wenn beim Wechsel Mobil -> Desktop die Scrollbar verschwindet.
+    this.resizeObserver = new ResizeObserver(() =>
+      this._ngZone.run(() => this.setPositon())
+    );
+    this.resizeObserver.observe(this.container.nativeElement);
+  }
+
+  ngOnDestroy() {
+    this.resizeObserver?.disconnect();
   }
   private setPositon() {
     this.containerXPosition =

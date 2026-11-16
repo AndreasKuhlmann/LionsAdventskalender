@@ -10,16 +10,30 @@
   display: flex;
 }
 
-@media (width > 800px) {
+// Desktop: alle 24 Türen verteilt auf einem Hintergrundbild
+@media (width > 1024px) {
   door {
     margin-top: 1rem;
     margin-right: 2rem;
   }
 }
-@media (width < 800px) {
+
+// Smartphone & Tablet: Hintergrundbild in voller Breite, 24x untereinander,
+// pro Bild genau eine Tür mittig (Türgröße bleibt unverändert).
+// Breakpoint muss mit door.component.scss übereinstimmen.
+@media (width <= 1024px) {
+  .doors-container {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
   door {
-    margin-top: -2.25rem;
-    margin-right: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    // exakt so hoch wie eine Wiederholung des Hintergrundbildes (kalender.png = 1200x847)
+    aspect-ratio: 1200 / 847;
   }
 }
 
