@@ -35,7 +35,8 @@ export class GewinnService {
 
   async loadGewinne() {
     // Die Gewinne sollen nur einmal am Tag geladen werden...
-    if (this.refreshDate.getDate() < new Date().getDate() || this._tagesGewinne().length == 0) {
+    // (komplettes Datum vergleichen - nur der Tag im Monat würde z.B. am 30.11. -> 1.12. versagen)
+    if (this.refreshDate.toDateString() !== new Date().toDateString() || this._tagesGewinne().length == 0) {
       console.log('Refresh');
       // reload all Gewinne...
       let tagesGewinne = await firstValueFrom(this.http

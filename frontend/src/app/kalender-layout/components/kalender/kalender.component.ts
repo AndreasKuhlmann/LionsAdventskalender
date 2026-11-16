@@ -58,7 +58,7 @@ export class KalenderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.containerXPosition.set(rect.x);
     this.containerYPosition.set(rect.y);
     this.containerWidth.set(rect.width);
-    this.containerHeight.set(`${rect.width * 0.711}px`);
+    this.containerHeight.set(`${(rect.width * 847) / 1200}px`);
   }
   onResize(element: HTMLDivElement) {
     this.setPositon();

@@ -57,4 +57,24 @@ describe('GewinnService', () => {
     expect(before[0].flipped).toBe(false);
     expect(storage.set).toHaveBeenLastCalledWith('tagesGewinne', after);
   });
+
+  it('reloads the prizes after a month change (30.11. -> 1.12.)', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    try {
+      vi.setSystemTime(new Date(2026, 10, 30, 20, 0));
+      await load();
+
+      // gleicher Tag: kein neuer Request
+      await service.loadGewinne();
+      http.expectNone(environment.url);
+
+      // nächster Tag im neuen Monat: neuer Request
+      vi.setSystemTime(new Date(2026, 11, 1, 8, 0));
+      await load();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  afterEach(() => http.verify());
 });

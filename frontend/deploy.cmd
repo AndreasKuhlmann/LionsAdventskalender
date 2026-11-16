@@ -1,14 +1,55 @@
-@REM SAS-Token expires 2021-02-23!
-@REM %-Zeichen müssen im SAS-Token in Batch-Datei immer mit %% ersetzt werden!!!!
+@echo off
+setlocal
 
+@REM ---------------------------------------------------------------------------
+@REM Deployment des Adventskalenders nach Azure Blob Storage ($web) + CDN-Purge.
+@REM
+@REM Der SAS-Token wird NICHT mehr in dieser Datei gespeichert, sondern muss als
+@REM Umgebungsvariable gesetzt sein (nur der Teil nach dem "?", in Anfuehrungszeichen
+@REM wegen der "&"-Zeichen):
+@REM
+@REM   set "KALENDER_SAS=sv=...&ss=...&sig=..."
+@REM   deploy.cmd
+@REM
+@REM Voraussetzungen: azcopy im PATH, az CLI angemeldet (az login), "ng build" gelaufen.
+@REM ---------------------------------------------------------------------------
 
-azcopy sync dist\advents-kalender\browser "https://kalendar.blob.core.windows.net/$web??sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2026-11-16T00:16:25Z&st=2024-11-15T16:16:25Z&spr=https&sig=Z%%2Fqv22bl1uU2Qac1uqPX290VYpbrH3Pw7OL70iUzUgU%%3D" --recursive=true --delete-destination=true
+if not defined KALENDER_SAS (
+  echo Fehler: Umgebungsvariable KALENDER_SAS ist nicht gesetzt.
+  exit /b 1
+)
 
-@REM azcopy remove "https://kalendar.blob.core.windows.net/$web??sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2024-11-11T20:26:12Z&st=2023-11-10T12:26:12Z&spr=https&sig=nGWE%%2Bjaq9pMdfWsHKBbtOO4VWa8WS5nmGyW3CkzImdM%%3D" --recursive=true
-@REM azcopy copy "dist\apps\adventskalender\*" "https://kalendar.blob.core.windows.net/$web??sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2024-11-11T20:26:12Z&st=2023-11-10T12:26:12Z&spr=https&sig=nGWE%%2Bjaq9pMdfWsHKBbtOO4VWa8WS5nmGyW3CkzImdM%%3D" --recursive=true --overwrite=true
+set "SRC=dist\advents-kalender\browser"
+set "DEST=https://kalendar.blob.core.windows.net/$web?%KALENDER_SAS%"
+set "WORKERS=ngsw-worker.js;safety-worker.js;worker-basic.min.js"
 
-az cdn endpoint purge --resource-group adventskalender --profile-name kalendar --name kalendar --content-paths=/*
+if not exist "%SRC%\ngsw.json" (
+  echo Fehler: %SRC%\ngsw.json fehlt - bitte zuerst "ng build" ausfuehren.
+  exit /b 1
+)
 
-@REM cmd.exe /c az storage blob delete-batch --source $web --account-name kalendar
-@REM cmd.exe /c az storage blob upload-batch --destination $web --source ./dist --account-name kalendar
-@REM cmd.exe /c az storage blob sync --container $web --source ./dist --account-name kalendar
+@REM Schritt 1: Gehashte Bundles (main-XYZ.js, styles-XYZ.css, ...). Der Inhalt einer solchen
+@REM            Datei aendert sich nie, sie darf daher dauerhaft gecacht werden.
+@REM            Alte Bundles bleiben liegen, damit Clients mit der Vorversion ihre Dateien
+@REM            noch nachladen koennen.
+azcopy copy "%SRC%\*" "%DEST%" --recursive=true ^
+  --include-pattern="*.js;*.css" --exclude-pattern="%WORKERS%" ^
+  --cache-control="public, max-age=31536000, immutable" --overwrite=ifSourceNewer || exit /b 1
+
+@REM Schritt 2: Alle uebrigen Dateien (index.html, Manifest, Assets, Service Worker) ohne ngsw.json.
+@REM            "no-cache" = Browser und CDN muessen bei jedem Abruf beim Server nachfragen.
+azcopy copy "%SRC%\*" "%DEST%" --recursive=true ^
+  --exclude-pattern="ngsw.json;*.js;*.css" ^
+  --cache-control="no-cache" --overwrite=true || exit /b 1
+azcopy copy "%SRC%\*" "%DEST%" ^
+  --include-pattern="%WORKERS%" ^
+  --cache-control="no-cache" --overwrite=true || exit /b 1
+
+@REM Schritt 3: ngsw.json ganz zum Schluss. Erst jetzt erkennen die Service Worker der Clients
+@REM            die neue Version - und alle dazugehoerigen Dateien sind bereits vorhanden.
+azcopy copy "%SRC%\ngsw.json" "%DEST%" --cache-control="no-cache" --overwrite=true || exit /b 1
+
+@REM Schritt 4: CDN-Cache leeren.
+call az cdn endpoint purge --resource-group adventskalender --profile-name kalendar --name kalendar --content-paths "/*"
+
+endlocal

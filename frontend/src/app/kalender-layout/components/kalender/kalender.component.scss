@@ -32,7 +32,7 @@
     justify-content: center;
     width: 100%;
     margin: 0;
-    // exakt so hoch wie eine Wiederholung des Hintergrundbildes (kalender.png = 1200x847)
+    // exakt so hoch wie eine Wiederholung des Hintergrundbildes (kalender.jpg = 1200x847)
     aspect-ratio: 1200 / 847;
   }
 }
@@ -42,7 +42,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  background-image: url(/assets/kalender.png);
+  background-image: url(/assets/kalender.jpg);
   background-size: 100% auto;
   background-repeat: repeat-y;
 }
