@@ -1,29 +1,25 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { KalenderLayoutComponent } from './kalender-layout.component';
 
-describe('AppComponent', () => {
+describe('KalenderLayoutComponent', () => {
   beforeEach(async () => {
+    // jsdom kennt matchMedia nicht (wird von der Toolbar für die PWA-Erkennung genutzt)
+    vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: false }));
+
     await TestBed.configureTestingModule({
-    imports: [KalenderLayoutComponent],
-}).compileComponents();
+      imports: [KalenderLayoutComponent],
+      providers: [provideRouter([])],
+    }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(KalenderLayoutComponent);
-    const app = fixture.componentInstance;
-  });
+  afterEach(() => vi.unstubAllGlobals());
 
-  it(`should have as title 'kalender'`, () => {
+  it('should render toolbar and router outlet', async () => {
     const fixture = TestBed.createComponent(KalenderLayoutComponent);
-    const app = fixture.componentInstance;
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(KalenderLayoutComponent);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome to kalender!'
-    );
+    expect(compiled.querySelector('app-toolbar')).not.toBeNull();
+    expect(compiled.querySelector('router-outlet')).not.toBeNull();
   });
 });

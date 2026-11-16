@@ -4,10 +4,8 @@ import {
   inject,
   isDevMode,
   provideAppInitializer,
-  provideZoneChangeDetection,
 } from '@angular/core';
 import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
 import { Drivers } from '@ionic/storage';
@@ -16,10 +14,8 @@ import { APP_ROUTES } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection(),
     provideRouter(APP_ROUTES),
     provideHttpClient(withXhr(), withInterceptorsFromDi()),
-    provideAnimationsAsync(),
     importProvidersFrom(
       IonicStorageModule.forRoot({
         name: 'adventsKalender',

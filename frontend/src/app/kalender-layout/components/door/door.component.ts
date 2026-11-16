@@ -5,14 +5,12 @@ import {
   afterRenderEffect,
   input,
   signal,
-  viewChild,
-  ChangeDetectionStrategy
+  viewChild
 } from '@angular/core';
 
 @Component({
   selector: 'door',
   templateUrl: './door.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./door.component.scss'],
 })
 export class DoorComponent {

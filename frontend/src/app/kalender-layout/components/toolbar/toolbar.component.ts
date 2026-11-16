@@ -1,5 +1,5 @@
 import { ImpressumDialogComponent } from './../impressum-dialog/impressum-dialog.component';
-import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FoerdererDialogComponent } from '../foerderer-dialog/foerderer-dialog.component';
 import { ZweckDialogComponent } from '../zweck-dialog/zweck-dialog.component';
@@ -19,7 +19,6 @@ declare var window: any;
     selector: 'app-toolbar',
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [MatToolbar, MatIconButton, MatTooltip, MatIcon, MatMenuTrigger, MatMenu, MatMenuItem]
 })
 export class ToolbarComponent {

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
 import { GewinnService, TagesGewinne } from '../../services/gewinn.service';
 import { App } from '@capacitor/app';
 import { DoorComponent } from '../door/door.component';
@@ -7,7 +7,6 @@ import { DoorComponent } from '../door/door.component';
     selector: 'kalender',
     templateUrl: './kalender.component.html',
     styleUrls: ['./kalender.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [DoorComponent]
 })
 export class KalenderComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -18,25 +17,21 @@ export class KalenderComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly containerWidth = signal(1208);
   readonly containerHeight = signal('906px');
   private resizeObserver?: ResizeObserver;
-  constructor(public service: GewinnService, private _ngZone: NgZone) {
+  constructor(public service: GewinnService) {
     // Wenn der Kalender in den Vordergrund kommt aktualisiere die Daten...
     document.addEventListener('visibilitychange', async (e: any) => {
       // console.log(e.target.hidden);
       // console.log(e.target.visibilityState);
-      this._ngZone.run(async () => {
-        if (!e.target.hidden) {
-          await this.service.loadGewinne();
-        }
-      });
+      if (!e.target.hidden) {
+        await this.service.loadGewinne();
+      }
     });
     // // nur für iOS and aktivieren...
     // App.addListener('appStateChange', (state) => {
-    //   this._ngZone.run(async () => {
-    //     if (state.isActive) {
-    //       console.log('App has come to the foreground!');
-    //       await this.service.loadGewinne();
-    //     }
-    //   });
+    //   if (state.isActive) {
+    //     console.log('App has come to the foreground!');
+    //     await this.service.loadGewinne();
+    //   }
     // });
   }
   async flip(gewinne: TagesGewinne) {
@@ -51,9 +46,7 @@ export class KalenderComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     // Reagiert auch auf Größenänderungen ohne window:resize-Event,
     // z.B. wenn beim Wechsel Mobil -> Desktop die Scrollbar verschwindet.
-    this.resizeObserver = new ResizeObserver(() =>
-      this._ngZone.run(() => this.setPositon())
-    );
+    this.resizeObserver = new ResizeObserver(() => this.setPositon());
     this.resizeObserver.observe(this.container().nativeElement);
   }
 
