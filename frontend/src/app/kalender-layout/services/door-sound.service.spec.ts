@@ -64,4 +64,32 @@ describe('DoorSoundService', () => {
     const service = TestBed.inject(DoorSoundService);
     expect(() => service.playOpen()).not.toThrow();
   });
+
+  describe('iOS audio session', () => {
+    let audioSession: { type: string };
+
+    beforeEach(() => {
+      audioSession = { type: 'auto' };
+      vi.stubGlobal('navigator', { ...navigator, audioSession });
+    });
+
+    it('switches to "playback" when a door sound plays (sound even if the iPhone is set to silent)', () => {
+      const service = TestBed.inject(DoorSoundService);
+      expect(audioSession.type).toBe('auto'); // nicht schon beim Laden - andere Musik läuft weiter
+
+      service.playOpen();
+      expect(audioSession.type).toBe('playback');
+    });
+
+    it('switches back to "ambient" when muted', () => {
+      const service = TestBed.inject(DoorSoundService);
+      service.playOpen();
+
+      service.toggleMuted();
+      expect(audioSession.type).toBe('ambient');
+
+      service.playOpen(); // stumm: keine Änderung
+      expect(audioSession.type).toBe('ambient');
+    });
+  });
 });

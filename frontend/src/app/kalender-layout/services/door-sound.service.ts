@@ -75,6 +75,8 @@ export class DoorSoundService {
     writeMuted(this.muted());
     if (this.muted()) {
       this.stopMelody();
+      // wieder normales iOS-Verhalten (Stummschalter wird beachtet, andere Audio-Apps laufen weiter)
+      setAudioSessionType('ambient');
     }
   }
 
@@ -122,6 +124,10 @@ export class DoorSoundService {
     if (this.muted()) {
       return;
     }
+    // iOS: Ton auch bei lautlos gestelltem iPhone abspielen. Erst hier (beim ersten echten
+    // Tür-Geräusch) setzen, nicht schon beim Antippen der Seite - "playback" pausiert andere
+    // Audio-Apps (z.B. Musik).
+    setAudioSessionType('playback');
     const ctx = this.context();
     if (!ctx || !this.master) {
       return;
@@ -439,6 +445,23 @@ export class DoorSoundService {
  * "touchend" bzw. "click".
  */
 const UNLOCK_EVENTS = ['touchend', 'click', 'keydown'] as const;
+
+/**
+ * Audio Session API (bisher nur Safari ab iOS 17 / macOS 14):
+ * - "ambient":  Standard - der Stummschalter am iPhone schaltet den Ton ab, mischt mit anderer Musik
+ * - "playback": Ton auch bei lautlos gestelltem iPhone, pausiert aber andere Audio-Wiedergabe
+ * In anderen Browsern ohne Wirkung.
+ */
+function setAudioSessionType(type: 'ambient' | 'playback'): void {
+  const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession;
+  if (session && session.type !== type) {
+    try {
+      session.type = type;
+    } catch {
+      // ignorieren
+    }
+  }
+}
 
 /** Spielt einen unhörbaren, 1 Sample langen Ton (Freischalten von Audio auf älteren iOS-Versionen). */
 function playSilence(ctx: AudioContext): void {
