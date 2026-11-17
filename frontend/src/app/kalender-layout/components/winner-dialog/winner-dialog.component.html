@@ -12,7 +12,6 @@
       <div class="tag">{{ win.tag }}. Dezember</div>
       @for (gewinn of win.gewinne; track gewinn.Id) {
         <div class="preis">
-          <strong class="nummer">{{ format(gewinn.Losnummer) }}</strong>
           {{ gewinn.Beschreibung }}
         </div>
       }
